@@ -90,7 +90,7 @@ For a CSS with forbidden set <span class="math">F</span> and effective dimension
 <p>The Cantor dimension measures how the forbidden patterns fill the <span class="math">k</span>-dimensional feature hypercube. For BOC/CLOC chemistry: <span class="math">|F| = 17</span>, <span class="math">k = 5</span>, giving <span class="math">D<sub>C</sub> ≈ 0.8175</span> — a number whose nature was an open question (OP10).</p>
 
 <div class="box theorem">
-<span class="tag">THEOREM</span>
+<span class="tag">THEOREM</span> <span class="status status-deductive">DEDUCTIVE</span>
 <span class="title">Theorem 1 (Transcendental Dichotomy — OP10).</span>
 For any CSS with <span class="math">k > 0</span>:
 <div class="math-block">D<sub>C</sub>(F) is transcendental ⇔ |F| is not a power of 2</div>
@@ -124,7 +124,7 @@ Define the boundary operator <span class="math">∂</span> on bigrams: a forbidd
 </p>
 
 <div class="box theorem">
-<span class="tag">THEOREM</span>
+<span class="tag">THEOREM</span> <span class="status status-deductive">DEDUCTIVE</span>
 <span class="title">Theorem 2 (∂-Naturality).</span>
 In the category <span class="math">SurfCSS</span> where objects are surface-saturated CSS and morphisms are feature-refinement embeddings (append ghost dimensions), ∂ is a natural transformation. Verified exhaustively on 65,536 CSS instances with zero violations.
 </div>
@@ -151,7 +151,7 @@ In the category <span class="math">SurfCSS</span> where objects are surface-satu
 </div>
 
 <div class="box theorem">
-<span class="tag">THEOREM</span>
+<span class="tag">THEOREM</span> <span class="status status-structural">STRUCTURAL</span>
 <span class="title">Theorem 3 (Bifunctor B).</span>
 There exists a bifunctor <span class="math">B: SurfCSS<sup>op</sup> × Parabolic<sup>op</sup> → Trans</span> whose projections extract <span class="math">D<sub>C</sub></span> (Forb side) and <span class="math">π</span> (Mandelbrot side). In the category <span class="math">Emergence</span>, the four-stage pipelines are isomorphic: <span class="math">E<sub>forb</sub>(CSS) ≅ E<sub>mand</sub>(D)</span>. The isomorphism is structural — <span class="math">D<sub>C</sub> ≠ π</span> in general, and should not be forced equal.
 </div>
@@ -219,7 +219,7 @@ The connected component count jumps from <span class="math">β₀ = 25</span> (o
 <h3>6.1 The Injectivity Ceiling</h3>
 
 <div class="box theorem">
-<span class="tag">THEOREM</span>
+<span class="tag">THEOREM</span> <span class="status status-deductive">DEDUCTIVE</span>
 <span class="title">Theorem 4 (Feature Dimension Bound — OP2).</span>
 For a CSS with sign set <span class="math">S</span>, the minimum feature dimension <span class="math">n</span> required to preserve all Boolean constraints satisfies:
 <ul>
@@ -369,5 +369,9 @@ A Survey of Six Results · Four Theorems · Seven Domains · Eleven References<b
 OP2, OP3, OP4 (Locality horizon), OP10, OP11: Resolved. All Betti numbers recomputed (full CMUdict, GF(2)). June 25, 2026.
 </div>
 
+
+<div class="nav-links" style="font-family:Arial,sans-serif;font-size:11px;color:#999;text-align:center;margin-top:12px;">
+<a href="Forb_Survey.html">Survey</a> · <a href="Forbidden_Pattern_Functor.html">Parent paper</a>
+</div>
 </body>
 </html>
