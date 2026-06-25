@@ -125,7 +125,7 @@ analysis — that all encode the same forbidden-pattern space (Theorem 4.1). The
 construction is shown to specialise McNaughton–Papert local languages through
 feature compression (§1.1), to instantiate Angluin's positive-data learning
 conditions (§5), and to operate identically across chemistry (107.8M compounds),
-English phonotactics (33K words, three absolute rules extracted automatically), and
+English phonotactics (134K words (CMUdict), four absolute rules extracted automatically), and
 undeciphered scripts (Indus, Linear A, Proto-Elamite; the Proto-Elamite application
 yields 503 significant forbidden bigrams and 22 automatically classified sign-function
 classes from 1,585 CDLI texts, §6.3). The framework is subject to
@@ -233,7 +233,7 @@ The operation was discovered in organic chemistry, where enumerating forbidden
 combinations of seven electronic-effect generators across 107.8 million compounds
 yielded Axiom A — a Boolean constraint with zero counterexamples at that scale
 (§1.2). The same pipeline, applied to English phonotactics with a seven-bit
-articulatory feature encoding, automatically extracted three absolute phonotactic
+articulatory feature encoding, automatically extracted four absolute phonotactic
 rules from the CMU Pronouncing Dictionary (§1.3). The identical mathematics
 applies to undeciphered scripts (Indus, Linear A, Proto-Elamite) — with a
 complete Proto-Elamite analysis yielding 503 significant forbidden bigrams
@@ -324,7 +324,7 @@ only the constraints with weight → ∞ — the absolute, zero-exception rules.
 This is both a restriction (gradient rules are excluded) and a virtue:
 the rules that survive are Popperian — a single counterexample falsifies
 them. The English phonotactics verification (§6.2) confirms this relationship
-empirically: the three absolute rules extracted automatically by Forb correspond
+empirically: the four absolute rules extracted automatically by Forb correspond
 to three Hayes–Wilson constraints with effective infinite weight, while the
 two gradient rules (voicing agreement, heterorganic clusters) correspond
 to finite-weight constraints. The foundational framework for English
@@ -522,7 +522,7 @@ This five-step pipeline is the concrete origin of the abstract Forb functor.
 
 <p>
 To test the domain-neutrality claim, the same five-step pipeline was applied
-to the CMU Pronouncing Dictionary (~33K English words, 39 ARPABET phonemes).
+to the CMU Pronouncing Dictionary (~134K English words (CMUdict), 39 ARPABET phonemes).
 Each phoneme was encoded in 7 bits: consonant/vowel, voicing, place of
 articulation (2 bits), manner of articulation (2 bits), and a consonant/vowel
 marker. The pipeline enumerated all <span class="math-inline">39² = 1,521</span>
@@ -2402,7 +2402,7 @@ space (Proposition 5.1), monotonicity (Corollary 3.2.1), and the second
 Borel–Cantelli lemma. This resolves the central open question stated in the
 original manuscript: Forb is now established as an <em>inferential</em> tool,
 not merely a descriptive one. The empirical scaling evidence (BOC: 21.4M →
-107.8M, 3/20 constraints demoted; English phonotactics: stable at 33K words)
+107.8M, 3/20 constraints demoted; English phonotactics: stable at 134K words (CMUdict))
 is consistent with the theorem's predictions.
 </p>
 <p>
@@ -2497,7 +2497,7 @@ steric or folding constraints) emerge at scale.
 </div>
 
 <div class="open-problem">
-<div class="num">OP7 — Forb-Constrained Decoding for Neural Language Models.</div>
+<div class="num">OP7 — Forb-Constrained Decoding for Neural Language Models. <strong>[PARTIAL — token-level experiment completed; feature compression not attempted, see Forb_LLM_Constrained_Decoding.html]</strong></div>
 <p>
 Implement and evaluate Forb-constrained decoding on a production LLM.
 Key empirical questions: (a) What fraction of structural hallucinations
@@ -2512,7 +2512,7 @@ order k) and generation quality as measured by human evaluation?
 </div>
 
 <div class="open-problem">
-<div class="num">OP8 — Topological Fingerprinting of Language Models.</div>
+<div class="num">OP8 — Topological Fingerprinting of Language Models. <strong>[IMPLEMENTED — token-level fingerprinting completed, see Forb_LLM_Constrained_Decoding.html §5.3]</strong></div>
 <p>
 Compute <span class="math-inline">Forb(C_gen)</span> for a diverse set of
 open-source LLMs and establish whether the resulting Boolean algebras
@@ -2617,7 +2617,7 @@ Gold's impossibility theorem by restricting to a finite hypothesis
 space of Boolean constraints at fixed feature dimension.</li>
 
 <li><strong>Empirical verification</strong> (§6): The same pipeline operates
-identically on 107.8M organic compounds (chemistry) and 33K English
+identically on 107.8M organic compounds (chemistry) and 134K English (CMUdict)
 words (phonology), extracting domain-appropriate absolute constraints in
 both cases. The structural isomorphism extends to undeciphered scripts,
 protein domain architectures, and large language model output.</li>
