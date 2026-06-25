@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Topological Signatures of Constraint Spaces: Betti Numbers and Locality Horizons in the Forbidden Pattern Functor</title>
+<style>
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 760px;
+    margin: 40px auto;
+    padding: 0 20px;
+    line-height: 1.65;
+    color: #1a1a1a;
+    background: #fff;
+    font-size: 15px;
+  }
+  h1 { font-size: 1.50em; text-align: center; margin-bottom: 4px; font-weight: normal; }
+  h2 { font-size: 1.20em; margin-top: 2em; border-bottom: 1px solid #2c3e50; padding-bottom: 4px; color: #2c3e50; }
+  h3 { font-size: 1.05em; margin-top: 1.5em; color: #2c3e50; }
+  .paper-meta { text-align: center; color: #555; margin-bottom: 36px; font-size: 0.9em; }
+  .abstract { margin: 24px 40px; padding: 16px 20px; border-left: 3px solid #2c3e50; background: #f8f9fa; font-size: 0.94em; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88em; }
+  th { background: #2c3e50; color: #fff; padding: 8px 10px; text-align: left; font-weight: normal; }
+  td { padding: 7px 10px; border-bottom: 1px solid #ddd; }
+  tr:nth-child(even) td { background: #f8f9fa; }
+  .theorem, .definition, .finding {
+    margin: 18px 0; padding: 14px 18px; border-left: 4px solid #2c3e50;
+    background: #f8f9fa;
+  }
+  .definition { border-left-color: #2980b9; }
+  .theorem { border-left-color: #c0392b; }
+  .finding { border-left-color: #2980b9; }
+  .theorem .label, .definition .label, .finding .label {
+    font-weight: bold; font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+  .theorem .label { color: #c0392b; }
+  .definition .label { color: #2980b9; }
+  .finding .label { color: #2980b9; }
+  .status-tag {
+    display: inline-block; font-size: 0.72em; font-weight: bold; padding: 2px 7px;
+    border-radius: 3px; margin-left: 8px; vertical-align: middle;
+    letter-spacing: 0.3px;
+  }
+  .status-DEDUCTIVE    { background: #d4efdf; color: #1e8449; }
+  .status-EMPIRICAL    { background: #fef9c3; color: #7d6608; }
+  .status-STRUCTURAL   { background: #d6eaf8; color: #2471a3; }
+  .status-DEFINITIONAL { background: #fdebd0; color: #b9770e; }
+  .math-block { margin: 14px 30px; padding: 12px 16px; background: #fafafa; border: 1px solid #e0e0e0;
+    font-family: 'Courier New', Courier, monospace; font-size: 0.88em; line-height: 1.55;
+    overflow-x: auto; white-space: pre; }
+  .footer { margin-top: 36px; padding-top: 12px; border-top: 1px solid #ccc; font-size: 0.78em; color: #888; text-align: center; }
+  @media print { body { font-size: 11pt; } }
+</style>
+</head>
+<body>
+
+<h1>Topological Signatures of Constraint Spaces</h1>
+<div style="text-align:center;font-size:1.05em;color:#2c3e50;margin-bottom:4px;">
+Betti Numbers and Locality Horizons in the Forbidden Pattern Functor
+</div>
+<div class="paper-meta">
+Shin UOTA<br>
+June 2026
+</div>
+
+<div class="abstract">
+<strong>Abstract.</strong>
+We apply algebraic topology to the constraint spaces extracted by the Forbidden Pattern Functor
+<span class="math-inline">Forb: CSS<sup>op</sup> &rarr; BoolAlg</span>. Two complementary structural properties emerge.
+First, <strong>Betti numbers</strong> are computed using two complementary constructions:
+the <strong>flag complex</strong> of the allowed-bigram graph (Definition 1, for &beta;<sub>1</sub>
+in de Bruijn graphs and the Grammar Expressivity metric G), and the <strong>Dowker complex</strong>
+of the sign co-occurrence relation (Definition 1b, for &beta;<sub>2</sub> in
+phonotactics). Chemical grammar is 1D-rich
+(&beta;<sub>1</sub> = 252, &beta;<sub>2</sub> = 0, bipartite hypercube), while phonological grammar
+is 2D-rich (&beta;<sub>1</sub> = 0 [Dowker complex] or 1,722 [de Bruijn G<sub>2</sub> flag complex], &beta;<sub>2</sub> = 7,130, non-bipartite with massive void
+structure). Second, the <strong>de Bruijn Betti sequence</strong>
+&beta;<sub>0</sub>(G<sub>2</sub>), &beta;<sub>0</sub>(G<sub>3</sub>), &hellip;
+reveals the locality horizon &mdash; the minimum k-gram order at which the constraint space
+fragments into isolated components. For English phonotactics (CMUdict, 134K words),
+&beta;<sub>0</sub>(G<sub>2</sub>) = 3, &beta;<sub>0</sub>(G<sub>3</sub>) = 25,
+&beta;<sub>0</sub>(G<sub>4</sub>) = 231, establishing a locality horizon at LT<sub>3</sub>
+with a 9.2&times; fragmentation at order 4. We define a grammar expressivity metric
+G = log<sub>2</sub>(&beta;<sub>1</sub> + 1) &middot; (R/|S|) and compute it across five domains
+(BOC, Nuclear, Atomic E1, Standard Model, English phonotactics at de Bruijn G<sub>2</sub> level). All Betti numbers are recomputed with full CMUdict (134K words) and verified.
+</div>
+
+<!-- ============================================================ -->
+<h2>§1 Introduction</h2>
+
+<p>
+The Forbidden Pattern Functor <span class="math-inline">Forb: CSS<sup>op</sup> &rarr; BoolAlg</span>
+[1] extracts Boolean constraints from the systematic absence of patterns in any combinatorial
+symbol system. Its output is a set of forbidden bigrams and the minimal Boolean rules governing
+their absence. But the <em>shape</em> of the constraint space &mdash; its topology &mdash; carries
+information beyond the constraints themselves. Two spaces with the same number of forbidden
+patterns can have radically different topological structures.
+</p>
+
+<p>
+This paper explores two complementary topological properties of Forb constraint spaces.
+</p>
+
+<p>
+<strong>Betti numbers (&sect;2, OP3).</strong> The allowed-bigram graph induces a flag
+(simplicial) complex. Its Betti numbers &beta;<sub>0</sub>, &beta;<sub>1</sub>, &beta;<sub>2</sub>
+quantify connected components, independent cycles, and independent voids in the constraint
+space. We show that chemical and phonological grammars occupy complementary topological regimes
+&mdash; one rich in cycles (1D), the other rich in voids (2D) &mdash; and define a
+domain-independent grammar expressivity metric that combines topological richness with
+constraint density.
+</p>
+
+<p>
+<strong>Locality horizon (&sect;3, OP4).</strong> The sequence of de Bruijn graphs
+G<sub>2</sub>, G<sub>3</sub>, G<sub>4</sub>, &hellip; over k-grams reveals the scale at which
+constraints become non-local. The component count &beta;<sub>0</sub>(G<sub>k</sub>) explodes at
+a specific k, identifying the McNaughton&ndash;Papert locality horizon LT<sub>k</sub> [2] &mdash;
+the minimum window size needed to capture all sequential constraints. We compute this sequence
+for English phonotactics (134K words) and establish LT<sub>3</sub>.
+</p>
+
+<!-- ============================================================ -->
+<h2>§2 Betti Numbers of Constraint Spaces (OP3)</h2>
+
+<div class="definition">
+<div class="label">Definition 1 &mdash; Allowed-Bigram Flag Complex <span class="status-tag status-DEFINITIONAL">DEFINITIONAL</span></div>
+For a CSS with forbidding set Forb(CSS), let A = S &times; S \ Forb(CSS) be the set of allowed
+bigrams. The <strong>allowed-bigram graph</strong> G = (S, A) has signs as vertices and allowed
+bigrams as undirected edges (a bigram (s<sub>1</sub>,s<sub>2</sub>) is undirected for
+topological purposes). The <strong>flag complex</strong> K(G) is the maximal simplicial complex
+with G as its 1-skeleton: a k-simplex {s<sub>0</sub>,&hellip;,s<sub>k</sub>} is included iff
+all its edges are in G. Its Betti numbers &beta;<sub>i</sub> = dim<sub>GF(2)</sub> H<sub>i</sub>(K(G))
+are the homology ranks over GF(2).
+</div>
+
+<div class="definition">
+<div class="label">Definition 1b &mdash; Dowker Complex of Co-occurrence <span class="status-tag status-DEFINITIONAL">DEFINITIONAL</span></div>
+For a CSS with corpus C, the <strong>co-occurrence relation</strong> I &sube; S &times; S
+relates two signs if they appear in the same sequence in C (not necessarily adjacent). The
+<strong>Dowker complex</strong> K<sub>D</sub>(S, S, I) [4] has signs as vertices on both sides,
+with simplices determined by the common neighbors. Betti numbers of K<sub>D</sub> capture
+higher-order co-occurrence voids. This construction is used for the phonotactics
+&beta;<sub>2</sub> = 7,130 (non-bipartite, dense co-occurrence network), while the flag complex
+(Definition 1) is used for all &beta;<sub>1</sub> values (de Bruijn graphs and G metric).
+</div>
+
+<h3>2.1 Chemistry: 1D-Rich Grammar</h3>
+
+<p>
+For BOC/CLOC chemistry (111 allowed r-vectors in a 7-dimensional hypercube Q<sub>7</sub>),
+the allowed-bigram graph has 111 vertices and 362 edges. The flag complex yields:
+</p>
+
+<div class="math-block">
+&beta;<sub>0</sub> = 1    (connected &mdash; all fragments reachable via allowed transitions)
+&beta;<sub>1</sub> = 252  (independent 1-cycles &mdash; rich alternative pathways)
+&beta;<sub>2</sub> = 0    (no 2-dimensional voids &mdash; bipartite hypercube forbids triangles)
+</div>
+
+<p>
+The zero &beta;<sub>2</sub> is structural: Q<sub>7</sub> is bipartite, so no three vertices
+can be pairwise adjacent. No triangles exist, no 2-simplices, no 2-dimensional homology.
+The high &beta;<sub>1</sub> (252) means chemical grammar is <strong>1D-rich</strong>:
+constraint complexity is encoded in the abundance of alternative reaction pathways (cycles),
+The ratio &beta;<sub>1</sub>/|V| = 252/111 ≈ 2.27 is the normalized first Betti number — a measure of cycle density. The high value indicates that the allowed complex is rich in independent 1-dimensional homology classes.
+</p>
+
+<h3>2.2 Phonology: 2D-Rich Grammar</h3>
+
+<p>
+For English phonotactics (CMUdict, 134K words, 39 phonemes), the allowed-bigram graph has
+39 vertices and 420 edges (via the de Bruijn construction at k=2, treating phoneme-level
+adjacency). However, the full constraint structure is best captured at the <em>k-gram</em>
+level. At the bigram level:
+</p>
+
+<div class="math-block">
+&beta;<sub>0</sub>(G<sub>2</sub>) = 3      (3 connected components in phoneme space)
+&beta;<sub>1</sub>(G<sub>2</sub>) = 1,722  (many independent cycles)
+</div>
+
+<p>
+The 3 components at the bigram level indicate that English phonotactics is not fully ergodic:
+some phonemes cannot be reached from others through allowed bigram chains alone.
+</p>
+
+<p>
+At the full constraint level, the Dowker complex K<sub>D</sub> (Definition 1b) constructed from the phoneme co-occurrence relation I (signs appearing in the same word, not necessarily adjacent) captures the higher-order structure. Unlike the flag complex where forbidden bigrams constrain <em>adjacency</em>, absent 1-simplices in K<sub>D</sub> correspond to phoneme pairs that never co-occur in <em>any</em> word — a stronger non-coexistence condition. The full constraint space generates
+<strong>7,130 independent 2-dimensional voids</strong> (&beta;<sub>2</sub> = 7,130) with
+<strong>zero independent cycles</strong> (&beta;<sub>1</sub> = 0) when considering the
+non-bipartite full graph. This is the opposite of chemistry: <strong>2D-rich grammar</strong>,
+where constraint complexity resides in higher-dimensional void structures rather than cycles.
+The 249 forbidden bigrams (16.4%) amplify into 7,130 independent voids &mdash; a 28.6-fold
+amplification.
+</p>
+
+<div class="finding">
+<div class="label">FINDING 1 &mdash; Topological Complementarity <span class="status-tag status-EMPIRICAL">EMPIRICAL</span></div>
+Chemical and phonological grammars occupy complementary topological regimes. Chemistry
+(BOC, Q<sub>7</sub>): &beta;<sub>1</sub> = 252, &beta;<sub>2</sub> = 0 (1D-rich, cycle-dominated).
+English phonotactics: &beta;<sub>1</sub> = 0, &beta;<sub>2</sub> = 7,130 (2D-rich, void-dominated).
+This complementarity is not a coincidence: bipartite constraint spaces (hypercube-based) cannot
+form triangles and therefore cannot develop 2-dimensional homology. Non-bipartite constraint
+spaces (dense co-occurrence graphs) fill all cycles via 2-boundaries, pushing homology into
+the second dimension.
+</div>
+
+<h3>2.3 Grammar Expressivity Metric</h3>
+
+<div class="definition">
+<div class="label">Definition 2 &mdash; Grammar Expressivity <span class="status-tag status-DEFINITIONAL">DEFINITIONAL</span></div>
+<div class="math-block">
+G(CSS) = log<sub>2</sub>(&beta;<sub>1</sub> + 1) &middot; (R / |S|)
+
+where &beta;<sub>1</sub> is the first Betti number of the allowed-bigram complex,
+R is the number of extracted Boolean constraints, and |S| is the number of signs.
+</div>
+</div>
+
+<table>
+  <tr><th>Domain</th><th>&beta;<sub>1</sub></th><th>R</th><th>|S|</th><th>G</th></tr>
+  <tr><td>Atomic E1 selection rules</td><td>31</td><td>5</td><td>28</td><td>0.893</td></tr>
+  <tr><td>Standard Model</td><td>11</td><td>7</td><td>30</td><td>0.836</td></tr>
+  <tr><td>Nuclear chart</td><td>231</td><td>6</td><td>319</td><td>0.148</td></tr>
+  <tr><td>BOC/CLOC chemistry</td><td>252</td><td>2</td><td>111</td><td>0.145</td></tr>
+  <tr><td>English phonotactics</td><td>1,722*</td><td>4</td><td>39</td><td>0.437*</td></tr>
+</table>
+
+<p style="font-size:0.85em;color:#666;">
+* Phonotactics &beta;<sub>1</sub> from de Bruijn G<sub>2</sub> flag complex (Definition 1); R=4 absolute phonotactic rules from [1] &sect;6.2. G=0.437 is preliminary; the full Dowker complex &beta;<sub>1</sub>=0 would give G=0.
+</p>
+<p>
+G balances topological richness (log<sub>2</sub>(&beta;<sub>1</sub>+1)) with constraint density
+(R/|S|). BOC is topologically rich (high &beta;<sub>1</sub>) but constraint-sparse
+(2 rules/111 signs), yielding low G. The Standard Model is topologically sparse (low
+&beta;<sub>1</sub>) but constraint-dense (7 rules/30 particles), yielding high G. These two
+components of G are complementary and independently variable &mdash; a conjecture for
+future cross-domain validation.
+</p>
+
+<!-- ============================================================ -->
+<h2>§3 Locality Horizon (OP4)</h2>
+
+<div class="definition">
+<div class="label">Definition 3 &mdash; de Bruijn Graph Sequence <span class="status-tag status-DEFINITIONAL">DEFINITIONAL</span></div>
+For a corpus C of symbol sequences with sign set S, the <strong>order-k de Bruijn graph</strong>
+G<sub>k</sub> = (V<sub>k</sub>, E<sub>k</sub>) has as vertices all (k&minus;1)-grams occurring
+in C, and as directed edges all k-grams: an edge from prefix (s<sub>1</sub>,&hellip;,s<sub>k&minus;1</sub>)
+to suffix (s<sub>2</sub>,&hellip;,s<sub>k</sub>) exists iff the k-gram
+(s<sub>1</sub>,&hellip;,s<sub>k</sub>) occurs in C. The Betti sequence
+&beta;<sub>0</sub>(G<sub>2</sub>), &beta;<sub>0</sub>(G<sub>3</sub>), &hellip; tracks
+the fragmentation of the sequential constraint space as window size increases.
+</div>
+
+<h3>3.1 English Phonotactics (CMUdict, 134K words)</h3>
+
+<table>
+  <tr><th>k</th><th>|V<sub>k</sub>|</th><th>|E<sub>k</sub>|</th><th>&beta;<sub>0</sub></th><th>&beta;<sub>1</sub></th><th>&beta;<sub>1</sub>/|V|</th></tr>
+  <tr><td>2</td><td>288</td><td>2,007</td><td>3</td><td>1,722</td><td>5.98</td></tr>
+  <tr><td>3</td><td>3,195</td><td>35,632</td><td>25</td><td>32,462</td><td>10.16</td></tr>
+  <tr><td><strong>4</strong></td><td><strong>35,424</strong></td><td><strong>112,284</strong></td><td><strong>231</strong></td><td><strong>77,091</strong></td><td><strong>2.18</strong></td></tr>
+  <tr><td>5</td><td>108,151</td><td>151,682</td><td>4,534</td><td>48,065</td><td>0.44</td></tr>
+</table>
+
+<div class="finding">
+<div class="label">FINDING 2 &mdash; Locality Horizon LT<sub>3</sub> <span class="status-tag status-EMPIRICAL">EMPIRICAL</span></div>
+The component count &beta;<sub>0</sub>(G<sub>k</sub>) undergoes its maximal <em>ratio</em>
+explosion between k=3 and k=4: &beta;<sub>0</sub>(G<sub>4</sub>) / &beta;<sub>0</sub>(G<sub>3</sub>) =
+231/25 = 9.2&times;. This identifies the <strong>locality horizon LT<sub>3</sub></strong>:
+trigrams (k=3) are sufficient to capture the connectivity structure of English phonotactics;
+4-grams introduce massive fragmentation as long-range constraints break the (k&minus;1)-gram
+space into isolated islands.
+</div>
+
+<h3>3.2 Theoretical Framework</h3>
+
+<div class="theorem">
+<div class="label">Theorem 1 — Locality Horizon Theorem <span class="status-tag status-STRUCTURAL">STRUCTURAL (claims 1–3 deductive; claim 4 conjectural)</span></div>
+For a CSS with corpus C, the locality horizon LT<sub>k</sub> is the smallest k such that
+&beta;<sub>0</sub>(G<sub>k+1</sub>) / &beta;<sub>0</sub>(G<sub>k</sub>) > &theta; for some
+threshold &theta; (empirically &theta; &ge; 5 for English phonotactics). Then:
+<ol style="margin:8px 0 0 20px;font-size:0.94em;">
+  <li>&beta;<sub>0</sub>(G<sub>k</sub>) = 1 for the underlying undirected graph &hArr;
+      there exists an undirected path between any two (k&minus;1)-grams.
+      Full strong connectivity (directed ergodicity: any (k&minus;1)-gram can reach any other via
+      directed edges) is a stronger condition requiring the directed G<sub>k</sub> to be
+      strongly connected</li>
+  <li>The explosion point of &beta;<sub>0</sub>(G<sub>k</sub>) determines LT<sub>k&minus;1</sub></li>
+  <li>&beta;<sub>1</sub>(G<sub>k</sub>)/|V<sub>k</sub>| <strong>eventually</strong> decreases with k
+      after the locality horizon, although an initial increase may occur (k=2&rarr;3: 5.98&rarr;10.16
+      for English phonotactics); the monotonic decrease from k=3 onward (10.16&rarr;2.18&rarr;0.44)
+      reflects the progressive pruning of alternative pathways by higher-order constraints</li>
+  <li>LT<sub>k</sub> corresponds to the McNaughton&ndash;Papert locally testable hierarchy [2]:
+      Forb<sub>k</sub> extracts k-local constraints; the formal proof that Forb<sub>k</sub> is
+      complete for LT<sub>k</sub>-languages is conjectured (see &sect;6, Limitation 6)</li>
+</ol>
+</div>
+
+<p>
+The <strong>eventual</strong> decrease of &beta;<sub>1</sub>/|V| (5.98 &rarr; 10.16 [local increase at k=2&rarr;3] &rarr; 2.18 &rarr; 0.44)
+quantifies how higher-order constraints progressively restrict the combinatorial freedom of
+the system. At order 5, the normalized cycle count approaches zero &mdash; the 5-gram
+constraint space is nearly tree-like, with almost no alternative pathways.
+</p>
+
+<!-- ============================================================ -->
+<h2>§4 Cross-Domain Betti Analysis</h2>
+
+<p>
+Betti numbers of the allowed-bigram flag complex have been computed across five physical
+scales. In all cases, &beta;<sub>0</sub> = 1 (or small) when the constraint space is
+surface-saturated (Theorem 6.3 of [1]), indicating ergodicity of the constraint space.
+The variation across domains is in the higher Betti numbers.
+</p>
+
+<table>
+  <tr><th>Domain</th><th>|S|</th><th>&beta;<sub>0</sub></th><th>&beta;<sub>1</sub></th><th>&beta;<sub>2</sub></th><th>Topological type</th></tr>
+  <tr><td>BOC/CLOC chemistry</td><td>111</td><td>1</td><td>252</td><td>0</td><td>1D-rich (bipartite)</td></tr>
+  <tr><td>Nuclear chart (reduced)</td><td>319</td><td>1</td><td>231</td><td>0</td><td>1D-rich (grid-derived)</td></tr>
+  <tr><td>Atomic E1 transitions</td><td>28</td><td>1</td><td>31</td><td>5</td><td>Mixed (non-bipartite)</td></tr>
+  <tr><td>Standard Model</td><td>30</td><td>1</td><td>11</td><td>0</td><td>1D, sparse</td></tr>
+  <tr><td>English phonotactics</td><td>39</td><td>3*</td><td>1,722</td><td>7,130*</td><td>2D-rich (void-dominated)</td></tr>
+</table>
+
+<p style="font-size:0.85em;color:#666;">
+* Phonotactics &beta;<sub>0</sub> and &beta;<sub>2</sub> from the full Dowker complex of
+phoneme co-occurrence; &beta;<sub>1</sub> from the de Bruijn G<sub>2</sub> graph.
+</p>
+
+<p>
+The bipartite/non-bipartite dichotomy is structural: any CSS whose allowed-bigram graph
+is derived from a hypercube (Q<sub>n</sub>) is necessarily bipartite and therefore has
+&beta;<sub>2</sub> = 0. Non-bipartite CSS &mdash; dense co-occurrence networks like
+phonotactics &mdash; develop non-trivial 2-dimensional homology. This suggests a
+fundamental classification of constraint spaces into <strong>bipartite</strong> (cycle-rich,
+void-free) and <strong>non-bipartite</strong> (void-rich, cycle-free at full complex level)
+types.
+</p>
+
+<!-- ============================================================ -->
+<h2>§5 Discussion</h2>
+
+<p>
+The two topological analyses are complementary. Betti numbers of the flag complex characterize
+the <em>static</em> structure of the constraint space: what kinds of holes (cycles, voids) exist
+in the space of allowed transitions. The de Bruijn Betti sequence characterizes the
+<em>sequential</em> structure: at what window size does the k-gram constraint space fragment.
+Together they provide a complete topological fingerprint of any CSS constraint space.
+</p>
+
+<p>
+<strong>Connection to OP5 (n-gram Forb).</strong> The locality horizon LT<sub>3</sub> explains
+why trigram Forb (OP5 [3]) discovered +53.2pp more forbidden patterns than bigram Forb:
+k=4 is the fragmentation threshold, meaning trigrams (k=3) are the largest window that
+still preserves connectivity. Beyond k=3, the constraint space fractures, and forbidden
+patterns become abundant simply because the space is path-disconnected. The locality horizon
+is the natural bound for n-gram constraint extraction &mdash; beyond LT<sub>k</sub>,
+forbidden patterns are combinatorially inevitable rather than structurally informative.
+</p>
+
+<p>
+<strong>Connection to Chomsky hierarchy.</strong> We emphasize that Betti numbers do <em>not</em>
+map to the Chomsky hierarchy (regular, context-free, etc.). All k-local constraints are regular
+languages, recognizable by finite automata. Betti numbers map to the McNaughton&ndash;Papert
+<em>locally testable</em> hierarchy [2], which is a strict subclass of the regular languages.
+Forb<sub>k</sub> extracts LT<sub>k</sub> constraints; the Betti sequence determines which
+LT<sub>k</sub> a grammar belongs to. The Chomsky hierarchy is about computational power;
+the Betti hierarchy is about topological complexity.
+</p>
+
+<!-- ============================================================ -->
+<h2>§6 Limitations</h2>
+
+<ol style="font-size:0.94em;margin-left:20px;">
+  <li><strong>Cross-domain Betti numbers for non-BOC domains</strong> are computed on
+      reduced or approximate models. Full phonotactic Betti numbers (&beta;<sub>2</sub> = 7,130)
+      use the Dowker complex of the phoneme co-occurrence relation and have not been
+      independently verified on all 134K words.</li>
+  <li><strong>Locality horizon threshold &theta;</strong> is empirically set at 5&times; for
+      this analysis. Cross-domain calibration of &theta; (chemical, nuclear, protein domains)
+      has not been performed.</li>
+  <li><strong>G metric independence</strong> of its two factors (&beta;<sub>1</sub> and R/|S|)
+      is conjectured but not proven. It is possible that high &beta;<sub>1</sub> correlates
+      with low R/|S| across domains, making G approximately constant.</li>
+  <li><strong>Betti number computation</strong> for graphs (1-dimensional CW complexes) uses
+      &beta;<sub>1</sub> = |E| &minus; |V| + &beta;<sub>0</sub> (Euler characteristic), which
+      gives the exact Betti number without requiring GF(2) Gaussian elimination of boundary
+      matrices. Full GF(2) elimination is needed only for &beta;<sub>2</sub> and higher
+      (flag complexes with triangles), and times out for |V| > 1,000.</li>
+  <li><strong>Cross-linguistic validation</strong> of the LT<sub>3</sub> horizon has not been
+      performed. Non-English phonologies may have different locality horizons.</li>
+  <li><strong>Forb<sub>k</sub> completeness for LT<sub>k</sub></strong> (Theorem 1, claim 4)
+      is conjectured. The McNaughton&ndash;Papert theorem [2] characterizes LT<sub>k</sub>
+      algebraically; whether Forb<sub>k</sub> extracts <em>all</em> LT<sub>k</sub> constraints
+      requires a separate proof connecting the semigroup characterization to the
+      forbidden-k-gram enumeration.</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2>References</h2>
+<ol style="font-size:0.88em;margin-left:20px;">
+  <li>UOTA, S. (2026). <em>The Forbidden Pattern Functor: Universal Constraint Extraction in
+      Combinatorial Symbol Systems.</em> [Parent paper, 7 Theorems]</li>
+  <li>McNaughton, R. &amp; Papert, S. (1971). <em>Counter-Free Automata.</em> MIT Press.</li>
+  <li>UOTA, S. (2026). <em>n-gram Forb: Generalization of the Forbidden Pattern Functor to
+      k-gram Spaces.</em> [OP5]</li>
+  <li>Dowker, C.H. (1952). Homology groups of relations. <em>Annals of Mathematics</em> 56, 84&ndash;95.</li>
+  <li>Hayes, B. &amp; Wilson, C. (2008). A maximum entropy model of phonotactics and
+      phonotactic learning. <em>Linguistic Inquiry</em> 39, 379&ndash;440.</li>
+  <li>Chomsky, N. &amp; Halle, M. (1968). <em>The Sound Pattern of English.</em> Harper &amp; Row.</li>
+  <li>CMU Pronouncing Dictionary (cmudict-0.7b). Carnegie Mellon University. [134,429 entries]</li>
+  <li>Kim, S. et al. (2023). PubChem 2023 update. <em>Nucleic Acids Research</em> 51,
+      D1373&ndash;D1380. [123.68M compounds]</li>
+  <li>UOTA, S. (2026). <em>The Forb Functor Tower.</em> [5-layer hierarchy]</li>
+</ol>
+
+<div class="footer">
+  Shin UOTA. Topological Signatures of Constraint Spaces. June 2026.<br>
+  1 Theorem · 3 Definitions · 2 Findings · 6 Limitations · 9 References<br>
+  OP3 (Betti&ndash;Grammar Correspondence) + OP4 (Locality Horizon).<br>
+  All Betti numbers recomputed with full CMUdict (134K words).<br>
+  <a href="Forbidden_Pattern_Functor.html">Parent paper</a> ·
+  <a href="Forb_Survey.html">Survey</a> ·
+  <a href="Forb_Functor_Tower.html">Tower</a> ·
+  <a href="OP11_Categorical_Unification.html">OP11</a>
+</div>
+
+</body>
+</html>

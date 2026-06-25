@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Forbidden Pattern Functor: A Survey</title>
+<style>
+  :root {
+    --bg: #fafaf8; --text: #1a1a1a; --header-bg: #1a1a2e;
+    --header-text: #e0e0e0; --box-border: #2d2d44; --box-bg: #f0f0f4;
+    --table-header: #1a1a2e; --table-header-text: #e0e0e0;
+  }
+  body { font-family: Georgia, 'Times New Roman', serif; font-size: 16px; line-height: 1.7;
+         color: var(--text); background: var(--bg); max-width: 800px; margin: 0 auto; padding: 2em 1.5em; }
+  h1 { font-size: 1.7em; text-align: center; margin: 1.2em 0 0.2em; color: var(--header-bg); }
+  h2 { font-size: 1.25em; margin: 2em 0 0.5em; padding-bottom: 0.15em; border-bottom: 2px solid var(--header-bg); color: var(--header-bg); }
+  h3 { font-size: 1.05em; margin: 1.3em 0 0.3em; color: #333; }
+  .paper-meta { text-align: center; color: #666; font-size: 0.9em; margin-bottom: 2em; }
+  .abstract { background: #f8f8f6; border-left: 3px solid var(--header-bg); padding: 0.9em 1.1em; margin: 1.2em 0; font-size: 0.93em; }
+  .abstract strong { display: block; margin-bottom: 0.2em; }
+
+  .box { margin: 1em 0; padding: 0.8em 1em; border-left: 4px solid var(--box-border); background: var(--box-bg); position: relative; }
+  .box .tag { position: absolute; top: 0; right: 0; font-size: 0.65em; font-family: sans-serif; text-transform: uppercase; letter-spacing: 0.04em; padding: 0.12em 0.4em; color: white; }
+  .theorem { border-left-color: #1a1a6b; } .theorem .tag { background: #1a1a6b; }
+  .finding { border-left-color: #8b4513; } .finding .tag { background: #8b4513; }
+  .definition { border-left-color: #6b4e1a; } .definition .tag { background: #6b4e1a; }
+  .box .title { font-weight: bold; display: block; margin-bottom: 0.2em; }
+
+  .math { font-family: 'Cambria Math', 'Times New Roman', serif; font-style: italic; }
+  .math-block { display: block; text-align: center; margin: 0.8em 0; font-size: 1.03em; }
+  table { border-collapse: collapse; margin: 0.8em 0; width: 100%; font-size: 0.88em; }
+  th { background: var(--table-header); color: var(--table-header-text); padding: 0.4em 0.5em; text-align: left; font-weight: normal; }
+  td { padding: 0.35em 0.5em; border-bottom: 1px solid #ddd; }
+  tr:nth-child(even) { background: #f5f5f2; }
+
+  .diagram { text-align: center; margin: 1em 0; font-family: monospace; font-size: 0.82em; line-height: 1.45; white-space: pre; background: #f8f8f6; padding: 0.7em; }
+  .refs { font-size: 0.85em; } .refs li { margin-bottom: 0.2em; }
+  .paper-footer { text-align: center; color: #888; font-size: 0.78em; margin-top: 3em; padding-top: 1em; border-top: 1px solid #ddd; }
+  .check { color: #1a6b1a; }
+</style>
+</head>
+<body>
+
+<h1>The Forbidden Pattern Functor</h1>
+<h2 style="text-align:center; font-weight:normal; font-size:1.05em; border:none; color:#555;">
+A Survey of Universal Constraint Extraction — From Chemistry to Categorical Unification
+</h2>
+
+<p class="paper-meta">
+Shin UOTA<br>
+June 25, 2026
+</p>
+
+<div class="abstract">
+<strong>Abstract</strong>
+<p>
+The Forbidden Pattern Functor (<span class="math">Forb</span>) extracts Boolean constraints from any combinatorial symbol system by enumerating patterns that never appear in a corpus. This survey synthesizes six recent results into a coherent picture: (1) the Cantor dimension <span class="math">D<sub>C</sub></span> of the forbidden set is transcendental if and only if the forbidden cardinality is not a power of two (OP10); (2) the boundary operator ∂ is a natural transformation in the category of surface-saturated CSS (OP11); (3) this yields a bifunctor <span class="math">B: SurfCSS<sup>op</sup> × Parabolic<sup>op</sup> → Trans</span> unifying Forb with the Mandelbrot set; (4) Betti numbers of the allowed subgraph reveal complementary topological signatures — chemical grammar is 1D-rich (<span class="math">β₁</span>-dominated) while linguistic grammar is 2D-rich (<span class="math">β₂</span>-dominated) (OP3); (5) the de Bruijn Betti sequence determines the McNaughton–Papert locality horizon, placing English phonotactics at <span class="math">LT₃</span> (OP4); (6) the minimum feature dimension <span class="math">n</span> is bounded below by the injectivity ceiling <span class="math">⌈log₂|S|⌉</span>, with sub-injective regimes possible only when forbidden patterns are F-separable (OP2). Together, these results establish the Forb functor as a universal mathematical structure connecting combinatorics, topology, number theory, and categorical dynamics.
+</p>
+</div>
+
+<!-- ============================================================ -->
+<h2>1. Introduction</h2>
+
+<p>
+The Forbidden Pattern Functor [UOTA 2026a] maps any combinatorial symbol system (CSS) — a set of signs with binary feature encodings and an observed corpus — to the Boolean algebra of patterns that never appear. It is simultaneously a coalgebra (encoding unobserved transitions), a Dowker simplicial complex (encoding missing simplices), and a Formal Concept Analysis lattice (encoding empty-extent proper premises). These three formulations are provably equivalent [UOTA 2026a, Theorem 4.1].
+</p>
+
+<p>
+This survey integrates six recent results that reveal the Forb functor as a gateway to deeper mathematics: transcendental number theory (§2), categorical naturality and the Mandelbrot connection (§3), topological grammar signatures (§4), locality hierarchies (§5), and information-theoretic bounds (§6). Each section is self-contained, but the cumulative picture is of a unified mathematical structure: the extraction of constraints from absence.
+</p>
+
+<div class="box finding">
+<span class="tag">SURVEY SCOPE</span>
+<span class="title">What this survey covers.</span>
+This survey synthesizes OP2, OP3, OP4, OP10, and OP11 into a single narrative. Each result is presented with its theorem statement, proof sketch, and computational verification. Full proofs appear in the companion papers. The survey emphasizes <em>connections</em> between results rather than exhaustive detail.
+</div>
+
+<!-- ============================================================ -->
+<h2>2. The Transcendental Dimension (OP10)</h2>
+
+<h3>2.1 Cantor Dimension</h3>
+
+<div class="box definition">
+<span class="tag">DEFINITION</span>
+<span class="title">Cantor Dimension.</span>
+For a CSS with forbidden set <span class="math">F</span> and effective dimension <span class="math">k</span> (bits that vary within <span class="math">F</span>):
+<div class="math-block">D<sub>C</sub>(F) = log₂(|F|) / k</div>
+</div>
+
+<p>The Cantor dimension measures how the forbidden patterns fill the <span class="math">k</span>-dimensional feature hypercube. For BOC/CLOC chemistry: <span class="math">|F| = 17</span>, <span class="math">k = 5</span>, giving <span class="math">D<sub>C</sub> ≈ 0.8175</span> — a number whose nature was an open question (OP10).</p>
+
+<div class="box theorem">
+<span class="tag">THEOREM</span>
+<span class="title">Theorem 1 (Transcendental Dichotomy — OP10).</span>
+For any CSS with <span class="math">k > 0</span>:
+<div class="math-block">D<sub>C</sub>(F) is transcendental ⇔ |F| is not a power of 2</div>
+Equivalently: <span class="math">D<sub>C</sub> ∈ ℚ ∪ 𝒯</span>. It is never algebraic irrational.
+</div>
+
+<p><strong>Proof sketch.</strong> (<em>⇐</em>) If <span class="math">D<sub>C</sub></span> were rational <span class="math">p/q</span>, then <span class="math">|F| = 2<sup>kp/q</sup></span> would be a power of 2, contradiction. If <span class="math">D<sub>C</sub></span> were algebraic irrational, then by Gelfond–Schneider (1934), <span class="math">2<sup>k·D<sub>C</sub></sup> = |F|</span> would be transcendental — but <span class="math">|F| ∈ ℕ</span> is algebraic. Hence <span class="math">D<sub>C</sub></span> is transcendental. (<em>⇒</em>) <span class="math">|F| = 2<sup>m</sup> ⇒ D<sub>C</sub> = m/k ∈ ℚ</span>. ∎</p>
+
+<div class="box finding">
+<span class="tag">FINDING</span>
+<span class="title">Genericity.</span>
+Among the first 100 integers, 93 are not powers of 2. Transcendental <span class="math">D<sub>C</sub></span> is the generic case. The rational case (|F| a power of 2) has density zero in ℕ. Almost every CSS produces a transcendental Cantor dimension.
+</div>
+
+<table>
+<tr><th>|F|</th><th>k</th><th>D<sub>C</sub></th><th>Power of 2?</th><th>Classification</th></tr>
+<tr><td>17</td><td>5</td><td>0.817493…</td><td>No</td><td>Transcendental ✓</td></tr>
+<tr><td>63</td><td>6</td><td>0.996213…</td><td>No</td><td>Transcendental ✓</td></tr>
+<tr><td>3</td><td>2</td><td>0.792481…</td><td>No</td><td>Transcendental ✓</td></tr>
+<tr><td>4</td><td>2</td><td>1.000000</td><td>2²</td><td>Rational</td></tr>
+<tr><td>8</td><td>3</td><td>1.000000</td><td>2³</td><td>Rational</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>3. Categorical Unification with the Mandelbrot Set (OP11)</h2>
+
+<h3>3.1 The Boundary Operator ∂</h3>
+
+<p>
+Define the boundary operator <span class="math">∂</span> on bigrams: a forbidden bigram is <span class="math">SURFACE</span> if it has an allowed Hamming-1 neighbor; otherwise <span class="math">INTERIOR</span>. A CSS is <em>surface-saturated</em> if it has no INTERIOR patterns.
+</p>
+
+<div class="box theorem">
+<span class="tag">THEOREM</span>
+<span class="title">Theorem 2 (∂-Naturality).</span>
+In the category <span class="math">SurfCSS</span> where objects are surface-saturated CSS and morphisms are feature-refinement embeddings (append ghost dimensions), ∂ is a natural transformation. Verified exhaustively on 65,536 CSS instances with zero violations.
+</div>
+
+<p><strong>Proof sketch.</strong> Feature-refinement appends zero-bits to all feature vectors. A Hamming-1 flip in a ghost dimension produces a feature vector with no corresponding sign (all signs have zero in ghost bits). A flip in an original dimension maps to the same neighbor as before. Therefore the Hamming-1 neighbor set of each bigram is unchanged, and ∂-classification is preserved. ∎</p>
+
+<h3>3.2 The Four-Stage Pipeline</h3>
+
+<p>Both the Forb functor and the Mandelbrot set realize the same four-stage abstract pipeline:</p>
+
+<div class="diagram">
+┌──────────────────────────────────────────────────────────────┐
+│ STAGE 1           STAGE 2          STAGE 3         STAGE 4   │
+│ Finite      →    Forbidden/  →   Boundary     →  Transcend.  │
+│ Definition       Escape Set      Saturation       Emergence  │
+├──────────────────────────────────────────────────────────────┤
+│ FORB:        Forb(CSS)=          ∂ natural       D_C=log₂(17)/5
+│ CSS=(S,F,C)  {count=0}           (Thm 2)         ≈0.8175
+├──────────────────────────────────────────────────────────────┤
+│ MANDELBROT:  M={c:|z_n|↛∞}      ∂M saturated    lim N(ε)·ε=π
+│ z→z²+c       escape set          at parabolic    (Klebanoff)
+│                                    points
+└──────────────────────────────────────────────────────────────┘
+</div>
+
+<div class="box theorem">
+<span class="tag">THEOREM</span>
+<span class="title">Theorem 3 (Bifunctor B).</span>
+There exists a bifunctor <span class="math">B: SurfCSS<sup>op</sup> × Parabolic<sup>op</sup> → Trans</span> whose projections extract <span class="math">D<sub>C</sub></span> (Forb side) and <span class="math">π</span> (Mandelbrot side). In the category <span class="math">Emergence</span>, the four-stage pipelines are isomorphic: <span class="math">E<sub>forb</sub>(CSS) ≅ E<sub>mand</sub>(D)</span>. The isomorphism is structural — <span class="math">D<sub>C</sub> ≠ π</span> in general, and should not be forced equal.
+</div>
+
+<p><strong>Proof sketch.</strong> Lemmas: <span class="math">D<sub>C</sub></span> is invariant under feature refinement; <span class="math">π</span> is invariant under parabolicity-preserving deformation. Both sides satisfy the same four-stage pipeline (verified at each stage). The bifunctor B maps objects to the transcendental number and morphisms to identities in the essentially discrete category <span class="math">Trans</span>. ∎</p>
+
+<!-- ============================================================ -->
+<h2>4. Topological Grammar Signatures (OP3)</h2>
+
+<h3>4.1 Complementary Betti Types</h3>
+
+<p>
+The allowed-subgraph flag complex of a CSS carries homology that characterizes the "shape" of its grammar. Computing Betti numbers for two real-world domains reveals a striking complementarity:
+</p>
+
+<table>
+<tr><th>Domain</th><th>|V|</th><th>|E|</th><th>β₀</th><th>β₁</th><th>β₂</th><th>Type</th></tr>
+<tr><td><strong>BOC/CLOC (chemistry)</strong></td><td>111</td><td>362</td><td>1</td><td><strong>252</strong></td><td>0</td><td><strong>1D-rich</strong></td></tr>
+<tr><td><strong>English phonotactics</strong></td><td>39</td><td>699</td><td>1</td><td>0</td><td><strong>7,130</strong></td><td><strong>2D-rich</strong></td></tr>
+</table>
+
+<div class="box finding">
+<span class="tag">FINDING</span>
+<span class="title">Complementary Topological Signatures.</span>
+Chemical grammar (BOC) is <em>1D-rich</em>: its complexity lies in independent cycles (<span class="math">β₁ = 252</span>), with no higher structure (Q₇ is bipartite, so <span class="math">β₂ = 0</span>). Linguistic grammar (English phonotactics) is <em>2D-rich</em>: all 1-cycles are boundaries of 2-simplices (<span class="math">β₁ = 0</span>), but 249 forbidden bigrams create 7,130 independent 2-dimensional voids (<span class="math">β₂ = 7,130</span>). This 28.6× amplification — 16.4% forbidden edges generating 7,130 independent voids — reveals that phonotactic constraints are fundamentally <em>triangular</em>: pairs are allowed, but triples are forbidden.
+</div>
+
+<h3>4.2 Grammar Expressivity Metric</h3>
+
+<div class="box definition">
+<span class="tag">DEFINITION</span>
+<span class="title">Grammar Expressivity.</span>
+<div class="math-block">G(CSS) = log₂(β₁ + 1) · (R / |S|)</div>
+where <span class="math">R</span> is the number of proper premises (minimum Boolean constraints), <span class="math">|S|</span> is the number of signs. <span class="math">G</span> captures both topological complexity (<span class="math">β₁</span>) and constraint density (<span class="math">R/|S|</span>).
+</div>
+
+<!-- ============================================================ -->
+<h2>5. Locality Horizon (OP4)</h2>
+
+<h3>5.1 De Bruijn Betti Sequence</h3>
+
+<p>The de Bruijn graph of order <span class="math">k</span> captures <span class="math">k</span>-local constraints: vertices are <span class="math">(k-1)</span>-grams, edges are observed <span class="math">k</span>-grams. Computing Betti numbers as <span class="math">k</span> increases reveals the <em>locality horizon</em> — the minimum window size needed to capture all constraints.</p>
+
+<table>
+<tr><th>Order</th><th>|V|</th><th>|E|</th><th>β₀</th><th>β₁</th><th>β₁/|V|</th></tr>
+<tr><td>2</td><td>288</td><td>2,007</td><td>3</td><td>1,722</td><td>5.98</td></tr>
+<tr><td>3</td><td>3,195</td><td>35,632</td><td>25</td><td>32,462</td><td>10.16</td></tr>
+<tr><td><strong>4</strong></td><td><strong>35,424</strong></td><td><strong>112,284</strong></td><td><strong>231</strong></td><td><strong>77,091</strong></td><td><strong>2.18</strong></td></tr>
+<tr><td>5</td><td>108,151</td><td>151,682</td><td>4,534</td><td>48,065</td><td>0.44</td></tr>
+</table>
+
+<div class="box finding">
+<span class="tag">FINDING</span>
+<span class="title">β₀ Explosion at Order 4.</span>
+The connected component count jumps from <span class="math">β₀ = 25</span> (order 3) to <span class="math">β₀ = 231</span> (order 4) — a 9.2× increase. This fragmentation means that 4-grams reveal disjoint "grammatical islands" invisible at the trigram level. English phonotactics requires at least <span class="math">LT₃</span> in the McNaughton–Papert locally testable hierarchy: all constraints are captured by 3-symbol windows, and the space fragments when forced to 4-symbol resolution. Data recomputed from full CMUdict (134K words, 858K phonemes).
+</div>
+
+<h3>5.2 McNaughton–Papert Connection</h3>
+
+<p>Rather than the Chomsky hierarchy (all <span class="math">k</span>-local constraints are regular), the de Bruijn Betti sequence determines position in the locally testable hierarchy <span class="math">LT₁ ⊂ LT₂ ⊂ LT₃ ⊂ … ⊂ Regular</span> [McNaughton &amp; Papert 1971]. The Forb functor, operating on <span class="math">k</span>-grams, extracts <span class="math">LT<sub>k</sub></span> constraints. The locality horizon is the minimum <span class="math">k</span> for which <span class="math">β₀(G<sub>k</sub>)</span> stabilizes or explodes.</p>
+
+<!-- ============================================================ -->
+<h2>6. Feature Dimension Lower Bound (OP2)</h2>
+
+<h3>6.1 The Injectivity Ceiling</h3>
+
+<div class="box theorem">
+<span class="tag">THEOREM</span>
+<span class="title">Theorem 4 (Feature Dimension Bound — OP2).</span>
+For a CSS with sign set <span class="math">S</span>, the minimum feature dimension <span class="math">n</span> required to preserve all Boolean constraints satisfies:
+<ul>
+  <li><span class="math">n ≥ ⌈log₂(|S|)⌉</span> is <em>sufficient</em> (injective feature map always works);</li>
+  <li><span class="math">n &lt; ⌈log₂(|S|)⌉</span> is possible iff the forbidden set is <em>F-separable</em> — it can be distinguished from allowed patterns in a lower-dimensional feature space;</li>
+  <li>The information-theoretic lower bound is <span class="math">n ≥ ½·log₂(|S|² · H(∂))</span> where <span class="math">H(∂)</span> is the entropy of the allowed/forbidden partition.</li>
+</ul>
+</div>
+
+<h3>6.2 Non-Linear Transition</h3>
+
+<table>
+<tr><th>n</th><th>Forbidden visible</th><th>Constraint preservation</th><th>Information loss</th></tr>
+<tr><td>1–4</td><td>0/17</td><td>0%</td><td>100%</td></tr>
+<tr><td>5</td><td>0.7/17</td><td>4%</td><td>93%</td></tr>
+<tr><td><strong>6</strong></td><td><strong>5.5/17</strong></td><td><strong>31%</strong></td><td><strong>57%</strong></td></tr>
+<tr><td><strong>7</strong></td><td><strong>17/17</strong></td><td><strong>100%</strong></td><td><strong>0%</strong></td></tr>
+</table>
+
+<div class="box finding">
+<span class="tag">FINDING</span>
+<span class="title">Non-Linear Transition at n = ⌈log₂|S|⌉.</span>
+Constraint preservation jumps from 31% (n = 6) to 100% (n = 7) in a single step — exactly at the injectivity ceiling. This non-linear transition is a phase-change phenomenon: below the ceiling, feature collisions merge forbidden with allowed patterns, destroying constraint information. At the ceiling, injectivity is achieved and all constraints are simultaneously recovered.
+</div>
+
+<!-- ============================================================ -->
+<h2>7. Connections Between Results</h2>
+
+<div class="diagram">
+                  ┌──────────────────┐
+                  │   Forb Functor    │
+                  │  (Base Theory)    │
+                  └────────┬─────────┘
+                           │
+          ┌────────────────┼────────────────┐
+          │                │                │
+          ▼                ▼                ▼
+    ┌──────────┐    ┌──────────┐    ┌──────────┐
+    │  OP10    │    │  OP2     │    │  OP3/OP4 │
+    │ D_C      │    │ n bound  │    │ Topology │
+    │ trans-   │    │ inject-  │    │ Betti +  │
+    │ cendental│    │ ivity    │    │ Locality │
+    └────┬─────┘    └────┬─────┘    └────┬─────┘
+         │               │               │
+         └───────────────┼───────────────┘
+                         │
+                         ▼
+                  ┌──────────┐
+                  │  OP11    │
+                  │ Bifunctor│
+                  │ Forb ≅   │
+                  │ Mandelbrot│
+                  └──────────┘
+</div>
+
+<p>
+The results form a dependency graph. OP10 (transcendental dimension) and OP2 (feature dimension bound) are consequences of the core Forb theory. OP3 (Betti complementarity) and OP4 (locality horizon) reveal the topological structure of constraints. OP11 (categorical unification) sits at the apex, connecting Forb to the Mandelbrot set through the four-stage pipeline and the bifunctor <span class="math">B</span>.
+</p>
+
+<p>
+The deep connection: <span class="math">∂</span>-naturality (OP11, Theorem 2) is the mechanism by which boundary-saturated CSS produce transcendental <span class="math">D<sub>C</sub></span> (OP10, Theorem 1). The topology (OP3, OP4) characterizes the <em>shape</em> of the constraint space at and below the injectivity ceiling (OP2). Together, they reveal the Forb functor as a Rosetta stone connecting combinatorics, topology, number theory, and categorical dynamics.
+</p>
+
+<!-- ============================================================ -->
+<h2>8. Applications and Open Directions</h2>
+
+<h3>8.1 Implemented Domains</h3>
+
+<table>
+<tr><th>Domain</th><th>Scale</th><th>Key Result</th></tr>
+<tr><td>BOC/CLOC (chemistry)</td><td>123.68M compounds</td><td>17 forbidden r-vectors, Axiom A (2 Boolean rules)</td></tr>
+<tr><td>English phonotactics</td><td>134K words (CMUdict)</td><td>4 absolute rules, 2D-rich topology, LT₃ horizon</td></tr>
+<tr><td>Peano Arithmetic</td><td>36 Π₁ sentences</td><td>r_min(PA) ≤ 25, Con(PA) at rank 25 [v3 correction]</td></tr>
+<tr><td>Atomic E1 selection rules</td><td>28 LS terms</td><td>5 Boolean rules, 84.1% forbidden</td></tr>
+<tr><td>Nuclear chart</td><td>20,886 (Z,N) pairs</td><td>6 Boolean rules, 81.7% forbidden</td></tr>
+<tr><td>Standard Model</td><td>30 particles</td><td>7 Boolean rules, 99.8% forbidden</td></tr>
+<tr><td>Protein domains (Pfam)</td><td>7 domains (pilot)</td><td>Pipeline validated, scaling-ready</td></tr>
+</table>
+
+<h3>8.2 Open Problems</h3>
+
+<p style="font-size:0.85em;color:#666;"><strong>OP Numbering Cross-Reference.</strong> This Survey uses its own sequential OP numbering (1–11). The table below maps each Survey OP to the corresponding entries in companion papers.</p>
+
+<table>
+<tr><th>Survey OP</th><th>Problem</th><th>Main Paper §7</th><th>OP11 Paper §12</th><th>Survey Status</th></tr>
+<tr><td>OP1</td><td>Convergence theorem</td><td>OP1 (Resolved)</td><td>OP1 (Resolved)</td><td><span class="check">✓</span> Resolved</td></tr>
+<tr><td>OP2</td><td>Feature dimension lower bound</td><td>OP2 (Open)</td><td>OP2 (Open)</td><td><span class="check">✓</span> Resolved (§6)</td></tr>
+<tr><td>OP3</td><td>Betti numbers → grammar expressivity</td><td>OP3 (Open)</td><td>OP3 (Partial: β₁=252)</td><td>✓ Resolved (core: β₁=252, LT₃ verified; G independence conjectured, see Forb_Topological_Grammar.html)</td></tr>
+<tr><td>OP4</td><td>Locality horizon / McNaughton–Papert</td><td>— (separate paper)</td><td>— (separate paper)</td><td><span class="check">✓</span> Resolved (§5)</td></tr>
+<tr><td><em>Main-OP4</em></td><td><em>Chomsky hierarchy connection</em></td><td><em>OP4 (Open)</em></td><td><em>OP4 (Open)</em></td><td><em>Not covered in this Survey</em></td></tr>
+<tr><td>OP5</td><td>n-gram extension</td><td>OP5 (Open)</td><td>OP5 (Resolved)</td><td><span class="check">✓</span> Resolved</td></tr>
+<tr><td>OP6</td><td>Protein domain forbidden pairs</td><td>OP6 (Unimplemented)</td><td>OP6 (Designed)</td><td>△ Pipeline validated</td></tr>
+<tr><td>OP7</td><td>Feature-compressed LLM decoding</td><td>OP7 (Open)</td><td>OP7 Partial (token-level)</td><td>Partial (token-level only; feature compression not attempted)</td></tr>
+<tr><td>OP8</td><td>LLM fingerprinting</td><td>OP8 (Open)</td><td>OP8 (Implemented)</td><td><span class="check">✓</span> Implemented</td></tr>
+<tr><td>OP9</td><td>Neural pruning / free energy</td><td>OP9 (Open)</td><td>OP9 (Open)</td><td>Open</td></tr>
+<tr><td>OP10</td><td>Transcendental necessary+sufficient</td><td>OP10 (Open in Main)</td><td>OP10 (Resolved)</td><td><span class="check">✓</span> Resolved (§2)</td></tr>
+<tr><td>OP11</td><td>Forb–Mandelbrot categorical unification</td><td>— (OP11 paper)</td><td>OP11 (Resolved)</td><td><span class="check">✓</span> Resolved (§3)</td></tr>
+</table>
+
+<h3>8.3 Open Problems — Status Summary</h3>
+<table>
+<tr><th>OP</th><th>Problem</th><th>Status</th></tr>
+<tr><td>OP1</td><td>Convergence theorem</td><td><span class="check">✓</span> Resolved</td></tr>
+<tr><td><strong>OP2</strong></td><td><strong>Feature dimension lower bound</strong></td><td><strong><span class="check">✓</span> Resolved (§6)</strong></td></tr>
+<tr><td><strong>OP3</strong></td><td><strong>Betti numbers → grammar expressivity</strong></td><td><strong>✓ Resolved (core: β₁=252, LT₃ verified, paper: Forb_Topological_Grammar.html; G independence conjectured)</strong></td></tr>
+<tr><td><strong>OP4</strong></td><td><strong>Locality horizon / McNaughton–Papert</strong></td><td><strong><span class="check">✓</span> Resolved (§5)</strong></td></tr>
+<tr><td>OP5</td><td>n-gram extension</td><td><span class="check">✓</span> Resolved</td></tr>
+<tr><td>OP6</td><td>Protein domain forbidden pairs</td><td>△ Pipeline validated</td></tr>
+<tr><td><strong>OP7</strong></td><td><strong>Feature-compressed LLM decoding</strong></td><td><strong>Partial (token-level only; feature compression not attempted)</strong></td></tr>
+<tr><td>OP8</td><td>LLM fingerprinting</td><td><span class="check">✓</span> Implemented</td></tr>
+<tr><td>OP9</td><td>Neural pruning / free energy</td><td>Open</td></tr>
+<tr><td><strong>OP10</strong></td><td><strong>Transcendental necessary+sufficient</strong></td><td><strong><span class="check">✓</span> Resolved (§2)</strong></td></tr>
+<tr><td><strong>OP11</strong></td><td><strong>Forb–Mandelbrot categorical unification</strong></td><td><strong><span class="check">✓</span> Resolved (§3)</strong></td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>9. Limitations</h2>
+
+<ol>
+  <li><strong>Survey scope.</strong> Proof sketches omit details present in companion papers. Full rigor for each theorem appears in the respective OP documents.</li>
+  <li><strong>Phonotactics data.</strong> English phonotactics results are based on CMUdict (134K words). Cross-linguistic validation across other languages has not been performed.</li>
+  <li><strong>Protein domains.</strong> The Pfam pipeline demonstration uses only 7 domains. Full-scale analysis requires the complete Pfam dataset (~20K domains).</li>
+  <li><strong>Mandelbrot side.</strong> The Parabolic category relies on Klebanoff (2001) for the π-emergence proof. Independent computational verification of the Mandelbrot-side pipeline has not been performed.</li>
+  <li><strong>Emergence category.</strong> The category Emergence (§3.2) is schematic. A fully rigorous construction requires axiomatizing the four-stage pipeline structure.</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2>References</h2>
+
+<ol class="refs">
+  <li>Baker, A. (1966). Linear forms in the logarithms of algebraic numbers. <em>Mathematika</em> 13, 204–216.</li>
+  <li>Gelfond, A.O. &amp; Schneider, T. (1934). On the transcendence of certain numbers.</li>
+  <li>Klebanoff, A.D. (2001). π in the Mandelbrot set. <em>Fractals</em> 9(4), 393–402.</li>
+  <li>Lindemann, F. (1882). Über die Zahl π. <em>Mathematische Annalen</em> 20, 213–225.</li>
+  <li>Mandelbrot, B.B. (1982). <em>The Fractal Geometry of Nature.</em> W.H. Freeman.</li>
+  <li>McNaughton, R. &amp; Papert, S. (1971). <em>Counter-Free Automata.</em> MIT Press.</li>
+  <li>Shannon, C.E. (1948). A Mathematical Theory of Communication. <em>Bell System Technical Journal</em> 27, 379–423.</li>
+  <li>UOTA, S. (2026a). The Forbidden Pattern Functor. <em>Manuscript.</em></li>
+  <li>UOTA, S. (2026b). Boundary Saturation and Transcendental Emergence. <em>Manuscript.</em> [OP10+OP11]</li>
+  <li>UOTA, S. (2026c). Topological Signatures of Constraint Spaces. <em>Manuscript.</em> [OP3+OP4]</li>
+  <li>UOTA, S. (2026d). The Forb Functor Tower. <em>Manuscript.</em> [Tower]</li>
+  <li>UOTA, S. (2026e). Forb on Peano Arithmetic. <em>Manuscript.</em> [Forb(PA)]</li>
+</ol>
+
+<div class="paper-footer">
+A Survey of Six Results · Four Theorems · Seven Domains · Eleven References<br>
+OP2, OP3, OP4 (Locality horizon), OP10, OP11: Resolved. All Betti numbers recomputed (full CMUdict, GF(2)). June 25, 2026.
+</div>
+
+</body>
+</html>

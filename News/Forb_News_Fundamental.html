@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>News — Forbidden Pattern Functor</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Georgia,serif;background:#fafafa;color:#111;font-size:15px;line-height:1.78}
+  .page{max-width:820px;margin:0 auto;background:white;padding:60px 72px 80px;border-left:1px solid #e0e0e0;border-right:1px solid #e0e0e0;min-height:100vh}
+  .kicker{font-family:Arial,sans-serif;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:#1a3a8a;font-weight:700;margin-bottom:14px}
+  .headline{font-size:24px;font-weight:700;line-height:1.3;color:#0a0a0a;margin-bottom:6px}
+  .deck{font-size:15px;color:#555;margin-bottom:20px;font-style:italic;line-height:1.5}
+  .byline{font-family:Arial,sans-serif;font-size:12px;color:#777;margin-bottom:28px;border-bottom:1px solid #ddd;padding-bottom:10px}
+  p{margin-bottom:14px;text-align:justify}
+  .pullquote{font-size:17px;font-style:italic;color:#1a3a8a;text-align:center;margin:26px 0;padding:14px 30px;line-height:1.5}
+  .highlight-box{background:#f2f4fc;border-left:3px solid #1a3a8a;padding:14px 18px;margin:18px 0;font-size:14px}
+  .sidenote{font-size:13px;color:#888;font-style:italic;margin:16px 0}
+  .footer{font-family:Arial,sans-serif;font-size:11px;color:#999;text-align:center;margin-top:40px;padding-top:16px;border-top:1px solid #eee}
+  table{border-collapse:collapse;margin:14px 0;width:100%;font-size:13px}
+  th{background:#1a1a2e;color:#e0e0e0;padding:6px 8px;text-align:left;font-weight:normal}
+  td{padding:5px 8px;border-bottom:1px solid #ddd}
+  ol.refs{font-size:12px;color:#666;margin-top:24px;padding-left:20px}
+  ol.refs li{margin-bottom:6px}
+</style>
+</head>
+<body><div class="page">
+
+<div class="kicker">News &amp; Views · Mathematical Foundations</div>
+<h1 class="headline">Learning from What Never Happens: The Universal Constraint Machine</h1>
+<div class="deck">A new mathematical functor extracts rules from absence — and explains why chemistry, language, nuclear physics, and protein folding all obey the same abstract logic of forbidden patterns.</div>
+<div class="byline">June 25, 2026</div>
+
+<p>Every scientific theory is a theory of what <em>can</em> happen. Newton's laws tell you where the apple can fall. Quantum electrodynamics tells you which energy levels an electron can occupy. But what about what <em>cannot</em> happen? The list of impossibilities is vast — for every allowed chemical bond, thousands are forbidden — and until now, there was no systematic way to extract rules from absence.</p>
+
+<div class="pullquote">"The Forbidden Pattern Functor is universal. Give it any set of symbols, any corpus of sequences, and it returns the Boolean rules governing what never appears. Chemistry, linguistics, particle physics — same math, same algorithm."</div>
+
+<p>Shin UOTA's Forbidden Pattern Functor — <strong>Forb: CSS<sup>op</sup> → BoolAlg</strong> — is a contravariant functor from the category of Combinatorial Symbol Systems to Boolean algebras. In plain language: it takes a system of symbols, a way of encoding them as binary features, and a collection of observed sequences, and it outputs the minimal set of Boolean constraints that explain why some symbol pairs never appear together. The functor is "contravariant" because adding more data can only <em>remove</em> forbidden patterns — once a pair appears, it can never become forbidden again — and this monotonicity is proven as a theorem.</p>
+
+<h2>Three Views of the Same Mathematics</h2>
+
+<p>One of the paper's central achievements is proving that three independently studied mathematical structures are different representations of the same operation:</p>
+
+<table>
+  <tr><th>Formulation</th><th>What Forb captures</th><th>Mathematical origin</th></tr>
+  <tr><td><strong>Coalgebraic</strong></td><td>Undefined transitions in a partial system</td><td>Sweedler (1969), Rutten (2000)</td></tr>
+  <tr><td><strong>Dowker simplicial complex</strong></td><td>Missing edges and faces in the observation complex</td><td>Dowker (1952)</td></tr>
+  <tr><td><strong>Formal Concept Analysis</strong></td><td>Empty-extent proper premises — minimal Boolean constraints</td><td>Ganter &amp; Wille (1999)</td></tr>
+</table>
+
+<p>Theorem 4.1 proves that these three are equivalent — a commutative diagram linking coalgebra, algebraic topology, and lattice theory. The functor is the unifying thread.</p>
+
+<h2>The PAC Learning Connection</h2>
+
+<p>Perhaps the most philosophically significant result is Theorem 5.2: Forb satisfies the Angluin (1980) conditions for identification in the limit from positive data alone. Gold's famous 1967 impossibility theorem says that no superfinite class of languages can be learned from positive examples only. Forb circumvents this by having a <em>finite</em> hypothesis space of size 2<sup>2<sup>2n</sup></sup> — the Boolean algebra of all possible n-bit feature constraints. This is the first constructive demonstration that "learning from what never happens" is computationally tractable.</p>
+
+<h2>The Phase Transition at Seven Bits (OP2)</h2>
+
+<p>A crucial question for the Forb functor's universality is: how many feature bits are enough? The answer is clean, and the transition is a cliff, not a slope. For a symbol system with |S| distinct signs, <strong>n<sub>min</sub> = ⌈log₂|S|⌉</strong> is sufficient for an injective encoding. Below this threshold, feature collisions cause distinct signs to be mapped to identical vectors, washing out constraints.</p>
+
+<p>The most dramatic demonstration comes from BOC chemistry (|S|=128, n<sub>min</sub>=7): at n=6, only 31% of constraints survive. At n=7, 100% survive — the phase transition is exact at the ceiling of log₂|S|. The information-theoretic lower bound n ≥ ½·log₂(|S|²·H(∂)) predicts this transition at n≈6.3, consistent with observation. The result explains why n=7 works across chemistry, phonology, and particle physics: 2⁷=128 comfortably covers most real-world symbol sets, and reaching the injective threshold unlocks all constraints simultaneously.</p>
+
+<div class="highlight-box">
+<strong>Seven proven theorems.</strong> Functoriality (Thm 3.1), Monotonicity (Thm 3.2), Convergence (Thm 3.3), 3-Formulation Commutativity (Thm 4.1), PAC Learnability (Thm 5.2), Transcendental Dimension (Thm 6.2), Surface Theorem (Thm 6.3). Five propositions, three corollaries, three conjectures, seven empirical domains verified.
+</div>
+
+<h2>Seven Domains, One Algorithm</h2>
+
+<p>The paper's §6 applies Forb to seven domains, from the Standard Model of particle physics (30 particles, 99.8% forbidden) to English phonotactics (39 phonemes, 16.4% forbidden) to nuclear physics (20,886 nuclide pairs, 81.7% forbidden). In every case, the same algorithm — enumerate all possible bigrams, find those with count zero, extract minimal Boolean rules — produces a compact grammar.</p>
+
+<table>
+  <tr><th>Domain</th><th>Symbols</th><th>Forbidden rate</th><th>Boolean rules</th></tr>
+  <tr><td>Standard Model (L0)</td><td>30</td><td>99.8%</td><td>7 (Q,B,L,Le,Lμ,Lτ,I₃)</td></tr>
+  <tr><td>Nuclear chart (L1)</td><td>20,886 pairs</td><td>81.7%</td><td>6 (magic numbers, valley)</td></tr>
+  <tr><td>Atomic E1 (L2)</td><td>28 LS terms</td><td>84.1%</td><td>5 (ΔS,ΔJ,ΔL,Laporte)</td></tr>
+  <tr><td>BOC chemistry (L4)</td><td>111 fragments</td><td>13.3%</td><td>2 (Axiom A, 0/123M)</td></tr>
+  <tr><td>English phonotactics</td><td>39 phonemes</td><td>16.4%</td><td>4 (absolute rules)</td></tr>
+  <tr><td>Proto-Elamite script</td><td>1,585 tablets</td><td>503 forbidden</td><td>22 functional classes</td></tr>
+  <tr><td>LLM output space</td><td>1,046 words</td><td>1.1%</td><td>0% constraint violation</td></tr>
+</table>
+
+<h2>Why It Matters</h2>
+
+<p>The Forbidden Pattern Functor is not domain-specific. It does not know chemistry or linguistics. It only knows symbols, features, and corpora. The fact that the same algorithm extracts meaningful constraints from the Standard Model and English phonology — with zero tuning — is evidence that "learning from absence" is a universal mathematical operation, not a domain-specific heuristic. The seven theorems provide the formal guarantee that this operation is well-behaved: it's functorial (structure-preserving across domains), monotonic (more data only removes constraints), convergent (approaches the true grammar with enough data), and computationally feasible (finite hypothesis space).</p>
+
+<div class="sidenote">
+  <strong>Scope note.</strong> The Forb functor's power depends on the feature map F: S → {0,1}ⁿ, which is domain-dependent. A poorly chosen F can produce trivial or misleading constraints. The theoretical guarantee of universality is at the level of the functor, not the feature engineering. The seven domain verifications are empirical; cross-validation within each domain has been performed but cross-domain statistical calibration is an open problem.
+</div>
+
+<h2>References</h2>
+<ol class="refs">
+  <li>UOTA, S. (2026). <em>The Forbidden Pattern Functor: Universal Constraint Extraction in Combinatorial Symbol Systems.</em> arXiv preprint.</li>
+  <li>Sweedler, M.E. (1969). <em>Hopf Algebras.</em> W.A. Benjamin.</li>
+  <li>Rutten, J.J.M.M. (2000). Universal coalgebra: a theory of systems. <em>Theoretical Computer Science</em> 249, 3–80.</li>
+  <li>Dowker, C.H. (1952). Homology groups of relations. <em>Annals of Mathematics</em> 56, 84–95.</li>
+  <li>Ganter, B. &amp; Wille, R. (1999). <em>Formal Concept Analysis: Mathematical Foundations.</em> Springer.</li>
+  <li>Gold, E.M. (1967). Language identification in the limit. <em>Information and Control</em> 10, 447–474.</li>
+  <li>Angluin, D. (1980). Inductive inference of formal languages from positive data. <em>Information and Control</em> 45, 117–135.</li>
+  <li>Hayes, B. &amp; Wilson, C. (2008). A maximum entropy model of phonotactics and phonotactic learning. <em>Linguistic Inquiry</em> 39, 379–440.</li>
+  <li>McNaughton, R. &amp; Papert, S. (1971). <em>Counter-Free Automata.</em> MIT Press.</li>
+  <li>Baker, A. (1966). Linear forms in the logarithms of algebraic numbers. <em>Mathematika</em> 13, 204–216.</li>
+</ol>
+
+<div class="footer">
+  Reference: UOTA, S. (2026). The Forbidden Pattern Functor. [Main paper, 2,843 lines, 7 Theorems].<br>
+  Survey: Forb_Survey.html. All papers: html/Forb/.
+</div></div></body></html>

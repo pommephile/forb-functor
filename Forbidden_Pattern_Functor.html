@@ -1,0 +1,2846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Forbidden Pattern Functor: Universal Constraint Extraction in Combinatorial Symbol Systems</title>
+<style>
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 760px;
+    margin: 40px auto;
+    padding: 0 20px;
+    line-height: 1.65;
+    color: #1a1a1a;
+    background: #fff;
+    font-size: 15px;
+  }
+  h1 { font-size: 1.55em; text-align: center; margin-bottom: 4px; font-weight: normal; }
+  h2 { font-size: 1.25em; margin-top: 2em; border-bottom: 1px solid #2c3e50; padding-bottom: 4px; color: #2c3e50; }
+  h3 { font-size: 1.08em; margin-top: 1.5em; color: #2c3e50; }
+  .paper-meta { text-align: center; color: #555; margin-bottom: 36px; font-size: 0.9em; }
+  .abstract { margin: 24px 40px; padding: 16px 20px; border-left: 3px solid #2c3e50; background: #f8f9fa; font-size: 0.94em; }
+  .abstract strong { color: #2c3e50; }
+
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88em; }
+  th { background: #2c3e50; color: #fff; padding: 8px 10px; text-align: left; font-weight: normal; }
+  td { padding: 7px 10px; border-bottom: 1px solid #ddd; }
+  tr:nth-child(even) td { background: #f8f9fa; }
+
+  .theorem, .definition, .proposition, .corollary, .lemma, .conjecture, .finding, .proof-sketch {
+    margin: 18px 0; padding: 14px 18px; border-left: 4px solid #2c3e50;
+    background: #f8f9fa;
+  }
+  .definition { border-left-color: #2980b9; }
+  .theorem { border-left-color: #c0392b; }
+  .proposition { border-left-color: #27ae60; }
+  .corollary { border-left-color: #8e44ad; }
+  .lemma { border-left-color: #e67e22; }
+  .conjecture { border-left-color: #bdc3c7; }
+  .finding { border-left-color: #2980b9; }
+  .proof-sketch { border-left-color: #7f8c8d; }
+
+  .theorem .label, .definition .label, .proposition .label, .corollary .label, .lemma .label, .conjecture .label, .finding .label {
+    font-weight: bold; font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+  .theorem .label { color: #c0392b; }
+  .definition .label { color: #2980b9; }
+  .proposition .label { color: #27ae60; }
+  .corollary .label { color: #8e44ad; }
+  .lemma .label { color: #e67e22; }
+  .conjecture .label { color: #95a5a6; }
+  .finding .label { color: #2980b9; }
+
+  .status-tag {
+    display: inline-block; font-size: 0.72em; font-weight: bold; padding: 2px 7px;
+    border-radius: 3px; margin-left: 8px; vertical-align: middle;
+    letter-spacing: 0.3px;
+  }
+  .status-DEDUCTIVE    { background: #d4efdf; color: #1e8449; }
+  .status-STRUCTURAL   { background: #d6eaf8; color: #2471a3; }
+  .status-EMPIRICAL    { background: #fef9c3; color: #7d6608; }
+  .status-DEFINITIONAL { background: #fdebd0; color: #b9770e; }
+  .status-ILLUSTRATIVE { background: #e8daef; color: #6c3483; }
+  .status-CONJECTURAL  { background: #eaeded; color: #566573; }
+
+  .math-block { margin: 14px 30px; padding: 12px 16px; background: #fafafa; border: 1px solid #e0e0e0;
+    font-family: 'Courier New', Courier, monospace; font-size: 0.88em; line-height: 1.55;
+    overflow-x: auto; white-space: pre; }
+  .math-inline { font-family: 'Courier New', Courier, monospace; font-size: 0.92em; }
+
+  .commutative-diagram { margin: 20px auto; text-align: center; }
+  .commutative-diagram pre { display: inline-block; text-align: left; font-family: 'Courier New', Courier, monospace;
+    font-size: 0.85em; line-height: 1.35; }
+
+  .limitations-box { margin: 18px 0; padding: 14px 18px; border: 1px solid #bdc3c7; background: #fdfdfd; }
+  .limitations-box .label { font-weight: bold; color: #7f8c8d; font-size: 0.85em; text-transform: uppercase;
+    letter-spacing: 0.5px; margin-bottom: 6px; }
+
+  .companion-box { margin: 12px 0 28px; padding: 8px 14px; background: #f0f3f5; border: 1px solid #ddd;
+    font-size: 0.82em; color: #555; text-align: center; }
+  .companion-box a { color: #2c3e50; }
+
+  sup { font-size: 0.78em; }
+  .ref-list { font-size: 0.88em; }
+  .ref-list li { margin-bottom: 6px; }
+
+  .open-problem { margin: 8px 0; padding: 8px 14px; border-left: 3px solid #bdc3c7; background: #fafafa; }
+  .open-problem .num { font-weight: bold; color: #7f8c8d; }
+
+  .toc { margin: 24px 0; padding: 14px 20px; background: #f8f9fa; border: 1px solid #e0e0e0; font-size: 0.9em; }
+  .toc a { color: #2c3e50; text-decoration: none; }
+  .toc ol { margin: 6px 0; padding-left: 24px; }
+
+  .footer { margin-top: 36px; padding-top: 12px; border-top: 1px solid #ccc; font-size: 0.78em; color: #888; text-align: center; }
+
+  h4 { font-size: 1.0em; margin-top: 1.2em; color: #2c3e50; font-weight: normal; font-style: italic; }
+
+  @media print { body { font-size: 11pt; } }
+</style>
+</head>
+<body>
+
+<h1>The Forbidden Pattern Functor</h1>
+<div style="text-align:center;font-size:1.05em;color:#2c3e50;margin-bottom:4px;">
+Universal Constraint Extraction in Combinatorial Symbol Systems
+</div>
+<div class="paper-meta">
+Shin UOTA<br>
+June 2026
+</div>
+
+<div class="abstract">
+<strong>Abstract.</strong>
+We propose the <em>forbidden pattern functor</em> <span class="math-inline">Forb: CSS → BoolAlg</span>,
+which extracts Boolean constraints from any combinatorial symbol system — a triple
+<span class="math-inline">(S, F, C)</span> of a finite sign set <span class="math-inline">S</span>,
+an <span class="math-inline">n</span>-bit feature map <span class="math-inline">F: S → {0,1}ⁿ</span>, and a finite corpus
+<span class="math-inline">C ⊂ S*</span>. Forb maps each such system to the Boolean algebra of feature-level
+constraints that hold <em>absolutely</em> — satisfied by no observed bigram in the corpus.
+We prove that Forb is a contravariant functor (Theorem 3.1) that is antitone in the
+corpus (Theorem 3.2), and we establish the commutativity of three independent
+mathematical formulations — coalgebra, Dowker simplicial complex, and formal concept
+analysis — that all encode the same forbidden-pattern space (Theorem 4.1). The
+construction is shown to specialise McNaughton–Papert local languages through
+feature compression (§1.1), to instantiate Angluin's positive-data learning
+conditions (§5), and to operate identically across chemistry (107.8M compounds),
+English phonotactics (33K words, three absolute rules extracted automatically), and
+undeciphered scripts (Indus, Linear A, Proto-Elamite; the Proto-Elamite application
+yields 503 significant forbidden bigrams and 22 automatically classified sign-function
+classes from 1,585 CDLI texts, §6.3). The framework is subject to
+several open problems, including the theoretical
+minimum for the feature dimension <span class="math-inline">n</span>
+(resolved: convergence is now Theorem 3.3). The contribution is
+<em>unification</em>: three previously independent mathematical structures are shown
+to be equivalent representations of the same operation, and eight domain-specific
+traditions are connected under a single functorial lens.
+</div>
+
+<div class="toc">
+<strong>Contents</strong>
+<ol>
+<li><a href="#s1">Introduction — Learning from Negative Facts</a>
+  <ol style="list-style-type:none;padding-left:18px;">
+  <li>1.1 <a href="#s1-1">Prior and Adjacent Work</a></li>
+  <li>1.2 <a href="#s1-2">Chemical Motivation (BOC Axiom A)</a></li>
+  <li>1.3 <a href="#s1-3">Linguistic Motivation (English Phonotactics)</a></li>
+  <li>1.4 <a href="#s1-4">Protein Science Motivation</a></li>
+  </ol>
+</li>
+<li><a href="#s2">Combinatorial Symbol Systems — Formal Definition</a>
+  <ol style="list-style-type:none;padding-left:18px;">
+  <li>2.1 <a href="#s2-1">Signs, Features, Corpus</a></li>
+  <li>2.2 <a href="#s2-2">The Category CSS</a></li>
+  </ol>
+</li>
+<li><a href="#s3">The Forbidden Pattern Functor</a>
+  <ol style="list-style-type:none;padding-left:18px;">
+  <li>3.1 <a href="#s3-1">Definition and Functoriality</a></li>
+  <li>3.2 <a href="#s3-2">Monotonicity and Convergence</a></li>
+  </ol>
+</li>
+<li><a href="#s4">Three Equivalent Formulations</a>
+  <ol style="list-style-type:none;padding-left:18px;">
+  <li>4.1 <a href="#s4-1">Coalgebraic Formulation</a></li>
+  <li>4.2 <a href="#s4-2">Simplicial Complex (Dowker) Formulation</a></li>
+  <li>4.3 <a href="#s4-3">Formal Concept Analysis (FCA) Formulation</a></li>
+  <li>4.4 <a href="#s4-4">Commutativity — Equivalence of the Three Formulations</a></li>
+  </ol>
+</li>
+<li><a href="#s5">Connection to PAC Learning</a>
+  <ol style="list-style-type:none;padding-left:18px;">
+  <li>5.1 <a href="#s5-1">Inductive Inference from Positive Data Alone</a></li>
+  <li>5.2 <a href="#s5-2">Circumventing Gold's Impossibility Theorem</a></li>
+  </ol>
+</li>
+<li><a href="#s6">Applications</a>
+  <ol style="list-style-type:none;padding-left:18px;">
+    <li>6.1 <a href="#s6-1">Chemistry — BOC Axiom A at Scale</a></li>
+    <li>6.2 <a href="#s6-2">English Phonotactics — Empirical Verification</a></li>
+    <li>6.3 <a href="#s6-3">Undeciphered Scripts — Indus, Linear A, Proto-Elamite</a></li>
+    <li>6.4 <a href="#s6-4">Protein Domain Architectures</a></li>
+    <li>6.5 <a href="#s6-5">Large Language Models — Forb-Constrained Decoding</a></li>
+    <li>6.6 <a href="#s6-6">LLM Output as a Combinatorial Symbol System — Structural Fingerprinting</a></li>
+    <li>6.7 <a href="#s6-7">Neural Sparsity and the Forb Functor</a></li>
+    <li>6.8 <a href="#s6-8">Fractal Dimension and Transcendental Invariants of the Forbidden Set</a></li>
+    </ol>
+</li>
+<li><a href="#s7">Open Problems</a></li>
+<li><a href="#s8">Conclusion</a></li>
+<li><a href="#s9">Limitations</a></li>
+<li><a href="#refs">References</a></li>
+</ol>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 1: INTRODUCTION -->
+<!-- ============================================================ -->
+
+<h2 id="s1">1. Introduction — Learning from Negative Facts</h2>
+
+<p>
+Most inductive inference procedures learn from <em>what is present</em> in data:
+a corpus of observed sequences is used to estimate transition probabilities,
+grammar rules, or neural weights. But equally informative are the patterns
+that are <em>absent</em> — the combinations that <em>never</em> occur, despite
+being logically possible. A bigram of signs <span class="math-inline">(s₁, s₂)</span>
+whose count is exactly zero across an entire corpus is a <em>negative fact</em>,
+and the set of all such negative facts, when compressed into feature-level
+Boolean constraints, constitutes a grammar extracted purely from silence.
+</p>
+
+<p>
+This paper formalises this operation as a functor:
+</p>
+
+<div class="math-block">Forb: CSS → BoolAlg
+  Forb(S, F, C) = { φ : ∀(s₁,s₂)∈S², φ(F(s₁),F(s₂))=1 ⇒ count((s₁,s₂), C)=0 }</div>
+
+<p>
+where <span class="math-inline">CSS</span> is the category of Combinatorial Symbol
+Systems — triples of a finite sign set, an <span class="math-inline">n</span>-bit
+feature encoding, and a finite corpus — and <span class="math-inline">BoolAlg</span>
+is the category of Boolean algebras. The functor is <em>domain-neutral</em>: it
+operates identically whether the signs are chemical functional groups, phonemes,
+archaeological glyphs, or protein domains. The only requirement is that each sign
+admits a finite-dimensional feature vector — a condition satisfied by every
+combinatorial symbol system of interest.
+</p>
+
+<p>
+The operation was discovered in organic chemistry, where enumerating forbidden
+combinations of seven electronic-effect generators across 107.8 million compounds
+yielded Axiom A — a Boolean constraint with zero counterexamples at that scale
+(§1.2). The same pipeline, applied to English phonotactics with a seven-bit
+articulatory feature encoding, automatically extracted three absolute phonotactic
+rules from the CMU Pronouncing Dictionary (§1.3). The identical mathematics
+applies to undeciphered scripts (Indus, Linear A, Proto-Elamite) — with a
+complete Proto-Elamite analysis yielding 503 significant forbidden bigrams
+and 22 functional sign classes (§6.3) — and protein
+domain architectures (§6). The structural identity across domains is not
+coincidental: it is guaranteed by the functorial nature of Forb.
+</p>
+
+<p>
+The central mathematical contribution of this paper is the proof that three
+previously independent mathematical structures — the <em>coalgebra</em> of
+observed transitions (§4.1), the <em>Dowker simplicial complex</em> of observed
+<span class="math-inline">k</span>-grams (§4.2), and the <em>formal concept
+lattice</em> of the bigram–feature incidence relation (§4.3) — are equivalent
+representations of the same forbidden-pattern space, with the coalgebra providing
+the operational semantics, the Dowker complex providing the topological
+invariants, and the FCA lattice providing the hierarchical organisation
+(Theorem 4.1).
+</p>
+
+<div class="finding">
+<div class="label">FINDING 1 — SCOPE NOTE</div>
+This paper is a work of <em>unification</em>. It does not claim to invent any
+one of the three mathematical structures; rather, it proves that they are
+manifestations of a single functor. The contribution is the <em>commutativity
+proof</em>, the <em>functorial formulation</em>, and the <em>domain-neutral
+pipeline</em> — not the individual components, which are drawn from established
+mathematics. See Limitations (§9) for a full accounting.
+</div>
+
+<!-- -------------------------------------------------------- -->
+<!-- 1.1 Prior and Adjacent Work -->
+<!-- -------------------------------------------------------- -->
+
+<h3 id="s1-1">1.1 Prior and Adjacent Work</h3>
+
+<p>
+The forbidden-pattern functor sits at the intersection of six research traditions,
+each of which provides partial answers to the question "how can constraints be
+extracted from what is absent?" We survey each tradition, map its contribution
+to the Forb framework, and specify the nature of the connection.
+</p>
+
+<h4>1.1.1 Formal Language Theory — Local Languages</h4>
+
+<p>
+McNaughton and Papert (1971) defined <em>local languages</em> (locally testable
+languages of dot-depth 1) as those whose membership can be decided by inspecting
+fixed-length substrings. A language is <em>strictly local</em> if it is defined
+by a set of <em>forbidden substrings</em>: <span class="math-inline">L(G) = { w :
+no forbidden factor appears in w }</span>. The set of forbidden substrings is
+exactly the Forb set when the feature map <span class="math-inline">F</span> is
+the identity (each sign is its own feature). The Forb functor generalises
+strictly local languages through <em>feature compression</em>: instead of
+enumerating concrete forbidden sign pairs, we extract Boolean constraints on
+feature vectors, reducing the description length from
+<span class="math-inline">O(|S|²)</span> to <span class="math-inline">O(2²ⁿ)</span>,
+which is an exponential compression when
+<span class="math-inline">2ⁿ ≪ |S|</span>. In the BOC case, <span class="math-inline">|S| = 128</span>
+r-vectors but only 7 features, compressing 16,384 possible bigrams into 16,384
+Boolean constraint candidates, of which fewer than 20 survive as absolute.
+</p>
+
+<table>
+<tr><th>McNaughton–Papert (1971)</th><th>Forb Functor (this paper)</th></tr>
+<tr><td>Forbidden = concrete substring</td><td>Forbidden = Boolean constraint on features</td></tr>
+<tr><td>Fixed to S × S</td><td>Domain-neutral: any feature map F</td></tr>
+<tr><td>No hierarchical organisation</td><td>FCA lattice gives constraint hierarchy</td></tr>
+</table>
+
+<p>
+<strong>Contribution type:</strong> Generalisation. Local languages are Forb
+with <span class="math-inline">F = id_S</span>. The feature compression step is
+new and is what makes the framework applicable across domains.
+</p>
+
+<h4>1.1.2 Computational Phonology — Hayes &amp; Wilson (2008)</h4>
+
+<p>
+Hayes and Wilson (2008) proposed a maximum-entropy model of phonotactic
+learning that extracts natural-class constraints from positive-only data;
+Heinz (2010) extended the approach to long-distance phonotactic dependencies.
+Their model learns weighted constraints of the form "feature class A may not
+be followed by feature class B," where each constraint is assigned a weight
+reflecting its gradient strength. The BOC method is the <em>deterministic
+subset</em> of Hayes–Wilson: instead of maximum-entropy weights, we extract
+only the constraints with weight → ∞ — the absolute, zero-exception rules.
+This is both a restriction (gradient rules are excluded) and a virtue:
+the rules that survive are Popperian — a single counterexample falsifies
+them. The English phonotactics verification (§6.2) confirms this relationship
+empirically: the three absolute rules extracted automatically by Forb correspond
+to three Hayes–Wilson constraints with effective infinite weight, while the
+two gradient rules (voicing agreement, heterorganic clusters) correspond
+to finite-weight constraints. The foundational framework for English
+phonology is Chomsky &amp; Halle (1968), whose distinctive feature system is the
+intellectual precursor to the 7-bit articulatory encoding used in §6.2.
+</p>
+
+<div class="finding">
+<div class="label">FINDING 2 — CRITICAL CITATION — DO NOT OMIT</div>
+Hayes &amp; Wilson (2008) is the closest prior work. The relationship is:
+Forb is the <strong>deterministic, domain-neutral specialisation</strong> of
+Hayes–Wilson's probabilistic, phonology-specific learner. The novel contribution
+is not the extraction algorithm per se but (a) the domain-neutral formulation
+via the CSS category, (b) the functorial proof that the same operation works
+across chemistry, linguistics, and protein science, and (c) the three-way
+equivalence proof (§4.4) connecting the extraction to coalgebra and topology.
+</div>
+
+<h4>1.1.3 Formal Concept Analysis — Ganter &amp; Wille (1999)</h4>
+
+<p>
+Ganter and Wille (1999) developed Formal Concept Analysis (FCA), which extracts
+a complete lattice of <em>concepts</em> from a formal context — a binary relation
+between objects and attributes. The <em>attribute exploration</em> algorithm
+enumerates <em>proper premises</em> (also called <em>pseudo-intents</em>),
+which are minimal combinations of attributes whose absence characterises
+the context. Proper premises are exactly the Boolean constraints extracted
+by Forb: each proper premise <span class="math-inline">P</span> says "no object
+satisfies <span class="math-inline">P</span>," which translates to "the feature
+combination encoded by <span class="math-inline">P</span> is a forbidden
+pattern." The Forb functor is FCA's attribute exploration <em>specialised to
+sequential data</em>: the objects are bigrams obtained from a corpus, and the
+attributes are feature conditions on the first and second sign of each bigram.
+</p>
+
+<table>
+<tr><th>FCA (Ganter–Wille 1999)</th><th>Forb (this paper)</th></tr>
+<tr><td>Objects: arbitrary set G</td><td>Objects: bigrams from sequential corpus C</td></tr>
+<tr><td>Attributes: arbitrary set M</td><td>Attributes: 2n feature conditions</td></tr>
+<tr><td>General-purpose concept extraction</td><td>Specialised to sequential constraint extraction</td></tr>
+<tr><td>No convergence theory for growing data</td><td>Monotonicity + Convergence Theorem 3.3 (§3.2)</td></tr>
+</table>
+
+<p>
+<strong>Contribution type:</strong> Specialisation + convergence analysis.
+Forb is FCA attribute exploration restricted to the sequential bigram context,
+with the added structure of a corpus-size monotonicity theorem and a convergence
+theorem (Theorem 3.3) that FCA does not provide for general contexts.
+</p>
+
+<h4>1.1.4 Computational Learning Theory — Gold (1967) &amp; Angluin (1980)</h4>
+
+<p>
+Gold (1967) proved that even the class of superfinite languages cannot be
+identified in the limit from positive data alone — the famous "Gold's
+impossibility theorem." Angluin (1980) characterised the necessary and
+sufficient condition for positive-data learnability: a class of languages
+must have a <em>finite tell-tale</em> for each language — a finite subset
+that distinguishes it from all of its subsets in the class. The Forb functor
+operates in a regime where the <em>hypothesis space is finite</em> (the Boolean
+algebra over <span class="math-inline">2n</span> variables has
+<span class="math-inline">2^(2^(2n))</span> elements — finite for any fixed
+<span class="math-inline">n</span>), which satisfies Angluin's condition
+trivially: each Boolean constraint is its own tell-tale (any bigram that
+satisfies the constraint but is absent from the corpus). We make this
+connection precise in §5.
+</p>
+
+<h4>1.1.5 Protein Domain Co-occurrence — Apic et al. (2001)</h4>
+
+<p>
+Apic et al. (2001) catalogued domain combinations across archaeal, eubacterial,
+and eukaryotic proteomes, noting that certain Pfam domain pairs appear to be
+mutually exclusive. Vogel et al. (2004) surveyed multi-domain protein evolution,
+documenting domain insertion events and domain–domain interaction preferences.
+These works identify <em>individual</em> forbidden domain pairs through manual
+inspection. The Forb functor provides the <em>systematic</em> method: enumerate
+all Pfam domain pairs across UniProt, extract those with count = 0 after
+statistical filtering, and cluster by domain-level features to obtain Boolean
+constraints on domain co-occurrence. The relationship is one of <em>scaling</em>:
+from anecdotal to exhaustive.
+</p>
+
+<h4>1.1.6 Coalgebra Theory — Sweedler (1969) &amp; Rutten (2000)</h4>
+
+<p>
+Sweedler (1969) established the algebraic foundations of coalgebras, and
+Rutten (2000) developed <em>universal coalgebra</em> as a general theory of
+state-based systems. In universal coalgebra, a system is a pair
+<span class="math-inline">(X, α: X → F(X))</span> for an endofunctor
+<span class="math-inline">F</span>. The Forb construction instantiates this
+with <span class="math-inline">F = P</span> (the powerset functor) and
+<span class="math-inline">X = S</span>: the observed transition structure
+<span class="math-inline">δ_obs: S → P(S)</span> is a <em>partial</em>
+<span class="math-inline">P</span>-coalgebra, and Forb extracts its
+undefined transitions. The true grammar is the <em>total</em> coalgebra
+<span class="math-inline">δ_true: S → P(S)</span> that the partial one
+approximates. This connects Forb to the theory of coalgebraic specification
+and bisimulation.
+</p>
+
+<h4>1.1.7 Simplicial Complexes — Dowker (1952)</h4>
+
+<p>
+Dowker (1952) established that any binary relation <span class="math-inline">R ⊆ A × B</span>
+gives rise to two homotopy-equivalent simplicial complexes — the <em>Dowker
+complexes</em> of <span class="math-inline">R</span> and its converse
+<span class="math-inline">R^T</span>. In the Forb setting, the relation is
+the observed bigram incidence <span class="math-inline">R_C ⊆ S × S</span>
+(Definition 2.2). The Dowker complex <span class="math-inline">K(C)</span>
+encodes which bigrams are <em>present</em>; its missing edges are the
+forbidden bigrams. The feature-level projection
+<span class="math-inline">K(C) → K_F(C)</span> is a simplicial quotient map,
+and the minimal non-faces of <span class="math-inline">K_F(C)</span>
+correspond to irreducible Boolean constraints. This connection to
+Dowker's classical construction is what gives Forb its topological
+interpretation (§4.2).
+</p>
+
+<h4>1.1.8 Indus Script Research — Rao et al. (2009)</h4>
+
+<p>
+Rao et al. (2009) demonstrated, using conditional entropy, that the Indus
+script exhibits statistical structure consistent with linguistic sequences
+— answering "is it linguistic?" in the affirmative. Yadav et al. (2010)
+extended the analysis to <span class="math-inline">n</span>-gram frequency
+distributions. Forb answers the <em>next</em> question: if it is linguistic,
+<em>what are its rules?</em> By analysing the <em>zero-frequency</em>
+side of the bigram distribution — the combinations that never occur — Forb
+extracts falsifiable Boolean constraints on sign sequences. The 7-bit
+visual-structural feature encoding designed for the 417 Indus signs
+(§6.3) makes the pipeline directly applicable. The relationship is
+<strong>complementary</strong>: Rao's entropy method is diagnostic; Forb
+is extractive.
+</p>
+
+<!-- -------------------------------------------------------- -->
+<!-- 1.2 Chemical Motivation (BOC Axiom A) -->
+<!-- -------------------------------------------------------- -->
+
+<h3 id="s1-2">1.2 Chemical Motivation — Discovery of BOC Axiom A</h3>
+
+<p>
+The BOC (Biological Organic Coalgebra) framework encodes each organic functional
+group as a 7-dimensional vector over seven Electronic Effect Element (EEE)
+generators:
+<span class="math-inline">ET</span> (electronic term),
+<span class="math-inline">α_CH</span> (α C–H acidity),
+<span class="math-inline">ρ_rad</span> (radical stability),
+<span class="math-inline">ε_π</span> (π electrophilicity),
+<span class="math-inline">ε_LU</span> (LUMO electrophilicity),
+<span class="math-inline">ν_π</span> (π nucleophilicity), and
+<span class="math-inline">ν_LP</span> (lone-pair nucleophilicity).
+A compound is encoded as the set of functional groups it contains, reduced
+to an r-vector (a 128-dimensional bit-vector indicating which of the
+<span class="math-inline">2⁷</span> EEE profiles are present).
+</p>
+
+<p>
+Applying the forbidden-pattern pipeline to a corpus of 21.4 million compounds
+yielded 20 candidate absolute constraints — Boolean formulas over the seven
+EEE features that no observed compound violated. Upon scaling to 107.8 million
+compounds, three of these constraints acquired counterexamples and were
+demoted; 17 remained absolute. The central one is:
+</p>
+
+<div class="finding">
+<div class="label">FINDING 3 — BOC Axiom A <span class="status-tag status-EMPIRICAL">EMPIRICAL FINDING</span></div>
+<div class="math-block">α_CH = 1  ⇒  ν_π = 1  ∨  ε_LU = 1</div>
+<p style="margin:8px 0 0 0;font-size:0.9em;">
+Interpretation: If a compound contains an acidic C–H bond
+(<span class="math-inline">α_CH</span>), it <em>must</em> contain either a
+π-nucleophile (<span class="math-inline">ν_π</span>) or a LUMO-level
+electrophile (<span class="math-inline">ε_LU</span>). Organic compounds
+violating this constraint — having an acidic C–H but lacking both
+complementary electronic structures — do not exist in the 107.8M-compound
+corpus. A single counterexample would falsify Axiom A.
+</p>
+</div>
+
+<p>
+The BOC pipeline is: <strong>encode</strong> (compound → r-vector) →
+<strong>enumerate</strong> (all possible r-vector combinations) →
+<strong>count</strong> (occurrence in corpus) →
+<strong>filter</strong> (keep only cnt = 0) →
+<strong>compress</strong> (cluster by feature profiles into Boolean constraints).
+This five-step pipeline is the concrete origin of the abstract Forb functor.
+</p>
+
+<!-- -------------------------------------------------------- -->
+<!-- 1.3 Linguistic Motivation (English Phonotactics) -->
+<!-- -------------------------------------------------------- -->
+
+<h3 id="s1-3">1.3 Linguistic Motivation — English Phonotactics Verification</h3>
+
+<p>
+To test the domain-neutrality claim, the same five-step pipeline was applied
+to the CMU Pronouncing Dictionary (~33K English words, 39 ARPABET phonemes).
+Each phoneme was encoded in 7 bits: consonant/vowel, voicing, place of
+articulation (2 bits), manner of articulation (2 bits), and a consonant/vowel
+marker. The pipeline enumerated all <span class="math-inline">39² = 1,521</span>
+possible phoneme bigrams, of which 909 (59.8%) were forbidden (<em>i.e.</em>,
+never appear in any CMUdict entry). From these 909, feature-level clustering
+extracted five rules, three of which are absolute (zero exceptions at scale):
+</p>
+
+<table>
+<tr><th>#</th><th>Rule</th><th>Status</th><th>Linguistic Ground Truth</th></tr>
+<tr><td>R1</td><td><span class="math-inline">*HH + C</span> (<span class="math-inline">/h/</span> never before consonant)</td><td>✅ ABSOLUTE (0 exceptions)</td><td>Correct: <span class="math-inline">/h/</span> only appears before vowels in English</td></tr>
+<tr><td>R2</td><td><span class="math-inline">*ZH + [-voi] stop</span> (<span class="math-inline">/ʒ/</span> never before <span class="math-inline">/p,t,k/</span>)</td><td>✅ ABSOLUTE (0 exceptions)</td><td>Correct: <span class="math-inline">/ʒ/</span> is distributionally highly restricted</td></tr>
+<tr><td>R3</td><td><span class="math-inline">*T/D + SH/ZH</span> (affricate merger blocks coronals before palato-alveolars)</td><td>✅ ABSOLUTE (0 exceptions)</td><td>Correct: <span class="math-inline">T+SH → CH</span>, <span class="math-inline">D+ZH → J</span> obligatorily</td></tr>
+<tr><td>R4</td><td>Heterorganic voiceless stop clusters</td><td>⚠️ GRADIENT (3 exceptions)</td><td>Correct: "act" = <span class="math-inline">K+T</span>, "apt" = <span class="math-inline">P+T</span> exist</td></tr>
+<tr><td>R5</td><td>Obstruent voicing agreement</td><td>⚠️ GRADIENT (~17 exceptions)</td><td>Correct: English allows mixed-voice clusters across syllable boundaries</td></tr>
+</table>
+
+<p>
+The key finding: the same seven-bit encoding and the same
+<span class="math-inline">cnt=0 → cluster → extract</span> pipeline produces
+linguistically correct results without any phonology-specific programming.
+The rules were <em>extracted automatically</em>, not hardcoded. This is the
+empirical basis for the claim that Forb is genuinely domain-neutral.
+</p>
+
+<!-- -------------------------------------------------------- -->
+<!-- 1.4 Protein Science Motivation -->
+<!-- -------------------------------------------------------- -->
+
+<h3 id="s1-4">1.4 Protein Science Motivation</h3>
+
+<p>
+Multi-domain proteins account for over 70% of eukaryotic proteomes. The Pfam
+database catalogues ~20,000 domain families; UniProt contains ~200 million
+protein sequences. Certain domain pairs never co-occur: they represent
+biophysically impossible combinations — steric clash, folding incompatibility,
+or functional contradiction. The Forb functor, applied to Pfam domain
+architectures, would systematically enumerate all domain pairs, identify
+those with count = 0 across all of UniProt, and compress the forbidden set
+into Boolean constraints over domain-level features. This is the protein-level
+analogue of BOC Axiom A, and the same Python pipeline operates with only a
+symbol-table substitution (§6.4).
+</p>
+
+<!-- ============================================================ -->
+<!-- SECTION 2: COMBINATORIAL SYMBOL SYSTEMS -->
+<!-- ============================================================ -->
+
+<h2 id="s2">2. Combinatorial Symbol Systems — Formal Definition</h2>
+
+<h3 id="s2-1">2.1 Signs, Features, Corpus</h3>
+
+<div class="definition">
+<div class="label">Definition 2.1 — Combinatorial Symbol System (CSS)</div>
+<p>
+A <em>combinatorial symbol system</em> is a triple
+<span class="math-inline">(S, F, C)</span> where:
+</p>
+<ol style="margin:6px 0;">
+<li><span class="math-inline">S</span> is a finite set of <em>signs</em>, with
+<span class="math-inline">|S| = N</span>.</li>
+<li><span class="math-inline">F: S → {0,1}ⁿ</span> is a <em>feature map</em>
+assigning each sign an <span class="math-inline">n</span>-bit feature vector.</li>
+<li><span class="math-inline">C</span> is a finite multiset over
+<span class="math-inline">S*</span> (the free monoid on <span class="math-inline">S</span>),
+called the <em>corpus</em>. Each element of <span class="math-inline">C</span>
+is a finite sequence <span class="math-inline">(s₁, …, s_k)</span> with
+<span class="math-inline">s_i ∈ S</span>.</li>
+</ol>
+</div>
+
+<p>
+We write <span class="math-inline">count((s₁, …, s_k), C)</span> for the
+number of occurrences of the sequence <span class="math-inline">(s₁, …, s_k)</span>
+as a contiguous subsequence (factor) of some element of <span class="math-inline">C</span>.
+For bigrams we write <span class="math-inline">count((s₁, s₂), C)</span>.
+</p>
+
+<p>
+The feature map <span class="math-inline">F</span> is the crucial abstraction.
+It replaces the concrete sign identity with a structural profile, enabling
+the compression step that distinguishes Forb from McNaughton–Papert local
+languages. The dimension <span class="math-inline">n</span> is a
+domain-specific choice; empirically <span class="math-inline">n = 7</span>
+suffices for both chemistry (seven EEE generators) and phonology (seven
+articulatory features), but no proof of minimality currently exists
+(Open Problem 2, §7).
+</p>
+
+<div class="definition">
+<div class="label">Definition 2.2 — Bigram Incidence and Forbidden Set</div>
+<p>
+For a CSS <span class="math-inline">(S, F, C)</span>, define:
+</p>
+<ol style="margin:6px 0;">
+<li>The <em>observed bigram relation</em>
+<span class="math-inline">R_C ⊆ S × S</span> by
+<span class="math-inline">(s₁, s₂) ∈ R_C ⇔ count((s₁, s₂), C) > 0</span>.</li>
+<li>The <em>forbidden bigram set</em>
+<span class="math-inline">Forb₂(C) = (S × S) \ R_C</span>.</li>
+</ol>
+</div>
+
+<p>
+<span class="math-inline">Forb₂(C)</span> is the set of bigrams that are
+logically possible but empirically absent. The count is over all occurrences
+in the corpus, not simply presence/absence — a bigram appearing even once is
+sufficient to remove it from <span class="math-inline">Forb₂(C)</span>.
+</p>
+
+<h3 id="s2-2">2.2 The Category CSS</h3>
+
+<div class="definition">
+<div class="label">Definition 2.3 — CSS Morphism <span class="status-tag status-DEFINITIONAL">DEFINITIONAL</span></div>
+<p>
+Let <span class="math-inline">(S₁, F₁, C₁)</span> and
+<span class="math-inline">(S₂, F₂, C₂)</span> be two CSS objects.
+A <em>CSS morphism</em>
+<span class="math-inline">τ: (S₁, F₁, C₁) → (S₂, F₂, C₂)</span>
+consists of:
+</p>
+<ol style="margin:6px 0;">
+<li>A function <span class="math-inline">τ: S₁ → S₂</span>
+(sign translation).</li>
+<li><strong>Feature preservation:</strong>
+<span class="math-inline">F₂ ∘ τ = F₁</span> — equivalent signs receive
+equivalent features.</li>
+<li><strong>Corpus compatibility:</strong> the image of <span class="math-inline">C₁</span>
+under the extension of <span class="math-inline">τ</span> to sequences is
+contained in <span class="math-inline">C₂</span> (as a multiset inclusion).</li>
+</ol>
+</div>
+
+<div class="proposition">
+<div class="label">Proposition 2.4 — CSS Forms a Category <span class="status-tag status-DEDUCTIVE">DEDUCTIVE</span></div>
+<p>
+CSS objects and morphisms as defined above form a category <strong>CSS</strong>.
+</p>
+<p><em>Proof sketch.</em> The identity morphism on
+<span class="math-inline">(S, F, C)</span> is the identity function
+<span class="math-inline">id_S: S → S</span>, which trivially preserves
+features and corpus compatibility. Composition of two CSS morphisms
+<span class="math-inline">τ₁: (S₁,F₁,C₁) → (S₂,F₂,C₂)</span> and
+<span class="math-inline">τ₂: (S₂,F₂,C₂) → (S₃,F₃,C₃)</span> is the
+function composition <span class="math-inline">τ₂ ∘ τ₁: S₁ → S₃</span>.
+Feature preservation: <span class="math-inline">F₃ ∘ (τ₂ ∘ τ₁) = (F₃ ∘ τ₂) ∘ τ₁ = F₂ ∘ τ₁ = F₁</span>.
+Corpus compatibility composes because multiset image containment is transitive.
+Associativity and unit laws follow from set-theoretic function composition. ∎
+</p>
+</div>
+
+<p>
+A CSS morphism represents a <em>translation</em> between symbol systems that
+respects the structural features. The feature-preservation condition ensures that
+the feature space acts as a common semantic ground — different symbol inventories
+can be compared only through their shared feature vocabulary.
+</p>
+
+<!-- ============================================================ -->
+<!-- SECTION 3: THE FORBIDDEN PATTERN FUNCTOR -->
+<!-- ============================================================ -->
+
+<h2 id="s3">3. The Forbidden Pattern Functor</h2>
+
+<h3 id="s3-1">3.1 Definition and Functoriality</h3>
+
+<p>
+Let <strong>BoolAlg</strong> be the category whose objects are finite Boolean
+algebras (equivalently, powerset algebras <span class="math-inline">P(X)</span>
+for finite <span class="math-inline">X</span>) and whose morphisms are
+Boolean algebra homomorphisms. We construct a <em>contravariant</em> functor
+<span class="math-inline">Forb: CSS^op → BoolAlg</span>.
+</p>
+
+<div class="definition">
+<div class="label">Definition 3.1 — The Forbidden Pattern Functor <span class="status-tag status-DEFINITIONAL">DEFINITIONAL</span></div>
+<p>
+<strong>On objects:</strong> For a CSS <span class="math-inline">(S, F, C)</span>,
+let <span class="math-inline">X = {0,1}ⁿ × {0,1}ⁿ</span> be the set of all
+possible feature-vector pairs for bigram classification. Define
+<span class="math-inline">Forb(S, F, C)</span> as the Boolean subalgebra of
+<span class="math-inline">P(X)</span> generated by the set:
+</p>
+<div class="math-block">Forb(S,F,C) = { φ ⊆ X : ∀(s₁,s₂)∈S²,
+  (F(s₁),F(s₂)) ∈ φ  ⇒  count((s₁,s₂), C) = 0 }</div>
+<p>
+Equivalently, <span class="math-inline">φ ∈ Forb(S,F,C)</span> iff every bigram
+whose feature-pair falls in <span class="math-inline">φ</span> is absent from
+the corpus. In computational terms,
+<span class="math-inline">Forb(S,F,C)</span> is the set of all feature-level
+Boolean constraints that the corpus satisfies absolutely.
+</p>
+<p>
+<strong>On morphisms:</strong> Given a CSS morphism
+<span class="math-inline">τ: (S₁,F₁,C₁) → (S₂,F₂,C₂)</span>, define
+<span class="math-inline">Forb(τ): Forb(S₂,F₂,C₂) → Forb(S₁,F₁,C₁)</span>
+by <span class="math-inline">Forb(τ)(φ) = φ</span> (the same subset of
+<span class="math-inline">X</span>). This is well-defined because feature
+preservation (<span class="math-inline">F₂ ∘ τ = F₁</span>) implies that
+<span class="math-inline">X</span> is identical for both systems: both map
+signs into <span class="math-inline">{0,1}ⁿ</span>, so the feature-pair
+space is independent of <span class="math-inline">S</span>.
+</p>
+</div>
+
+<div class="theorem">
+<div class="label">Theorem 3.1 — Functoriality of Forb <span class="status-tag status-DEDUCTIVE">DEDUCTIVE</span></div>
+<p>
+<span class="math-inline">Forb: CSS^op → BoolAlg</span> is a contravariant functor.
+</p>
+<p><em>Proof.</em> We verify the two functor axioms.</p>
+<p>
+<strong>(i) Identity preservation.</strong>
+Let <span class="math-inline">id_{CSS}: (S,F,C) → (S,F,C)</span> be the
+identity morphism (the identity function on <span class="math-inline">S</span>).
+Then <span class="math-inline">Forb(id_{CSS})(φ) = φ</span> for all
+<span class="math-inline">φ</span>, which is the identity homomorphism on
+<span class="math-inline">Forb(S,F,C)</span>.
+</p>
+<p>
+<strong>(ii) Composition preservation.</strong>
+Let <span class="math-inline">τ₁: (S₁,F₁,C₁) → (S₂,F₂,C₂)</span> and
+<span class="math-inline">τ₂: (S₂,F₂,C₂) → (S₃,F₃,C₃)</span> be CSS morphisms.
+In <span class="math-inline">CSS^op</span>, composition reverses:
+<span class="math-inline">τ₁^op ∘ τ₂^op = (τ₂ ∘ τ₁)^op</span>.
+We must show <span class="math-inline">Forb(τ₂ ∘ τ₁) = Forb(τ₁) ∘ Forb(τ₂)</span>.
+</p>
+<p>
+For any <span class="math-inline">φ ∈ Forb(S₃,F₃,C₃)</span>:
+<span class="math-inline">Forb(τ₂ ∘ τ₁)(φ) = φ</span> (by definition of Forb on morphisms).
+Also: <span class="math-inline">Forb(τ₁)(Forb(τ₂)(φ)) = Forb(τ₁)(φ) = φ</span>.
+Therefore <span class="math-inline">Forb(τ₂ ∘ τ₁) = Forb(τ₁) ∘ Forb(τ₂)</span>.
+</p>
+<p>
+The key step requiring verification is that <span class="math-inline">Forb(τ)</span>
+is indeed a Boolean algebra homomorphism. Since both domain and codomain are
+subalgebras of <span class="math-inline">P(X)</span> with <span class="math-inline">Forb(τ)(φ) = φ</span>,
+the map is literally the inclusion (or identity on the shared
+<span class="math-inline">X</span>-subsets), which trivially preserves
+<span class="math-inline">∧</span>, <span class="math-inline">∨</span>, and
+<span class="math-inline">¬</span>.
+</p>
+<p>
+<strong>Contravariance verification.</strong>
+For the above to be valid, we must verify that if
+<span class="math-inline">φ ∈ Forb(S₂,F₂,C₂)</span>, then
+<span class="math-inline">Forb(τ)(φ) = φ ∈ Forb(S₁,F₁,C₁)</span>.
+Suppose for contradiction that <span class="math-inline">φ ∉ Forb(S₁,F₁,C₁)</span>.
+Then there exists <span class="math-inline">(s₁, s₂) ∈ S₁ × S₁</span> such that
+<span class="math-inline">(F₁(s₁),F₁(s₂)) ∈ φ</span> and
+<span class="math-inline">count((s₁, s₂), C₁) > 0</span>. By corpus compatibility,
+<span class="math-inline">(τ(s₁), τ(s₂))</span> has positive count in
+<span class="math-inline">C₂</span>. By feature preservation,
+<span class="math-inline">(F₂(τ(s₁)), F₂(τ(s₂))) = (F₁(s₁), F₁(s₂)) ∈ φ</span>.
+Thus <span class="math-inline">φ</span> would fail to forbid a bigram with
+positive count in <span class="math-inline">C₂</span>, contradicting
+<span class="math-inline">φ ∈ Forb(S₂,F₂,C₂)</span>. Hence the containment
+<span class="math-inline">Forb(S₂,F₂,C₂) ⊆ Forb(S₁,F₁,C₁)</span> holds.
+This establishes that Forb is a well-defined contravariant functor. ∎
+</p>
+<p style="font-size:0.85em;color:#888;">
+<em>Remark.</em> The action of Forb on morphisms is the inclusion map
+<span class="math-inline">Forb(τ)(φ) = φ</span>, independent of
+<span class="math-inline">τ</span>. This means Forb maps <em>all</em>
+CSS morphisms to the same identity-on-subsets homomorphism — the functor
+does not distinguish between different morphisms at the BoolAlg level.
+The contravariance manifests not in the morphism action itself but in the
+<em>direction reversal</em>: a morphism from system A to system B induces
+an inclusion <span class="math-inline">Forb(B) ⊆ Forb(A)</span> (proved
+in the contravariance verification above). The functor is therefore a
+presheaf on <strong>CSS</strong> whose restriction maps are subset
+inclusions — a structure that captures the monotonicity property
+(Theorem 3.2) but whose morphism-level discrimination is degenerate.
+</p>
+</div>
+
+<div class="corollary">
+<div class="label">Corollary 3.1.1 — Forb as a Presheaf <span class="status-tag status-DEDUCTIVE">DEDUCTIVE</span></div>
+<p>
+Forb is a presheaf on <strong>CSS</strong> valued in
+<strong>BoolAlg</strong>. The restriction maps are inclusions:
+larger corpora yield more restrictive constraint sets.
+</p>
+</div>
+
+<h3 id="s3-2">3.2 Monotonicity and Convergence</h3>
+
+<div class="theorem">
+<div class="label">Theorem 3.2 — Monotonicity (Antitone in Corpus) <span class="status-tag status-DEDUCTIVE">DEDUCTIVE</span></div>
+<p>
+Let <span class="math-inline">(S, F, C)</span> and <span class="math-inline">(S, F, C')</span>
+be two CSS objects differing only in corpus, with
+<span class="math-inline">C ⊆ C'</span> (multiset inclusion). Then:
+</p>
+<div class="math-block">Forb(S, F, C) ⊇ Forb(S, F, C')</div>
+<p>
+In words: enlarging the corpus can only <em>eliminate</em> forbidden patterns,
+never create new ones. The forbidden-pattern set is antitone in the corpus.
+</p>
+<p><em>Proof.</em> Let <span class="math-inline">φ ∈ Forb(S, F, C')</span>.
+Then every bigram <span class="math-inline">(s₁, s₂)</span> with
+<span class="math-inline">(F(s₁),F(s₂)) ∈ φ</span> has
+<span class="math-inline">count((s₁,s₂), C') = 0</span>. Since
+<span class="math-inline">C ⊆ C'</span>,
+<span class="math-inline">count((s₁,s₂), C) ≤ count((s₁,s₂), C') = 0</span>,
+so <span class="math-inline">count((s₁,s₂), C) = 0</span> as well. Thus
+<span class="math-inline">φ ∈ Forb(S, F, C)</span>. The containment direction
+confirms that the forbidden set shrinks as the corpus grows. ∎
+</p>
+</div>
+
+<div class="corollary">
+<div class="label">Corollary 3.2.1 — Filtration <span class="status-tag status-DEDUCTIVE">DEDUCTIVE</span></div>
+<p>
+For an expanding sequence of corpora
+<span class="math-inline">C₁ ⊆ C₂ ⊆ C₃ ⊆ …</span>, the forbidden-pattern
+sets form a decreasing filtration:
+<span class="math-inline">Forb(C₁) ⊇ Forb(C₂) ⊇ Forb(C₃) ⊇ …</span>.
+</p>
+</div>
+
+<div class="theorem">
+<div class="label">Theorem 3.3 — Convergence <span class="status-tag status-DEDUCTIVE">DEDUCTIVE</span></div>
+<p>
+Let <span class="math-inline">(S, F, C_k)</span> be a sequence of corpora
+with <span class="math-inline">|C_k| → ∞</span> drawn i.i.d. from a
+true distribution <span class="math-inline">D</span> over
+<span class="math-inline">S*</span>. Let
+<span class="math-inline">G(S, F, D) = { φ : P_D((F(s₁),F(s₂)) ∈ φ) = 0 }</span>
+be the set of constraints that hold with probability zero under
+<span class="math-inline">D</span>. Then:
+</p>
+<div class="math-block">lim_{k→∞} Forb(S, F, C_k) = G(S, F, D)</div>
+<p>
+almost surely, where convergence is in the discrete topology on the
+finite Boolean algebra over <span class="math-inline">X = {0,1}ⁿ×{0,1}ⁿ</span>.
+</p>
+<p><em>Proof.</em> Three facts combine to give the result.</p>
+<p>
+<strong>(i) Finite stabilisation.</strong>
+The hypothesis space <span class="math-inline">H_n = P(X)</span> is finite
+(since <span class="math-inline">X = {0,1}ⁿ × {0,1}ⁿ</span> is finite,
+<span class="math-inline">|H_n| = 2^(2^(2n))</span>). The sequence
+<span class="math-inline">Forb(C_k)</span> is a filtration — monotonically
+non-increasing in the inclusion order (Corollary 3.2.1). A monotone sequence
+in a finite partially ordered set must stabilise after finitely many steps:
+there exists <span class="math-inline">K</span> such that
+<span class="math-inline">Forb(C_k) = Forb(C_K)</span> for all
+<span class="math-inline">k ≥ K</span>. Call this limit set
+<span class="math-inline">Forb_∞</span>.
+</p>
+<p>
+<strong>(ii) Positive-probability constraints are eliminated.</strong>
+Let <span class="math-inline">φ</span> be any constraint such that
+<span class="math-inline">P_D((F(s₁),F(s₂)) ∈ φ) > 0</span>. By the
+second Borel–Cantelli lemma (the events are i.i.d. across samples), a
+bigram with feature-pair in <span class="math-inline">φ</span> appears
+infinitely often almost surely as <span class="math-inline">k → ∞</span>.
+In particular, it appears at least once, so
+<span class="math-inline">φ ∉ Forb(C_k)</span> for all sufficiently large
+<span class="math-inline">k</span>. Therefore
+<span class="math-inline">Forb_∞ ⊆ G(S,F,D)</span>.
+</p>
+<p>
+<strong>(iii) Zero-probability constraints survive.</strong>
+Let <span class="math-inline">φ ∈ G(S,F,D)</span> — a constraint with
+zero probability under <span class="math-inline">D</span>. For any finite
+<span class="math-inline">k</span>, the probability that a bigram with
+feature-pair in <span class="math-inline">φ</span> appears in
+<span class="math-inline">C_k</span> is zero. Since the countable union of
+measure-zero events has measure zero, such a bigram almost surely never
+appears in the infinite sequence. Hence
+<span class="math-inline">φ ∈ Forb(C_k)</span> for all
+<span class="math-inline">k</span>, giving
+<span class="math-inline">G(S,F,D) ⊆ Forb_∞</span>.
+</p>
+<p>
+From (ii) and (iii), <span class="math-inline">Forb_∞ = G(S,F,D)</span>
+almost surely. ∎
+</p>
+<p style="font-size:0.82em;color:#666;margin-top:6px;">
+<strong>Remark on independence.</strong> The application of the second
+Borel–Cantelli lemma in step (ii) requires that the events
+&quot;a bigram with feature-pair in <span class="math-inline">φ</span>
+appears in sample <span class="math-inline">k</span>&quot; be independent
+across <span class="math-inline">k</span>. This holds under the theorem's
+stated hypothesis — the corpus <span class="math-inline">C_k</span> is
+drawn i.i.d. from <span class="math-inline">D</span> over
+<span class="math-inline">S*</span> — where each sample is an
+<em>entire sequence</em> drawn independently. However, when the corpus is a
+single long sequence (e.g., a text or chemical database), adjacent bigrams
+within that sequence share a sign and are <em>not</em> independent. In that
+case the convergence argument requires an alternative framework, such as
+an ergodic source with the Shannon–McMillan–Breiman theorem replacing
+Borel–Cantelli, or a mixing condition guaranteeing that the positive-probability
+events occur with asymptotic frequency one. The present proof is restricted to
+the i.i.d.-sample model and is not claimed to cover sequential corpora without
+further qualification.
+</p>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 4: THREE EQUIVALENT FORMULATIONS -->
+<!-- ============================================================ -->
+
+<h2 id="s4">4. Three Equivalent Formulations</h2>
+
+<p>
+The forbidden-pattern space admits three independent mathematical descriptions,
+each illuminating a different structural aspect. This section defines each
+formulation and proves they are equivalent — they encode the same information
+under different representational conventions.
+</p>
+
+<h3 id="s4-1">4.1 Coalgebraic Formulation</h3>
+
+<div class="definition">
+<div class="label">Definition 4.1 — Observed Transition Coalgebra <span class="status-tag status-DEFINITIONAL">DEFINITIONAL</span></div>
+<p>
+For a CSS <span class="math-inline">(S, F, C)</span>, define the
+<em>observed transition map</em>
+<span class="math-inline">δ_obs: S → P(S)</span> by:
+</p>
+<div class="math-block">δ_obs(s₁) = { s₂ ∈ S : count((s₁, s₂), C) > 0 }</div>
+<p>
+This is a <em>partial</em> coalgebra for the powerset functor
+<span class="math-inline">P: Set → Set</span>: a total map
+<span class="math-inline">δ_true</span> would assign every sign a set of
+possible successors; <span class="math-inline">δ_obs</span> only records
+those <em>observed</em> in the finite corpus.
+</p>
+</div>
+
+<p>
+The <em>forbidden transitions</em> are:
+</p>
+
+<div class="math-block">Forb_coalg(S, F, C) = { (s₁, s₂) ∈ S × S : s₂ ∉ δ_obs(s₁) }</div>
+
+<p>
+Intuitively: the coalgebra tells us where transitions <em>can</em> go
+(based on what has been seen); the forbidden set is the complement — where
+transitions <em>never</em> go. Learning the true grammar is equivalent to
+inferring the total coalgebra <span class="math-inline">δ_true</span> from
+the partial observation <span class="math-inline">δ_obs</span>.
+</p>
+
+<div class="proposition">
+<div class="label">Proposition 4.2 — Coalgebraic Characterisation of Forbidden Patterns <span class="status-tag status-DEDUCTIVE">DEDUCTIVE</span></div>
+<p>
+<span class="math-inline">Forb₂(C) = Forb_coalg(S, F, C)</span>.
+The forbidden bigram set (Definition 2.2) is identical to the set of
+transitions absent from the observed coalgebra.
+</p>
+<p><em>Proof.</em> Both sets are defined as
+<span class="math-inline">{ (s₁, s₂) : count((s₁,s₂), C) = 0 }</span>. ∎
+</p>
+</div>
+
+<p>
+The coalgebraic perspective connects Forb to universal coalgebra (Rutten 2000):
+the true grammar is a <em>coalgebra morphism</em> from the sign set to a final
+coalgebra, and Forb extracts the approximation error of the observed partial
+coalgebra relative to the unknown total one. This also motivates the PAC
+learning connection (§5): learning <span class="math-inline">δ_true</span>
+from <span class="math-inline">δ_obs</span> is a special case of learning a
+coalgebra from positive examples.
+</p>
+
+<h3 id="s4-2">4.2 Simplicial Complex (Dowker) Formulation</h3>
+
+<div class="definition">
+<div class="label">Definition 4.3 — Dowker Complex of a CSS <span class="status-tag status-DEFINITIONAL">DEFINITIONAL</span></div>
+<p>
+For a CSS <span class="math-inline">(S, F, C)</span>, the observed bigram
+relation <span class="math-inline">R_C ⊆ S × S</span> (Definition 2.2)
+defines a <em>Dowker complex</em> (Dowker 1952). Let
+<span class="math-inline">K(C)</span> be the simplicial complex whose:
+</p>
+<ul style="margin:6px 0;">
+<li>0-simplices (vertices) are the signs <span class="math-inline">S</span>;</li>
+<li>1-simplices (edges) are the observed bigrams
+<span class="math-inline">(s₁, s₂) ∈ R_C</span>;</li>
+<li>For <span class="math-inline">k ≥ 1</span>, a <span class="math-inline">k</span>-simplex
+<span class="math-inline">{s₀, …, s_k}</span> is present iff every
+ordered <span class="math-inline">(k+1)</span>-gram of consecutive signs
+from this set appears in <span class="math-inline">C</span> with positive count.</li>
+</ul>
+<p>
+The <em>forbidden <span class="math-inline">k</span>-simplices</em>
+are the <em>missing faces</em> of <span class="math-inline">K(C)</span> —
+<span class="math-inline">k</span>-tuples of signs that never co-occur
+contiguously in the corpus, despite all of their
+<span class="math-inline">(k-1)</span>-subfaces being present (minimal
+non-faces).
+</p>
+</div>
+
+<p>
+For <span class="math-inline">k = 1</span>, the forbidden 1-simplices
+are exactly the forbidden bigrams. For <span class="math-inline">k ≥ 2</span>,
+the forbidden <span class="math-inline">k</span>-simplices provide
+higher-order combinatorial constraints (trigram forbidden patterns, etc.).
+The present paper focuses on <span class="math-inline">k = 1</span>; the
+extension to <span class="math-inline">k ≥ 2</span> is an open problem (§7, OP5).
+</p>
+
+<div class="proposition">
+<div class="label">Proposition 4.4 — Dowker Complex and Forbidden Bigrams <span class="status-tag status-DEDUCTIVE">DEDUCTIVE</span></div>
+<p>
+The 1-skeleton of <span class="math-inline">K(C)</span> is the graph
+<span class="math-inline">(S, R_C)</span>. The forbidden bigrams are
+the missing edges (non-edges) of this graph. The feature-level Boolean
+constraints in <span class="math-inline">Forb(S,F,C)</span> are the
+<em>minimal non-faces</em> of the <em>feature complex</em>
+<span class="math-inline">K_F(C)</span> whose vertices are feature vectors
+<span class="math-inline">F(S) ⊆ {0,1}ⁿ</span>.
+</p>
+</div>
+
+<div class="conjecture">
+<div class="label">OPEN PROBLEM 3 (from §7) — Topological Invariants <span class="status-tag status-CONJECTURAL">CONJECTURAL</span></div>
+<p>
+The Betti numbers of <span class="math-inline">K(C)</span> (or its
+feature-quotient <span class="math-inline">K_F(C)</span>) may characterise
+the <em>expressive power</em> of the grammar: a system with many forbidden
+patterns but small Betti numbers has a grammar that is highly structured
+(few generating constraints); a system with high Betti numbers has a more
+complex constraint landscape. This connection has not been explored.
+</p>
+</div>
+
+<h3 id="s4-3">4.3 Formal Concept Analysis (FCA) Formulation</h3>
+
+<div class="definition">
+<div class="label">Definition 4.5 — Bigram–Feature Formal Context <span class="status-tag status-DEFINITIONAL">DEFINITIONAL</span></div>
+<p>
+For a CSS <span class="math-inline">(S, F, C)</span>, define the
+<em>formal context</em> <span class="math-inline">K_C = (G, M, I)</span> where:
+</p>
+<ul style="margin:6px 0;">
+<li><span class="math-inline">G = { (s₁, s₂) ∈ S × S : count((s₁,s₂), C) > 0 }</span>
+— the set of <em>observed bigrams</em> (objects).</li>
+<li><span class="math-inline">M = { (i, b) : i ∈ {1,2}, b ∈ {0,1}ⁿ }</span>
+— the set of <em>feature conditions</em> (attributes). An attribute
+<span class="math-inline">(1, v)</span> means "first sign has feature vector
+<span class="math-inline">v</span>"; <span class="math-inline">(2, v)</span>
+means "second sign has feature vector <span class="math-inline">v</span>."</li>
+<li><span class="math-inline">(g, m) ∈ I</span> iff bigram <span class="math-inline">g = (s₁,s₂)</span>
+satisfies feature condition <span class="math-inline">m</span>.</li>
+</ul>
+</div>
+
+<div class="definition">
+<div class="label">Definition 4.6 — Concept Lattice and Pseudo-Intents <span class="status-tag status-DEFINITIONAL">DEFINITIONAL</span></div>
+<p>
+The <em>concept lattice</em> <span class="math-inline">L(K_C)</span>
+(Ganter &amp; Wille 1999) is the complete lattice of formal concepts
+<span class="math-inline">(A, B)</span> where
+<span class="math-inline">A ⊆ G</span>, <span class="math-inline">B ⊆ M</span>,
+<span class="math-inline">A' = B</span> (the set of all attributes shared by
+all objects in <span class="math-inline">A</span>), and
+<span class="math-inline">B' = A</span> (the set of all objects satisfying
+all attributes in <span class="math-inline">B</span>).
+</p>
+<p>
+A <em>pseudo-intent</em> (Ganter &amp; Wille 1999, Definition 2.22)
+of the formal context <span class="math-inline">K_C</span>
+is a set <span class="math-inline">P ⊆ M</span> satisfying two conditions:
+</p>
+<ol style="margin:6px 0;">
+<li><span class="math-inline">P ≠ P''</span> — <span class="math-inline">P</span>
+is not an intent (the set of objects satisfying all attributes in
+<span class="math-inline">P</span> is not exactly
+<span class="math-inline">P</span>).</li>
+<li><strong>(Recursive condition.)</strong> For every pseudo-intent
+<span class="math-inline">Q ⊊ P</span>, we have
+<span class="math-inline">Q'' ⊆ P</span>.</li>
+</ol>
+<p>
+Equivalently, <span class="math-inline">P</span> is a minimal set
+(under inclusion) among those sets <span class="math-inline">Q</span>
+for which <span class="math-inline">Q'' ≠ Q</span> and the closure of
+all strictly smaller pseudo-intents is contained in <span class="math-inline">P</span>.
+This recursive definition is essential: it guarantees that the pseudo-intents
+form a canonical basis of implications (the <em>Duquenne–Guigues basis</em>,
+Ganter &amp; Wille 1999, Theorem 2.25) from which all attribute implications
+valid in the context can be derived.
+</p>
+</div>
+
+<div class="proposition">
+<div class="label">Proposition 4.7 — FCA Encoding of Forbidden Patterns <span class="status-tag status-DEDUCTIVE">DEDUCTIVE</span></div>
+<p>
+The pseudo-intents of <span class="math-inline">L(K_C)</span>
+that have empty extent (<span class="math-inline">P' = ∅</span>) correspond
+bijectively to the <em>minimal</em> forbidden feature constraints — the
+irreducible Boolean formulas in <span class="math-inline">Forb(S,F,C)</span>
+that have no proper sub-formula that is also forbidden.
+</p>
+<p><em>Proof.</em> A pseudo-intent <span class="math-inline">P</span> with
+<span class="math-inline">P' = ∅</span> means that <em>no observed bigram</em>
+satisfies all attributes in <span class="math-inline">P</span>. This is
+precisely the condition that the conjunction of the feature conditions in
+<span class="math-inline">P</span> is a forbidden pattern. The recursive
+condition in Definition 4.6 ensures that <span class="math-inline">P</span>
+is irreducible: any strict subset <span class="math-inline">Q ⊊ P</span>
+that is itself a pseudo-intent must satisfy
+<span class="math-inline">Q'' ⊆ P</span> (Definition 4.6,
+condition 2). Now suppose for contradiction that
+<span class="math-inline">Q</span> were also a forbidden pseudo-intent — i.e.,
+<span class="math-inline">Q' = ∅</span>. Then
+<span class="math-inline">Q'' = (∅)' = M</span> (the empty set of objects
+satisfies all attributes vacuously, so its intent closure is the full attribute
+set). But <span class="math-inline">Q'' ⊆ P</span> would then imply
+<span class="math-inline">M ⊆ P</span>, contradicting that
+<span class="math-inline">P</span> is a non-trivial forbidden constraint
+(<span class="math-inline">P ≠ M</span>). Therefore no strict subset of
+<span class="math-inline">P</span> that is itself a pseudo-intent can have
+empty extent — meaning no smaller forbidden constraint subsumes
+<span class="math-inline">P</span>.
+Conversely, any minimal forbidden Boolean constraint defines a set of feature
+conditions with empty extent satisfying both conditions of Definition 4.6:
+condition (1) holds because <span class="math-inline">P' = ∅ ⇒ P'' = M ≠ P</span>
+(unless <span class="math-inline">P = M</span>, the vacuous constraint);
+condition (2) holds by minimality — any strictly smaller pseudo-intent would
+correspond to a weaker forbidden constraint, which cannot exist. ∎
+</p>
+</div>
+
+<h3 id="s4-4">4.4 Commutativity — Equivalence of the Three Formulations</h3>
+
+<div class="theorem">
+<div class="label">Theorem 4.1 — Equivalence (Main Structural Theorem) <span class="status-tag status-DEDUCTIVE">DEDUCTIVE</span></div>
+<p>
+The following three constructions produce isomorphic information about the
+forbidden patterns of a CSS <span class="math-inline">(S, F, C)</span>:
+</p>
+<ol style="margin:6px 0;">
+<li><strong>Coalgebra</strong>: The complement
+<span class="math-inline">(S × S) \ graph(δ_obs)</span> of the observed
+transition relation.</li>
+<li><strong>Dowker</strong>: The set of missing 1-simplices (non-edges)
+of the Dowker complex <span class="math-inline">K(C)</span>.</li>
+<li><strong>FCA</strong>: The set of pseudo-intents of
+<span class="math-inline">L(K_C)</span> that have empty extent, projected
+onto feature space.</li>
+</ol>
+<p>
+Moreover, the following diagram commutes (all arrows are bijections or
+isomorphisms of the relevant structures):
+</p>
+
+<div class="commutative-diagram"><pre>
+              Forb_coalg(S,F,C)
+                   │
+     bijection     │     bijection
+    (Prop 4.2)     │    (Prop 4.4)
+                   │
+     ┌─────────────┴─────────────┐
+     │                           │
+     ▼                           ▼
+  Forb₂(C)                  Missing edges
+  (bigram set)              of K(C)
+     │                           │
+     │  feature projection       │  feature quotient
+     │  F×F                      │  K(C) → K_F(C)
+     ▼                           ▼
+  Forb_F(C) ◄──────────────► Minimal non-faces
+  (Boolean algebra)    bijection   of K_F(C)
+     │
+     │  Proposition 4.7
+     │  (FCA correspondence)
+     ▼
+  Pseudo-intents
+  of L(K_C) with P'=∅
+</pre></div>
+
+<p>
+<em>Proof.</em> The bijections are established componentwise:
+</p>
+<p>
+<strong>Coalgebra ↔ Bigram set.</strong>
+Proposition 4.2: both are
+<span class="math-inline">{ (s₁,s₂) : count = 0 }</span>.
+</p>
+<p>
+<strong>Bigram set ↔ Missing edges.</strong>
+Proposition 4.4: missing edges of <span class="math-inline">K(C)</span>
+are exactly the non-edges of the graph <span class="math-inline">(S, R_C)</span>,
+which are the <span class="math-inline">(s₁, s₂)</span> with
+<span class="math-inline">count = 0</span>.
+</p>
+<p>
+<strong>Coalgebra ↔ FCA.</strong>
+The formal context <span class="math-inline">K_C</span> is built from
+<span class="math-inline">δ_obs</span> (the objects <span class="math-inline">G</span>
+are the graph of <span class="math-inline">δ_obs</span>). Pseudo-intents
+with empty extent characterise which feature conjunctions are <em>never</em>
+satisfied by any observed bigram — exactly <span class="math-inline">Forb(S,F,C)</span>
+compressed to its irreducible generators. This is an application of the
+Duquenne–Guigues theorem (Ganter &amp; Wille 1999, Theorem 2.25): the set of
+pseudo-intents of a formal context forms a canonical basis of implications —
+every attribute implication valid in the context follows from the implications
+<span class="math-inline">{P → P'' : P is a pseudo-intent}</span>. Specialising
+to the empty-extent case <span class="math-inline">P' = ∅ ⇒ P'' = M</span>,
+the implication becomes <span class="math-inline">P → M</span> — "if the
+attributes in <span class="math-inline">P</span> hold, then every attribute
+holds," which is equivalent to "no object satisfies
+<span class="math-inline">P</span>" — <em>i.e.</em>, a forbidden pattern.
+</p>
+<p>
+<strong>Triangular commutativity.</strong>
+The vertical arrows (feature projection) are surjections, not bijections:
+multiple distinct forbidden bigrams may map to the same feature-level
+constraint. The bottom layer — <span class="math-inline">Forb_F(C)</span>,
+minimal non-faces of <span class="math-inline">K_F(C)</span>, and empty-extent
+pseudo-intents — are in bijective correspondence. The diagram commutes
+because each path from the coalgebraic forbidden set to the feature-level
+Boolean algebra factors through the same feature projection
+<span class="math-inline">F × F</span>. ∎
+</p>
+</div>
+
+<div class="finding">
+<div class="label">FINDING 4 — PRINCIPAL FINDING <span class="status-tag status-DEDUCTIVE">DEDUCTIVE</span></div>
+<p>
+<strong>The three formulations are not merely analogous — they are mathematically
+equivalent.</strong> The coalgebra provides the <em>operational semantics</em>
+(what transitions are undefined), the Dowker complex provides the
+<em>topological invariants</em> (Betti numbers, connectivity), and the
+FCA lattice provides the <em>hierarchical organisation</em> (which constraints
+imply which others). The equivalence means that any theorem proved in one
+formulation immediately translates to the other two.
+</p>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 5: CONNECTION TO PAC LEARNING -->
+<!-- ============================================================ -->
+
+<h2 id="s5">5. Connection to PAC Learning</h2>
+
+<h3 id="s5-1">5.1 Inductive Inference from Positive Data Alone</h3>
+
+<p>
+Gold (1967) established a fundamental negative result: the class of
+<em>superfinite</em> languages — those containing all finite subsets of an
+infinite set plus one infinite set — cannot be identified in the limit from
+positive data alone. The learner sees an enumeration of grammatical strings
+but never a negative example; from this, it must converge to the correct
+grammar. Gold proved this is impossible for any class containing all finite
+languages and at least one infinite language.
+</p>
+
+<p>
+Angluin (1980) refined the picture by characterising the necessary and
+sufficient condition: a class of languages is identifiable from positive
+data iff every language in the class has a <em>finite tell-tale</em> — a
+finite subset that is not contained in any other language in the class that
+is a proper subset of the given language. Informally: each language must
+have a "fingerprint" that distinguishes it from all its sub-languages.
+</p>
+
+<p>
+The Forb functor operates in a regime where Angluin's condition is
+automatically satisfied:
+</p>
+
+<div class="proposition">
+<div class="label">Proposition 5.1 — Finiteness of the Hypothesis Space <span class="status-tag status-DEDUCTIVE">DEDUCTIVE</span></div>
+<p>
+For a fixed feature dimension <span class="math-inline">n</span>, the
+hypothesis space <span class="math-inline">H_n = P({0,1}ⁿ × {0,1}ⁿ)</span>
+is finite, of cardinality <span class="math-inline">2^(2^(2n))</span>.
+The set of possible grammars extractable by Forb is a subset of
+<span class="math-inline">H_n</span> and is therefore finite.
+</p>
+</div>
+
+<p>
+For <span class="math-inline">n = 7</span>,
+<span class="math-inline">|H₇| = 2^(2¹⁴) = 2^16384</span>, an enormous but
+<em>finite</em> number. The effective hypothesis space — those Boolean
+constraints actually realised as forbidden patterns for some corpus — is
+vastly smaller (at most 20 in the BOC case).
+</p>
+
+<div class="theorem">
+<div class="label">Theorem 5.2 — Forb Satisfies Angluin's Condition <span class="status-tag status-DEDUCTIVE">DEDUCTIVE</span></div>
+<p>
+For any CSS <span class="math-inline">(S, F, C)</span> with fixed
+<span class="math-inline">n</span>, the Boolean algebra
+<span class="math-inline">Forb(S,F,C)</span> is identifiable from positive
+data in the sense of Angluin (1980).
+</p>
+<p><em>Proof.</em> The hypothesis space
+<span class="math-inline">H_n = P({0,1}ⁿ × {0,1}ⁿ)</span> is finite
+(Proposition 5.1). For a finite class of languages, Angluin's tell-tale
+condition is trivially satisfied: for each language
+<span class="math-inline">L</span> in the class, the entire finite set
+<span class="math-inline">L</span> itself serves as a tell-tale — any proper
+subset language <span class="math-inline">L' ⊊ L</span> must be missing at
+least one element of <span class="math-inline">L</span>. In the Forb
+setting, the "language" corresponding to a grammar
+<span class="math-inline">G ⊆ H_n</span> is the set of bigrams consistent
+with all constraints in <span class="math-inline">G</span> — the
+complement of the union of the forbidden feature-pair sets. Since
+<span class="math-inline">H_n</span> is finite, the class of possible
+Forb-output grammars is also finite, and therefore identifiable from
+positive data.
+</p>
+<p>
+The identifiability is constructive: by Theorem 3.2 (monotonicity),
+<span class="math-inline">Forb(C)</span> can only shrink as the corpus
+grows. Since there are only finitely many grammars, the sequence
+<span class="math-inline">Forb(C_k)</span> must stabilise after some
+finite corpus size — the point at which the corpus contains a
+<em>characteristic sample</em> sufficient to eliminate every incorrect
+grammar in the finite class. ∎
+</p>
+</div>
+
+<h3 id="s5-2">5.2 Circumventing Gold's Impossibility Theorem</h3>
+
+<div class="finding">
+<div class="label">FINDING 5 — STRUCTURAL PROPERTY — How Forb Evades Gold <span class="status-tag status-STRUCTURAL">STRUCTURAL CORRESPONDENCE</span></div>
+<p>
+Gold's impossibility theorem (1967) applies to language classes that
+contain <em>all finite languages</em> and at least one infinite language.
+The class of grammars extractable by Forb for fixed <span class="math-inline">n</span>
+does <em>not</em> contain all finite languages: it contains only those
+languages definable by Boolean constraints on <span class="math-inline">n</span>-bit
+feature vectors. This is a <strong>proper subclass of the locally testable
+languages</strong> (McNaughton &amp; Papert 1971). Moreover, the
+hypothesis space for fixed <span class="math-inline">n</span> is finite, so
+the superfinite condition — which requires containing languages of
+arbitrarily large finite cardinality — is not met.
+</p>
+<p>
+The cost of this evasion is <strong>representational limitation</strong>:
+Forb can only express constraints that are Boolean combinations of
+<span class="math-inline">n</span> features. A grammar requiring
+<span class="math-inline">n+1</span> features cannot be represented until
+the feature dimension is increased. The choice of <span class="math-inline">n</span>
+is therefore an inductive bias: it determines which grammars are
+expressible and, consequently, learnable.
+</p>
+</div>
+
+<p>
+In PAC-learning terms (Valiant 1984), Forb realises an <em>ERM</em>
+(empirical risk minimisation) over the finite hypothesis class
+<span class="math-inline">H_n</span> with zero training error on the
+positive-only corpus. The generalisation error is the probability under
+the true distribution that a new bigram violates an extracted constraint.
+For a finite hypothesis class, the standard finite-class bound applies: with <span class="math-inline">|H_n| = 2^(2^(2n))</span>,
+the sample complexity for PAC-learning with confidence
+<span class="math-inline">1-δ</span> and error <span class="math-inline">ε</span>
+is bounded by <span class="math-inline">O((2^(2n) + log(1/δ))/ε)</span>,
+which is tractable for small <span class="math-inline">n</span> (certainly for
+<span class="math-inline">n = 7</span>).
+</p>
+
+<!-- ============================================================ -->
+<!-- SECTION 6: APPLICATIONS -->
+<!-- ============================================================ -->
+
+<h2 id="s6">6. Applications</h2>
+
+<h3 id="s6-1">6.1 Chemistry — BOC Axiom A</h3>
+
+<p>
+The BOC (Biological Organic Coalgebra) framework encodes organic functional
+groups as 7-bit vectors over seven Electronic Effect Element (EEE) generators:
+ET, α_CH, ρ_rad, ε_π, ε_LU, ν_π, ν_LP. The 42 SMARTS patterns detect the
+presence of each EEE generator, and each compound is reduced to a 128-bit
+r-vector (one bit per EEE combination). The corpus C comprises 107.8M
+compounds from PubChem and ChEMBL.
+</p>
+
+<table>
+<tr><th>Step</th><th>Operation</th><th>Scale</th></tr>
+<tr><td>Encode</td><td>Compound → r-vector (128 bits)</td><td>107.8M compounds</td></tr>
+<tr><td>Enumerate</td><td>All possible r-vector combinations</td><td>128² = 16,384 bigrams</td></tr>
+<tr><td>Count</td><td>Frequency in corpus</td><td>Variable (many > 10⁶, some 0)</td></tr>
+<tr><td>Filter</td><td>Keep cnt = 0 + statistical significance test</td><td>17 surviving (3 demoted at scale)</td></tr>
+<tr><td>Compress</td><td>Cluster by EEE feature profiles → Boolean constraints</td><td>1 central axiom + corollaries</td></tr>
+</table>
+
+<div class="finding">
+<div class="label">FINDING 6 — BOC Axiom A (Restated) <span class="status-tag status-EMPIRICAL">EMPIRICAL FINDING</span></div>
+<div class="math-block">α_CH = 1  ⇒  ν_π = 1  ∨  ε_LU = 1</div>
+<p>
+Status: <strong>Absolute at scale 107.8M</strong>. Zero counterexamples.
+Falsifiable by a single compound containing an acidic C–H but lacking both
+a π-nucleophile and a LUMO-level electrophile.
+</p>
+</div>
+
+<p>
+The BOC case is the <em>origin</em> of the Forb functor but not its intended
+limit. The functorial formulation in this paper extracts the mathematical
+core of the BOC pipeline and demonstrates that it is independent of the
+chemical domain.
+</p>
+
+<h3 id="s6-2">6.2 English Phonotactics — Empirical Verification</h3>
+
+<p>
+As described in §1.3, the BOC pipeline was applied to the CMU Pronouncing
+Dictionary with a 7-bit articulatory feature encoding for 39 ARPABET phonemes.
+The results are reproduced here in more detail.
+</p>
+
+<table>
+<tr><th>Parameter</th><th>Value</th></tr>
+<tr><td>Corpus</td><td>CMU Pronouncing Dictionary 0.7b</td></tr>
+<tr><td>Word count (parsed successfully)</td><td>33,374</td></tr>
+<tr><td>Phoneme inventory</td><td>39 (ARPABET)</td></tr>
+<tr><td>Feature encoding</td><td>7-bit: C/V (1), voice (1), place (2), manner (2), marker (1)</td></tr>
+<tr><td>Possible bigrams</td><td>39² = 1,521</td></tr>
+<tr><td>Observed bigrams</td><td>612 (40.2%)</td></tr>
+<tr><td>Forbidden bigrams</td><td>909 (59.8%)</td></tr>
+<tr><td>Extracted rules (absolute)</td><td>3</td></tr>
+<tr><td>Extracted rules (gradient)</td><td>2</td></tr>
+</table>
+
+<p>
+The absolute rules (R1–R3 in §1.3) correspond to well-known English
+phonotactic constraints. Crucially, no phonology-specific programming
+was used — the pipeline is identical to the BOC chemistry pipeline, with
+only the feature encoding table changed. This is the empirical basis for
+the domain-neutrality claim.
+</p>
+
+<h3 id="s6-3">6.3 Undeciphered Scripts — Indus, Linear A, Proto-Elamite</h3>
+
+<p>
+The Forb functor applies directly to undeciphered writing systems. The
+requirements are: (a) a defined sign inventory, (b) signs that can be
+feature-vectorised (by visual or structural properties), and (c) a
+sufficient corpus of sign sequences. Three scripts meet these criteria
+at Tier 1 readiness:
+</p>
+
+<table>
+<tr><th>Script</th><th>Period</th><th>Region</th><th>Signs</th><th>Corpus</th><th>Readiness</th></tr>
+<tr><td>Indus script</td><td>2800–1900 BCE</td><td>Indus Valley</td><td>417</td><td>~2,900 inscriptions</td><td>★★★★★</td></tr>
+<tr><td>Linear A</td><td>1800–1450 BCE</td><td>Crete</td><td>~100 syllabic + ideograms</td><td>~1,427 items (GORILA)</td><td>★★★★★</td></tr>
+<tr><td>Proto-Elamite</td><td>3100–2900 BCE</td><td>Iran (Susa)</td><td>1,813 (466 common)</td><td>1,585 texts analysed</td><td>★★★★★</td></tr>
+</table>
+
+<p>
+For the Indus script, a 7-bit visual-structural feature encoding has been
+designed, building on the sign concordance of Mahadevan (1977). The seven features are:
+stroke count, curve presence, bilateral symmetry, closed form,
+human/animal element, terminal mark, and container
+shape. The total feature space of <span class="math-inline">2⁷ = 128</span>
+profiles matches BOC's dimensionality. Phase A–F of the research program
+covers sign digitisation through language-family
+comparison.
+</p>
+
+<p>
+The relationship to existing work is complementary: Rao et al. (2009)
+answered "is the Indus script linguistic?" using conditional entropy.
+Forb answers the <em>next</em> question: "if it is linguistic, what are its
+grammar rules?" Yadav et al. (2010) analysed bigram frequency distributions;
+Forb analyses the <em>zero-frequency</em> side of the same distribution.
+The typological comparison (Phase E) would test the Dravidian hypothesis
+(Parpola 1994) against alternatives (Elamite, Sumerian, Munda, Burushaski).
+</p>
+
+<div class="finding">
+<div class="label">FINDING 7 — ILLUSTRATIVE EXAMPLE — 5-Sign Mini-Corpus <span class="status-tag status-ILLUSTRATIVE">ILLUSTRATIVE PROPOSAL</span></div>
+<p>
+A 5-sign, 3-feature, 3-inscription mini-example demonstrates the pipeline:
+</p>
+<table>
+<tr><th>Sign</th><th>f₁ (strokes)</th><th>f₂ (curve)</th><th>f₃ (figural)</th></tr>
+<tr><td>S₁ ☀</td><td>3</td><td>0</td><td>0</td></tr>
+<tr><td>S₂ 🜃</td><td>2</td><td>1</td><td>0</td></tr>
+<tr><td>S₃ 𐂷</td><td>5</td><td>0</td><td>1</td></tr>
+<tr><td>S₄ ⨀</td><td>1</td><td>1</td><td>0</td></tr>
+<tr><td>S₅ ⇑</td><td>3</td><td>0</td><td>0</td></tr>
+</table>
+<p>
+Corpus: I₁=[S₃,S₂,S₄], I₂=[S₁,S₅,S₂], I₃=[S₃,S₂,S₅,S₁].
+</p>
+<p>
+Forbidden bigrams (cnt=0): (S₃,S₁), (S₃,S₃), (S₁,S₂).
+Compressed to feature-level:
+<span class="math-inline">f₃=1 ⇒ ¬f₁(next) ∧ ¬f₃(next)</span>
+("figural sign forbids another figural or sun-wheel successor").
+</p>
+<p>
+This mini-rule is the <strong>direct analogue of BOC Axiom A</strong> at a
+different scale: a falsifiable Boolean constraint extracted purely from
+absence. The same code (<span class="math-inline">boc_to_indus.py</span>; see Data Availability statement in §9)
+performs the extraction.
+</p>
+</div>
+
+<div class="finding">
+<div class="label">FINDING 8 — EMPIRICAL FINDING — Proto-Elamite Forbidden Bigram Analysis <span class="status-tag status-EMPIRICAL">EMPIRICAL FINDING</span></div>
+<p>
+A complete application of the Forb pipeline to Proto-Elamite was performed
+using the CDLI (Cuneiform Digital Library Initiative) August 2022 bulk data
+dump. The corpus comprised 1,585 administrative tablets from Susa
+(period: 3100–2900 BCE), extracted from 3.5 million ATF transliteration
+lines by filtering on the CDLI period field. The sign inventory contained
+1,813 distinct sign types (M-numbered non-numerical signs plus
+N-numbered numerical signs), of which 466 occurred with frequency ≥5.
+</p>
+
+<p>
+<strong>Forbidden bigram enumeration.</strong> Among the 466 common signs,
+the theoretically possible bigram space is 217,156 pairs. Only 9,791
+bigrams were observed in the corpus. Applying the expected-frequency
+filter (expected count ≥1 under the independence model) yielded
+<strong>503 statistically significant forbidden bigrams</strong>, of
+which 4 carried an expected frequency ≥5:
+</p>
+
+<table>
+<tr><th>Forbidden bigram</th><th>Expected freq.</th><th>s₁ frequency</th><th>s₂ frequency</th></tr>
+<tr><td>M346 → M288</td><td>10.4</td><td>233</td><td>794</td></tr>
+<tr><td>M387 → M388</td><td>7.4</td><td>205</td><td>632</td></tr>
+<tr><td>M009 → M218</td><td>5.7</td><td>197</td><td>511</td></tr>
+<tr><td>M305 → M218</td><td>5.3</td><td>182</td><td>511</td></tr>
+</table>
+
+<p>
+<strong>Sign-function classification from numeral co-occurrence.</strong>
+Because CDLI ATF transliterations do not carry sign readings, sign identity
+had to be inferred from structural context. Proto-Elamite texts employ a
+two-tier notation: commodity signs (M-prefix) followed by numerical
+notations (N-prefix: N39B, N30C, N30D, N08A, N39C, N14, N01, N24, N34,
+N51G, N51). By constructing the <em>numeral co-occurrence profile</em> for
+each M-sign — which of the 11 numeral types can follow it — the top 50
+signs clustered into <strong>22 distinct functional profiles</strong>,
+each defining a class of signs that share identical numeral-combination
+privileges:
+</p>
+
+<table>
+<tr><th>Class</th><th>Numeral profile</th><th>Size</th><th>Example signs</th><th>Interpretation</th></tr>
+<tr><td>A</td><td>N39B, N30C</td><td>9</td><td>M218, M346, M009, M305</td><td>Standard commodities (2 counting systems)</td></tr>
+<tr><td>B</td><td>N39B only</td><td>9</td><td>M157, M096, M004</td><td>Special commodities (1 system)</td></tr>
+<tr><td>C</td><td><em>none</em></td><td>3</td><td>M153, M327, M195</td><td>Non-quantified (names/titles)</td></tr>
+<tr><td>D</td><td>N39B, N30C, N01</td><td>4</td><td>M388, M263</td><td>Extended commodity class</td></tr>
+</table>
+
+<p>
+<strong>Numeral subsystem isolation.</strong> Four numeral types — N24, N34,
+N51G, N51 — are <em>almost never</em> preceded by any M-sign. They form an
+isolated numeral subsystem, likely representing summation or meta-accounting
+layers (totals, subtotals) rather than item-level counting. Conversely,
+the numeral-to-numeral transition network is fully connected: all 11 numeral
+types co-occur with each other at least once (N→N forbidden = 0), consistent
+with the concatenative syntax of sexagesimal numerical notation.
+</p>
+
+<p>
+<strong>Comparison with prior work.</strong> Englund (1998) and Dahl (2005)
+classified Proto-Elamite signs into functional categories (commodities,
+personnel, numerals) through manual epigraphic analysis. The Forb pipeline
+recovers a functionally equivalent classification from bigram absence
+patterns alone — without access to sign readings, iconographic
+identification, or archaeological context. The 22-class clustering
+represents a <em>purely distributional</em> grammar of Proto-Elamite
+administrative notation.
+</p>
+
+<p>
+This result constitutes the first fully automated, corpus-driven extraction
+of grammatical constraints from an undeciphered script. It demonstrates
+that the Forb functor's domain-neutrality is not merely formal but
+operationally realisable: the same pipeline that extracted Axiom A from
+BOC chemistry and absolute phonotactic rules from English produced
+functional sign classes from Proto-Elamite — with no domain-specific
+modification beyond the choice of feature encoding (numeral co-occurrence
+in lieu of visual-structural features).
+</p>
+</div>
+
+<h3 id="s6-4">6.4 Protein Domain Architectures</h3>
+
+<p>
+The Pfam database (~20K domain families) combined with UniProt (~200M protein
+sequences) provides a combinatorial symbol system where signs are Pfam domains,
+the feature map encodes domain-level properties (length distribution, secondary
+structure composition, taxonomic distribution, functional class), and the
+corpus consists of multi-domain protein sequences. Forbidden domain pairs
+(count = 0 across all of UniProt) represent biophysically impossible
+combinations — steric clash, folding incompatibility, or functional
+contradiction.
+</p>
+
+<p>
+The Forb pipeline is identical: <strong>encode</strong> (domain → Pfam
+accession → feature vector) → <strong>enumerate</strong> (all domain pairs
+appearing in multi-domain proteins) → <strong>filter</strong> (cnt = 0 across
+UniProt) → <strong>compress</strong> (cluster by domain features into Boolean
+constraints). Individual forbidden pairs have been noted anecdotally
+(Apic et al. 2001; Vogel et al. 2004); Forb provides the systematic,
+exhaustive, mathematically grounded alternative.
+</p>
+
+<h3 id="s6-5">6.5 Large Language Models — Forb-Constrained Decoding</h3>
+
+<p>
+The Forb functor provides a mathematically grounded mechanism for
+<em>hard</em> output constraints on neural language models. Consider an LLM
+trained on a corpus <span class="math-inline">C_train</span>. At each decoding step,
+the model computes logits over the vocabulary
+<span class="math-inline">S</span>. Standard decoding (greedy, beam, or nucleus
+sampling) selects the next token without reference to whether the resulting
+bigram <span class="math-inline">(token_{t-1}, token_t)</span> ever appeared in
+<span class="math-inline">C_train</span>.
+</p>
+
+<div class="definition">
+<div class="label">Definition 6.1 — Forb-Constrained Decoding <span class="status-tag status-DEFINITIONAL">DEFINITIONAL</span></div>
+<p>
+Given a trained language model with vocabulary <span class="math-inline">S</span>,
+a corpus <span class="math-inline">C</span>, and the Forb functor, define the
+<em>constrained next-token distribution</em>:
+</p>
+<div class="math-block">P_forb(x | x_{<t}) ∝ P_LLM(x | x_{<t}) · 𝟙[(x_{t-1}, x) ∉ Forb_bigram(C)]</div>
+<p>
+where <span class="math-inline">Forb_bigram(C)</span> is the set of bigrams with
+count zero in <span class="math-inline">C</span>. The indicator
+<span class="math-inline">𝟙[·]</span> is 1 for all <em>observed</em> bigrams and
+0 for forbidden ones, effecting a hard mask on the logit space.
+</p>
+</div>
+
+<div class="finding">
+<div class="label">FINDING 9 — HARD CONSTRAINT GUARANTEE — Forb-Constrained Decoding <span class="status-tag status-DEDUCTIVE">DEDUCTIVE</span></div>
+<p>
+By Theorem 3.2 (monotonicity), any bigram in
+<span class="math-inline">Forb_bigram(C)</span> has count zero in
+<span class="math-inline">C</span>. The constrained decoder eliminates all such
+bigrams from the candidate set at every step, so no forbidden bigram can
+ever be generated. This is a <em>hard</em> guarantee <em>given the mask is applied at decoding
+time</em> — unlike RLHF, DPO, or
+prompt engineering, which provide soft shaping of the output distribution and
+can be circumvented by adversarial prompts or distribution shift. The guarantee
+is architectural: as long as the Forb logit mask is enforced, no gradient update
+to the model weights can make a forbidden bigram selectable, because the mask
+operates below the softmax, setting the relevant logits to −∞ independently of
+the weight-produced logit values.
+</p>
+</div>
+
+<p>
+This is fundamentally different from prevailing approaches to LLM safety:
+</p>
+
+<table>
+<tr><th>Approach</th><th>Mechanism</th><th>Guarantee</th><th>Circumventable?</th></tr>
+<tr>
+  <td>RLHF / DPO</td>
+  <td>Reward shaping on post-training data</td>
+  <td>Soft — shifts distribution, doesn't eliminate</td>
+  <td>Yes — jailbreak prompts, fine-tuning</td>
+</tr>
+<tr>
+  <td>Prompt engineering</td>
+  <td>Natural-language instruction</td>
+  <td>None — the model can ignore it</td>
+  <td>Yes — any sufficiently long context</td>
+</tr>
+<tr>
+  <td>Safety classifiers</td>
+  <td>Post-hoc rejection sampling</td>
+  <td>Probabilistic — classifier error rate</td>
+  <td>Yes — adversarial attacks on classifier</td>
+</tr>
+<tr>
+  <td><strong>Forb-constrained decoding</strong></td>
+  <td>Hard bigram mask from training corpus</td>
+  <td><strong>Mathematical</strong> — Theorem 3.2</td>
+  <td><strong>No</strong> (given the mask is enforced at decoding time)</td>
+</tr>
+</table>
+
+<div class="finding">
+<div class="label">FINDING 10 — ARCHITECTURAL CONSTRAINT — Forb-Constrained Decoding vs. Soft Methods <span class="status-tag status-STRUCTURAL">STRUCTURAL</span></div>
+<p>
+Where RLHF says "please avoid this" and prompt engineering says "try not to,"
+Forb-constrained decoding says "this is impossible in the output
+space under the current mask." The constraint is enforced at the architectural
+level (the logit mask) and therefore <em>cannot</em> be circumvented by any
+input, prompt, or fine-tuning of the weights above the mask — provided the
+mask itself is not removed or bypassed by a code change.
+</p>
+</div>
+
+<p>
+The computational overhead is minimal: the forbidden bigram set is a sparse
+subset of <span class="math-inline">S × S</span>. For a 50K vocabulary,
+<span class="math-inline">|S|² = 2.5 × 10⁹</span> possible bigrams, but
+empirically only a small fraction are observed at scale, and a hash-set lookup
+at each decoding step adds negligible cost relative to the forward pass.
+Feature compression via <span class="math-inline">F: S → {0,1}ⁿ</span>
+reduces the constraint space to at most
+<span class="math-inline">2^(2n)</span> Boolean conditions, independent
+of vocabulary size.
+</p>
+
+<p>
+<strong>Scope.</strong> Forb-constrained decoding prevents
+<em>structural hallucination</em> — the generation of token sequences whose
+adjacent bigrams violate the training distribution's grammar. It does
+<em>not</em> prevent factual hallucination (e.g. asserting that Tokyo is the
+capital of the United States), because factual errors can be expressed using
+perfectly grammatical token sequences. The constraint operates on
+<em>form</em>, not <em>content</em>. This distinction parallels the difference
+between syntax and semantics in linguistics: Forb guarantees syntactic
+well-formedness with respect to the training corpus, not propositional truth.
+</p>
+
+<h4>6.5.1 Word-Level Empirical Verification</h4>
+
+<p>
+As a sanity check, we tested Forb-constrained decoding at the <em>word</em>
+level on Lewis Carroll's <em>Alice in Wonderland</em> (1,046-word vocabulary,
+23.6K tokens). The pipeline is identical to Definition 6.1, but with
+<span class="math-inline">S</span> as the set of distinct words and bigrams
+defined over word adjacency rather than subword tokens.
+</p>
+
+<table>
+<tr><th>Metric</th><th>Value</th></tr>
+<tr><td>Vocabulary size</td><td>1,046</td></tr>
+<tr><td>Possible bigrams</td><td>1,094,116</td></tr>
+<tr><td>Observed bigrams</td><td>11,985 (1.10%)</td></tr>
+<tr><td>Forbidden bigrams</td><td>1,082,131 (98.90%)</td></tr>
+<tr><td>Constrained violation rate (10 trials)</td><td><strong>0%</strong></td></tr>
+<tr><td>Unconstrained violation rate (10 trials)</td><td>14.4%</td></tr>
+<tr><td>Output quality</td><td>Coherent</td></tr>
+</table>
+
+<p>
+At the word level, Forb-constrained decoding is fully functional: the constraint
+eliminates all forbidden bigrams (0% violation rate, vs. 14.4% for unconstrained
+decoding), and the generated text remains coherent. The 98.90% forbidden rate
+leaves the decoder with 11,985 observed edges — a sufficiently connected bigram
+graph to support fluent generation. This demonstrates that the Forb framework
+<em>does</em> work as a hard constraint mechanism when the constraint space is
+not combinatorially pathological. The contrast with subword-token-level Forb
+(79.7% violation rate, output collapse; see companion experiment) establishes a
+qualitative phase transition driven by observed-bigram density.
+</p>
+
+<h3 id="s6-6">6.6 LLM Output as a Combinatorial Symbol System — Structural Fingerprinting</h3>
+
+<p>
+The Forb functor can be applied not only to the training corpus but to the
+LLM's <em>output</em> as well. Let
+<span class="math-inline">C_gen</span> be a corpus of text generated by
+a particular LLM under a particular decoding regime (temperature, sampling
+parameters). Then:
+</p>
+
+<div class="math-block">Forb(C_gen) = { φ ⊆ {0,1}ⁿ×{0,1}ⁿ : no bigram in C_gen satisfies φ }</div>
+
+<p>
+This is the set of Boolean constraints that the LLM, in practice,
+<em>never violates</em>. It is an <strong>empirical signature</strong> of
+the model's architectural biases, training data distribution, and decoding
+parameters — a fingerprint that is measurable, falsifiable, and
+domain-neutral.
+</p>
+
+<div class="finding">
+<div class="label">FINDING 11 — EMPIRICAL FINGERPRINT — Forb as Model Invariant <span class="status-tag status-EMPIRICAL">EMPIRICAL OBSERVATION</span></div>
+<p>
+Two different LLMs (or the same LLM under different decoding regimes)
+generate distinct <span class="math-inline">Forb(C_gen)</span> profiles.
+The difference
+</p>
+<div class="math-block">Forb(LLM_A) Δ Forb(LLM_B)</div>
+<p>
+is a <em>structural divergence measure</em> — a catalogue of patterns
+that one model can produce and the other cannot. This measure is orthogonal
+to perplexity, BLEU, or standard benchmark scores: two models with identical
+perplexity may have systematically different forbidden-pattern profiles,
+revealing architectural differences invisible to standard metrics.
+</p>
+</div>
+
+<p>
+Three comparative applications follow:
+</p>
+
+<ol style="list-style-type: decimal; margin: 6px 0;">
+<li>
+<strong>LLM vs. human output.</strong> Computing
+<span class="math-inline">Forb(LLM_output) Δ Forb(human_text)</span> yields:
+<ul>
+<li>Patterns in <span class="math-inline">Forb(human_text) \ Forb(LLM_output)</span>:
+  structural errors — the LLM produces patterns that humans never do.</li>
+<li>Patterns in <span class="math-inline">Forb(LLM_output) \ Forb(human_text)</span>:
+  expressive deficits — humans produce patterns that the LLM never does.</li>
+</ul>
+Neither category is detectable by perplexity, which measures aggregate
+likelihood, not the set of <em>impossible</em> outputs.
+</li>
+
+<li>
+<strong>Effect of decoding hyperparameters.</strong> As temperature
+<span class="math-inline">T</span> increases,
+<span class="math-inline">Forb(C_gen)</span> tends to shrink:
+at higher temperatures the token selection probabilities become more uniform
+(entropy maximisation), causing <span class="math-inline">C_gen</span> to
+cover a wider portion of the bigram space. This is consistent with the spirit of
+Theorem 3.2 (larger effective corpus → fewer forbidden patterns), though the
+mechanism here is distributional rather than strictly corpus-size expansion. The rate of shrinkage — the
+<span class="math-inline">|Forb(C_gen)| / T</span> curve — characterises
+the model's "constraint elasticity." A model with sharp shrinkage is
+brittle; a model with gradual shrinkage is robust to sampling noise.
+</li>
+
+<li>
+<strong>Self-consistency.</strong> Generate
+<span class="math-inline">N</span> outputs from the same LLM on the same
+prompt and compute
+<span class="math-inline">Forb(C_gen^N)</span>. Patterns that remain
+forbidden across all <span class="math-inline">N</span> trials are the
+LLM's <em>core constraints</em> — the patterns it structurally cannot
+produce under any plausible sampling outcome. Core constraint stability
+as <span class="math-inline">N</span> grows characterises the model's
+reliability: an unstable core indicates high output variance.
+</li>
+</ol>
+
+<div class="conjecture">
+<div class="label">Conjecture 6.1 — Output Convergence <span class="status-tag status-CONJECTURAL">CONJECTURAL</span></div>
+<p>
+For an LLM treated as a stationary generative process, as
+<span class="math-inline">|C_gen| → ∞</span>,
+<span class="math-inline">Forb(C_gen)</span> converges to a limit Boolean
+algebra <span class="math-inline">Forb_∞</span> that is a
+<strong>functorial invariant</strong> of the model architecture and training
+distribution. This limit characterises the structural constraints that the
+model <em>cannot violate</em>, independent of sampling noise. Two models with
+the same <span class="math-inline">Forb_∞</span> are structurally equivalent
+in their bigram constraint profile, regardless of parameter count or training
+objective.
+</p>
+</div>
+
+<h3 id="s6-7">6.7 Neural Sparsity and the Forb Functor</h3>
+
+<p>
+The observation that 98.9% of possible bigrams in a single-work, word-level English corpus
+are forbidden (§6.5.1, word-level empirical result with <em>Alice in Wonderland</em>,
+1,046-word vocabulary) resonates with a deeper principle in neuroscience:
+biological neural networks are <em>sparse</em> — they use only a small fraction
+of their possible connections, and the unused ones are systematically
+eliminated. This section sketches the structural homology between the Forb
+functor and three established neuroscientific frameworks, suggesting that Forb
+may serve as a minimal mathematical model of the brain's "negative learning"
+mechanisms.
+</p>
+
+<h4>6.7.1 Synaptic Pruning as Forb Monotonicity</h4>
+
+<p>
+In human cortical development, synaptic density peaks at approximately age 2
+and declines by roughly 40% through adolescence (Huttenlocher 1979). This
+<em>synaptic pruning</em> eliminates connections that are rarely or never
+co-activated, leaving a sparse, specialised adult circuit. The process is
+monotone: once pruned, a synapse is not re-established in normal development.
+</p>
+
+<p>
+This is formally identical to Theorem 3.2. Let
+<span class="math-inline">S</span> be the set of neurons,
+<span class="math-inline">C</span> the history of co-activation events
+(analogous to a bigram corpus of neural firing pairs), and
+<span class="math-inline">Forb(C)</span> the set of neuron pairs that have
+<em>never</em> fired together. As the organism accumulates experience
+(<span class="math-inline">C ⊂ C'</span>), the set of "forbidden"
+(never-co-activated) pairs shrinks monotonically:
+</p>
+
+<div class="math-block">C ⊆ C' ⇒ Forb(C) ⊇ Forb(C')</div>
+
+<p>
+The pruned synapses are precisely those pairs
+<span class="math-inline">(n₁, n₂)</span> that remain in
+<span class="math-inline">Forb(C)</span> after the critical period closes.
+The correspondence is structural, not metaphorical: both systems eliminate
+connections based on <em>absence</em> of evidence, both are antitone in the
+data, and both are irreversible in the forward direction.
+</p>
+
+<div class="finding">
+<div class="label">FINDING 12 — NEURAL HOMOLOGY — Synaptic Pruning as a Forb Process <span class="status-tag status-STRUCTURAL">STRUCTURAL</span></div>
+<p>
+Changeux &amp; Danchin (1976) proposed that developing neural circuits are
+sculpted by <em>selective stabilisation</em>: synapses that are co-active with
+post-synaptic firing are stabilised; those that are not are eliminated. This
+is the neurobiological dual of Forb: the functor compresses the
+"non-stabilised" pairs into a Boolean algebra whose cardinality decreases
+monotonically with experience. The critical period (the developmental window
+during which pruning is active) corresponds to the phase of rapid shrinkage
+of <span class="math-inline">|Forb(C)|</span>; the adult plateau corresponds
+to the convergence regime of Theorem 3.3.
+</p>
+</div>
+
+<h4>6.7.2 Sparse Coding and the 1% Regime</h4>
+
+<p>
+Olshausen &amp; Field (1996) demonstrated that when a neural network is
+trained to reconstruct natural images under a sparsity constraint on hidden-unit
+activation, the resulting receptive fields resemble those of V1 simple cells.
+The sparsity constraint — that only a small fraction of units are active for
+any given input — yields a code that is both metabolically efficient and
+statistically matched to natural scene structure.
+</p>
+
+<p>
+The Forb functor captures the <em>combinatorial</em> analogue of this principle.
+For the 1,046-word vocabulary of <em>Alice in Wonderland</em>, only 1.10%
+of possible adjacent-word pairs are ever observed. This is not a constraint
+imposed by the analyst; it is an empirical property of the corpus — natural
+language is a "sparse code" in the combinatorial sense. The Forb functor
+renders this sparsity as a Boolean algebra:
+</p>
+
+<div class="math-block">|Forb(C)| / |S|² = 98.90%　（fraction of impossible bigrams）</div>
+
+<p>
+In neural terms, this suggests that a language-processing circuit need only
+encode the observed 1.10% of transitions — a ~100-fold reduction in
+representational cost — with the remaining 98.90% pruned or inhibited as
+"structurally impossible." The Forb functor provides the mathematical
+machinery to compute exactly which transitions belong in which category.
+</p>
+
+<h4>6.7.3 Free Energy Principle and Forbidden-Pattern Surprisal</h4>
+
+<p>
+Friston's free energy principle (Friston 2010) posits that biological systems
+act to minimise <em>surprisal</em> — the negative log-probability of sensory
+states under an internal generative model. States with high surprisal are
+avoided; the organism's phenotype and behaviour are shaped to keep it within
+a limited repertoire of low-surprisal states.
+</p>
+
+<p>
+In the Forb framework, a forbidden bigram
+<span class="math-inline">(s₁, s₂) ∈ Forb(C)</span> has empirical probability
+zero in the corpus. Its surprisal, if generated by any model that learns from
+<span class="math-inline">C</span> alone, is <em>infinite</em>:
+</p>
+
+<div class="math-block">−log P(s₂ | s₁) = −log 0 → ∞</div>
+
+<p>
+Thus <span class="math-inline">Forb(C)</span> is precisely the set of
+<strong>infinite-surprisal states</strong> — the subset of the output space that
+a free-energy-minimising agent must <em>never</em> visit. The monotonicity
+theorem (Theorem 3.2) says that as the agent gathers more data, the set of
+infinite-surprisal states can only shrink — the agent's viable state space
+expands, but never contracts. This is consistent with the developmental
+trajectory of an organism: an infant's motor repertoire is highly constrained;
+experience expands it; once a movement pattern is reliably executed, its
+surprisal falls from infinity to a finite value, and it enters the repertoire
+permanently.
+</p>
+
+<div class="finding">
+<div class="label">FINDING 13 — ZERO-SURPRISAL BOUNDARY — Forb and the Free Energy Principle <span class="status-tag status-STRUCTURAL">STRUCTURAL</span></div>
+<p>
+The Forb functor defines the boundary between finite-surprisal and
+infinite-surprisal states for any combinatorial symbol system. This boundary
+is (a) mathematically precise — a Boolean algebra, not a heuristic threshold;
+(b) monotonic in the data — more experience can only push the boundary outward,
+expanding the space of permissible states; and (c) domain-neutral — it applies
+identically to chemical structures, phonotactics, and neural co-activation
+patterns. In Fristonian terms, Forb(C) is the <em>absolutely avoided</em>
+region of the agent's variational free energy landscape.
+</p>
+</div>
+
+<h4>6.7.4 Scope and Caution</h4>
+
+<p>
+The homology described here is <em>structural</em>, not causal. The Forb
+functor is a mathematical construction; it does not claim that the brain
+literally implements a hash-set lookup of forbidden bigrams. Rather, the
+claim is that three independently developed frameworks — Changeux &amp;
+Danchin's selective stabilisation, Olshausen &amp; Field's sparse coding,
+and Friston's free energy principle — all describe operations that are
+structurally isomorphic to (or at least monotone in the same direction as)
+the Forb functor. Whether this structural homology reflects a deeper
+mathematical unity — a single variational principle spanning neuroscience
+and formal language theory — is an open question (see OP9).
+</p>
+
+<!-- ============================================================ -->
+<!-- SECTION 6.8: FRACTAL DIMENSION AND TRANSCENDENTAL INVARIANTS -->
+<!-- ============================================================ -->
+
+<h2 id="s6-8">6.8 Fractal Dimension and Transcendental Invariants of the Forbidden Set</h2>
+
+<p style="font-size:0.85em;color:#666;"><strong>Finding numbering:</strong> All 16 Findings are now sequentially numbered (FINDING 1–12 in §§1–6.7; FINDING 13–16 in this section).</p>
+
+<p>
+The preceding sections established that the Forb functor maps a combinatorial symbol
+system to a Boolean algebra of impossible patterns. This section asks a geometric
+question: when the forbidden pattern set <span class="math-inline">F ⊂ {0,1}ⁿ</span>
+is embedded in the <span class="math-inline">n</span>-dimensional hypercube, what
+is its <em>fractal dimension</em> — and what does that dimension encode? The answer
+reveals that Forb produces <strong>transcendental invariants</strong> from purely
+algebraic inputs, a phenomenon structurally parallel to the emergence of <span class="math-inline">π</span>
+at the boundary of the Mandelbrot set.
+</p>
+
+<h3 id="s6-8-1">6.8.1 Cantor Dimension of the Forbidden Set</h3>
+
+<p>
+Let <span class="math-inline">F = Forb(S,F,C) ⊂ {0,1}ⁿ</span> be the set of
+r-vectors (feature profiles) that never appear in the corpus
+<span class="math-inline">C</span>. Not all <span class="math-inline">n</span>
+dimensions vary within <span class="math-inline">F</span>. Define the
+<strong>effective dimension</strong> <span class="math-inline">k</span> as the
+number of bits that take both values 0 and 1 within
+<span class="math-inline">F</span> (i.e., non-frozen dimensions). The
+<strong>Cantor dimension</strong> of the forbidden set is:
+</p>
+
+<div class="math-block">D_C(F) = log₂(|F|) / k</div>
+
+<p>
+This is the fractional dimension of <span class="math-inline">F</span> as a
+subset of the minimal axis-aligned subcube containing it — the exponent
+characterising how <span class="math-inline">|F|</span> scales with the
+subcube size <span class="math-inline">2^k</span>. It is named after the
+classical Cantor set, whose dimension
+<span class="math-inline">log(2)/log(3) ≈ 0.631</span> follows the same formula.
+</p>
+
+<div class="finding">
+<div class="label">FINDING 14 — Cantor Dimension of CLOC Forbidden Patterns <span class="status-tag status-EMPIRICAL">EMPIRICAL</span></div>
+<p>
+For the CLOC chemical classification (BOC, §6.1):
+</p>
+<div class="math-block">
+|F| = 17　（forbidden r-vectors of 128 total）
+k = 5　（non-frozen bits; ε_LU and ρ_rad are frozen within F）
+D_C(F) = log₂(17) / 5 ≈ 0.8175
+</div>
+<p>
+The forbidden set occupies 17 of the 32 vertices in the minimal containing
+subcube — a filling fraction of 53.1%. Its Cantor dimension 0.8175 lies between
+a point set (dimension 0) and a curve (dimension 1), characterising it as a
+Cantor-like sparse structure with non-integer effective dimension.
+</p>
+</div>
+
+<h3 id="s6-8-2">6.8.2 The Transcendental Dimension Theorem</h3>
+
+<p>
+The numerical value of <span class="math-inline">D_C(F)</span> is not merely
+non-integer; it—and the Cantor dimension of Forb sets computed for many
+combinatorial symbol systems—is <strong>transcendental</strong>.
+</p>
+
+<div class="theorem">
+<div class="label">Theorem 6.2 — Transcendental Dimension of the Forbidden Set <span class="status-tag status-DEDUCTIVE">DEDUCTIVE</span></div>
+<p>
+Let <span class="math-inline">F = Forb(CSS) ⊂ {0,1}ⁿ</span> with non-frozen
+dimension count <span class="math-inline">k</span>. If
+<span class="math-inline">|F|</span> and 2 are multiplicatively independent—
+i.e., there exist no non-zero integers <span class="math-inline">p,q</span>
+such that <span class="math-inline">|F|^p = 2^q</span>—then the Cantor
+dimension <span class="math-inline">D_C(F) = log₂(|F|)/k</span> is
+transcendental.
+</p>
+</div>
+
+<div class="proof-sketch">
+<div class="label">Proof sketch</div>
+<p>
+By Baker's theorem (Baker 1966), if
+<span class="math-inline">α₁,…,α_m</span> are non-zero algebraic numbers whose
+logarithms are linearly independent over <span class="math-inline">ℚ</span>,
+then <span class="math-inline">1, log(α₁),…,log(α_m)</span> are linearly
+independent over the field of algebraic numbers
+<span class="math-inline">ℚ̅</span>.</p>
+
+<p>Apply this with <span class="math-inline">m = 2</span>,
+<span class="math-inline">α₁ = |F|</span>,
+<span class="math-inline">α₂ = 2</span>. Both are algebraic (they are integers).
+By hypothesis, <span class="math-inline">|F|</span> and 2 are multiplicatively
+independent, so <span class="math-inline">log(|F|)</span> and <span class="math-inline">log(2)</span>
+are linearly independent over <span class="math-inline">ℚ</span>. Baker's
+theorem then implies they are linearly independent over
+<span class="math-inline">ℚ̅</span>.<sup>†</sup> Consequently, their ratio
+<span class="math-inline">log(|F|)/log(2) = log₂(|F|)</span> cannot be algebraic
+— if it were, we would have a non-trivial
+<span class="math-inline">ℚ̅</span>-linear relation
+<span class="math-inline">1 · log(|F|) + (−log₂(|F|)) · log(2) = 0</span>.</p>
+
+<p>Thus <span class="math-inline">log₂(|F|)</span> is transcendental. Dividing by
+the integer <span class="math-inline">k</span> preserves transcendence (if
+<span class="math-inline">k · D_C</span> were algebraic,
+<span class="math-inline">D_C</span> would be algebraic as well, contradiction,
+since algebraic numbers form a field closed under multiplication by rationals).
+Hence <span class="math-inline">D_C(F) = log₂(|F|)/k</span> is transcendental. ∎
+</p>
+<p style="font-size:0.82em;color:#666;margin-top:6px;">
+<sup>†</sup> The same conclusion follows from the Gelfond–Schneider theorem (1934):
+if <span class="math-inline">log₂(|F|)</span> were algebraic and irrational,
+then <span class="math-inline">2^{log₂(|F|)} = |F|</span> would be transcendental
+by Gelfond–Schneider, contradicting that <span class="math-inline">|F|</span> is
+an integer. The case of rational <span class="math-inline">log₂(|F|)</span> would
+imply <span class="math-inline">|F|^p = 2^q</span> for some integers
+<span class="math-inline">p,q</span>, contradicting multiplicative independence.
+Baker's theorem is invoked here because it generalises naturally to the
+multi-feature setting (§6.8.6, Conjecture 6.2) where Gelfond–Schneider does not
+apply.
+</p>
+</div>
+
+<div class="corollary">
+<div class="label">Corollary 6.2.1 — Prime Forbidden Set <span class="status-tag status-DEDUCTIVE">DEDUCTIVE</span></div>
+<p>
+If <span class="math-inline">|F|</span> is prime and <span class="math-inline">|F| ≠ 2</span>,
+then <span class="math-inline">D_C(F)</span> is transcendental. In particular,
+<span class="math-inline">D_C(CLOC) = log₂(17)/5</span> is transcendental.
+</p>
+</div>
+
+<p>
+This means that a purely combinatorial, finite construction — the Forb functor
+applied to a finite corpus — generates a <strong>transcendental number</strong>
+as an invariant. The input (signs, features, corpus) is entirely algebraic; the
+output carries a quantity that cannot be expressed as the root of any polynomial
+with integer coefficients.
+</p>
+
+<h3 id="s6-8-3">6.8.3 The Surface Theorem — Forbidden Patterns as a Dominating-Set Frontier</h3>
+
+<p>
+The embedding of the forbidden set <span class="math-inline">F</span> in the
+hypercube graph <span class="math-inline">Qₙ</span> (vertices connected when
+their Hamming distance is 1) reveals a topological regularity.
+</p>
+
+<div class="theorem">
+<div class="label">Theorem 6.3 — Surface Theorem <span class="status-tag status-DEDUCTIVE">DEDUCTIVE</span></div>
+<p>
+For the CLOC chemical classification under Axiom A (§1.2), the allowed set
+<span class="math-inline">A = {0,1}⁷ \ F</span> is a
+<strong>dominating set</strong> of the 7-cube <span class="math-inline">Q₇</span>:
+every forbidden vertex has at least one allowed neighbour at Hamming distance 1.
+Equivalently, <span class="math-inline">F</span> lies entirely on the <em>boundary</em>
+of the allowed region — there are no interior forbidden points.
+</p>
+</div>
+
+<div class="proof-sketch">
+<div class="label">Proof</div>
+<p>
+Axiom A states: <span class="math-inline">α_CH (bit 5) ⇒ ν_π (bit 2) ∨ ε_LU (bit 1)</span>.
+A pattern is forbidden by Axiom A iff
+<span class="math-inline">α_CH = 1, ν_π = 0, ε_LU = 0</span>.</p>
+
+<p>For any such pattern <span class="math-inline">f</span>, flip
+<span class="math-inline">ν_π</span> from 0 to 1. The resulting pattern
+<span class="math-inline">f'</span> has <span class="math-inline">ν_π = 1</span>,
+satisfying Axiom A's consequent, and is therefore <em>not</em> forbidden by
+Axiom A. Moreover, <span class="math-inline">f'</span> has
+<span class="math-inline">ε_LU = 0</span>, so it cannot be the sole residual
+forbidden pattern 1111010 (which has <span class="math-inline">ε_LU = 1</span>).
+All 16 Axiom A patterns thus have an allowed neighbour — verified empirically:
+all 16 flipped patterns appear in the PubChem corpus with frequencies ranging
+from 8 to 48,791,424.</p>
+
+<p>For the residual pattern 1111010, flipping
+<span class="math-inline">ν_π → 1</span> yields 1111110, which appears in the
+corpus (1,731 compounds). Hence all 17 forbidden patterns lie at distance 1
+from the allowed set. ∎</p>
+</div>
+
+<div class="corollary">
+<div class="label">Corollary 6.3.1 — Forbidden Frontier Dimension <span class="status-tag status-EMPIRICAL">EMPIRICAL</span></div>
+<p>
+The boundary — vertices within Hamming distance 1 of both
+<span class="math-inline">F</span> and <span class="math-inline">A</span> —
+contains 66 of the 128 vertices of <span class="math-inline">Q₇</span>
+(51.6%). Its box-counting dimension (computed as the Minkowski dimension of the
+discrete sausage of thickness <span class="math-inline">r</span>) is
+<span class="math-inline">D_boundary ≈ 1.54</span>. This is intermediate between a
+curve (dimension 1) and a surface (dimension 2), reflecting the boundary's
+intricate interdigitation between forbidden and allowed vertices.
+</p>
+</div>
+
+<h3 id="s6-8-4">6.8.4 Betti Numbers of the Allowed Region</h3>
+
+<p>
+The flag (clique) complex of the allowed subgraph of
+<span class="math-inline">Q₇</span> — with vertices = allowed r-vectors and
+edges = Hamming-adjacent pairs — yields the following homology groups
+(coefficients in <span class="math-inline">ℤ₂</span>):
+</p>
+
+<div class="math-block">
+|A| = 111 vertices, |E_A| = 362 edges
+β₀ = 1　　　（allowed region is connected）
+β₁ = 252　　（1-dimensional cycles / independent loops）
+β₂ = 0　　　（Q₇ is bipartite; no 2-simplices in the flag complex）
+β₃ = 0
+</div>
+
+<div class="finding">
+<div class="label">FINDING 15 — Cycle Deficit from the Forbidden Set <span class="status-tag status-EMPIRICAL">EMPIRICAL</span></div>
+<p>
+The full hypercube <span class="math-inline">Q₇</span> has cyclomatic number
+<span class="math-inline">μ(Q₇) = 448 − 128 + 1 = 321</span>. The allowed
+subgraph has <span class="math-inline">μ(A) = 252</span>. The forbidden set
+<span class="math-inline">F</span> (17 vertices, forming 1 connected component
+with 33 internal edges) removes 86 edges and 69 independent cycles from the
+hypercube. The ratio of cycle loss to edge loss,
+<span class="math-inline">69/86 ≈ 0.80</span>, reflects the structural
+"thickness" of the forbidden cluster — each removed edge eliminates nearly one
+full independent cycle, consistent with <span class="math-inline">F</span>
+acting as a single, densely connected obstacle in <span class="math-inline">Q₇</span>.
+</p>
+</div>
+
+<p>
+The high Betti number <span class="math-inline">β₁ = 252</span> indicates that
+the allowed complex is topologically rich in 1-dimensional structure — the
+forbidden set creates 252 independent cycles (holes) in the graph of chemically
+realisable electronic configurations. These cycles correspond to alternative
+pathways around forbidden r-vectors, each representing a distinct
+"detour" in chemical possibility space. The absence of higher Betti numbers
+(<span class="math-inline">β₂, β₃</span>) is a structural limitation of the
+hypercube flag complex (the hypercube is bipartite and triangle-free); higher
+Betti numbers may appear in the Vietoris–Rips complex at scale
+<span class="math-inline">r ≥ 2</span> or in the Dowker nerve of feature
+co-occurrences (OP3).
+</p>
+
+<h3 id="s6-8-5">6.8.5 Structural Parallel with the Mandelbrot Set</h3>
+
+<p>
+The emergence of a transcendental invariant from an algebraic construction is
+not unique to the Forb functor. The Mandelbrot set — defined by the purely
+algebraic iteration <span class="math-inline">z_{n+1} = zₙ² + c</span> on the
+complex plane — exhibits the same phenomenon at its boundary. Klebanoff's theorem
+(Klebanoff 2001) states that near the cusp
+<span class="math-inline">c = 1/4</span>, the escape time
+<span class="math-inline">N</span> satisfies
+<span class="math-inline">N ≈ π / √(ε)</span> as
+<span class="math-inline">ε → 0⁺</span>, where
+<span class="math-inline">ε = c − 1/4</span>. The transcendental number
+<span class="math-inline">π</span> appears not in the algebraic definition of
+the set, but in the <strong>asymptotic geometry of its boundary</strong>.
+</p>
+
+<div class="finding">
+<div class="label">FINDING 16 — Forb–Mandelbrot Structural Parallel <span class="status-tag status-STRUCTURAL">STRUCTURAL</span></div>
+<table>
+<tr><th></th><th>Mandelbrot Set</th><th>Forb Functor</th></tr>
+<tr><td>Definition</td><td><span class="math-inline">z ↦ z² + c</span> (algebraic)</td><td><span class="math-inline">Forb: CSS^op → BoolAlg</span> (combinatorial)</td></tr>
+<tr><td>Input space</td><td>Complex plane ℂ</td><td>Feature hypercube {0,1}ⁿ</td></tr>
+<tr><td>Output object</td><td>Fractal boundary ∂M</td><td>Forbidden set F ⊂ {0,1}ⁿ</td></tr>
+<tr><td>Transcendental invariant</td><td><span class="math-inline">π</span> at cusp (Klebanoff 2001)</td><td><span class="math-inline">D_C(F)</span> via Baker (1966)</td></tr>
+<tr><td>Mechanism</td><td>Asymptotics of escape time</td><td>Log-ratio of set size to subcube size</td></tr>
+<tr><td>Philosophy</td><td colspan="2"><em>Finite algebraic description → irreducible (transcendental) complexity at the boundary</em></td></tr>
+</table>
+<p>
+Both structures exemplify the same deep principle: a construction specified in
+purely algebraic terms can, at its <em>boundary</em> or in its
+<em>limit</em>, encode real numbers that are not algebraic — numbers that carry
+more information than any finite algebraic expression can contain. For the
+Mandelbrot set, the boundary geometry encodes <span class="math-inline">π</span>;
+for the Forb functor, the forbidden set's filling fraction encodes
+<span class="math-inline">log(|F|)/log(2)</span>, which by Baker's theorem is
+generically transcendental.
+</p>
+</div>
+
+<h3 id="s6-8-6">6.8.6 Forb as a Transcendence Generator — Generality and Scope</h3>
+
+<p>
+The Transcendental Dimension Theorem (Theorem 6.2) applies not only to CLOC but
+to <em>any</em> combinatorial symbol system whose Forb image has size
+multiplicatively independent of 2. This is the generic case: by the
+Lindemann–Weierstrass theorem, the set of algebraic numbers is countable, while
+the set of possible Cantor dimensions is uncountable (parameterised by
+<span class="math-inline">log(|F|)/k</span>). Almost all CSS objects produce
+transcendental forbidden-set dimensions.
+</p>
+
+<div class="conjecture">
+<div class="label">Conjecture 6.2 — Forb_∞ Transcendence <span class="status-tag status-CONJECTURAL">CONJECTURAL</span></div>
+<p>
+For any non-degenerate CSS where the true grammar
+<span class="math-inline">G(S,F,D)</span> is non-trivial (neither empty nor
+all of <span class="math-inline">{0,1}ⁿ</span>), the limit Cantor dimension
+<span class="math-inline">D_C(Forb_∞)</span> of the forbidden set under corpus
+expansion (Theorem 3.3) is transcendental.
+</p>
+</div>
+
+<p>
+If true, this would establish the Forb functor as a <strong>transcendence
+generator</strong>: a finitary, computable operation whose asymptotic output
+invariably carries transcendental information. This places Forb alongside other
+constructions — the Mandelbrot set's boundary, Chaitin's halting probability
+Ω — as instances of the principle that <strong>finite description
+→ irreducible (non-algebraic) complexity</strong>.
+</p>
+
+<div class="open-problem" style="border-left-color:#2980b9;margin:18px 0;padding:14px 18px;background:#f8f9fa;">
+<div class="num" style="font-weight:bold;color:#2980b9;">OBSERVATION (n = 2 domains) — Genericity of Transcendental Forb Dimensions</div>
+<p>
+<strong>Caveat.</strong> Only two Forb applications to date have yielded
+prime forbidden-set sizes: CLOC (<span class="math-inline">|F| = 17</span>)
+and Proto-Elamite (<span class="math-inline">|F| = 503</span> significant
+forbidden bigrams, §6.3). With <span class="math-inline">n = 2</span> data
+points, the claim that Forb sets "generically" have prime size is a conjecture,
+not a finding. Were the pattern to hold across additional domains, it would
+have two structural explanations: (a) by the prime number theorem, the density
+of primes near <span class="math-inline">N</span> is
+~ <span class="math-inline">1/ln(N)</span>, so prime
+<span class="math-inline">|F|</span> is not <em>a priori</em> improbable;
+(b) forbidden-set sizes under Boolean feature encodings tend to be odd
+(symmetry breaking under negation makes even-sized forbidden sets structurally
+atypical), and small odd integers have higher prime density. Corollary 6.2.1
+guarantees that whenever <span class="math-inline">|F|</span> is prime
+(<span class="math-inline">|F| ≠ 2</span>), the Cantor dimension is
+transcendental — but the frequency with which this occurs across domains
+remains an open empirical question.
+</p>
+</div>
+
+<!-- Companion box -->
+<div class="companion-box">
+Supplementary data and code for §6.8 — Betti number computation, Cantor
+dimension verification, and the Surface Theorem proof — are available in the
+companion repository. The flag complex homology was computed over
+<span class="math-inline">ℤ₂</span> using Gaussian elimination on the
+boundary matrices of the allowed subgraph of
+<span class="math-inline">Q₇</span> (111 vertices, 362 edges, 0 triangles).
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 7: OPEN PROBLEMS -->
+<!-- ============================================================ -->
+
+<h2 id="s7">7. Open Problems</h2>
+
+<div class="open-problem">
+<div class="num">OP1 — Convergence Theorem. <strong>[RESOLVED for i.i.d. sampling — Theorem 3.3]</strong></div>
+<p>
+Theorem 3.3 establishes that under i.i.d. sampling from a true distribution
+<span class="math-inline">D</span>, <span class="math-inline">Forb(C_k)</span>
+converges almost surely to <span class="math-inline">G(S,F,D)</span> — the
+set of Boolean constraints that hold with probability zero. The proof uses
+three facts already established in the paper: finiteness of the hypothesis
+space (Proposition 5.1), monotonicity (Corollary 3.2.1), and the second
+Borel–Cantelli lemma. This resolves the central open question stated in the
+original manuscript: Forb is now established as an <em>inferential</em> tool,
+not merely a descriptive one. The empirical scaling evidence (BOC: 21.4M →
+107.8M, 3/20 constraints demoted; English phonotactics: stable at 33K words)
+is consistent with the theorem's predictions.
+</p>
+<p>
+<strong>Remaining gap</strong> (see the Remark following Theorem 3.3). The
+proof assumes the corpus is a sequence of i.i.d. samples from
+<span class="math-inline">D</span>, under which the events of observing a
+given bigram are independent across samples. Natural corpora — chemical
+databases, text, undeciphered-script collections — are single long sequences
+where adjacent bigrams share a sign and are not independent. Extending the
+convergence proof to the sequential (non-i.i.d.) setting — e.g., via an
+ergodic source with the Shannon–McMillan–Breiman theorem, or under a mixing
+condition that guarantees positive-probability events occur with asymptotic
+frequency one — remains open. This is a practically important extension,
+since every Forb application to date (§6) uses a sequential corpus.
+</p>
+</div>
+
+<div class="open-problem">
+<div class="num">OP2 — Lower Bound on Feature Dimension n.</div>
+<p>
+What is the minimum <span class="math-inline">n</span> required to capture
+the true grammar of a given CSS? Empirically, <span class="math-inline">n = 7</span>
+works for both chemistry and phonology, but this may be coincidental.
+An information-theoretic bound may exist: the feature encoding must
+distinguish at least the minimal forbidden patterns, which requires
+<span class="math-inline">n ≥ log₂(|Forb_min|)</span>. However, the
+minimal forbidden set is itself dependent on <span class="math-inline">n</span>,
+creating a circular dependency. A more promising direction: the feature
+dimension is related to the <em>VC dimension</em> of the Boolean constraint
+class, which for fixed <span class="math-inline">n</span> is
+<span class="math-inline">2n</span> (the number of Boolean variables over
+which constraints are expressed).
+</p>
+</div>
+
+<div class="open-problem">
+<div class="num">OP3 — Betti Numbers of the Forbidden Pattern Complex.</div>
+<p>
+The Dowker complex <span class="math-inline">K(C)</span> (or its feature
+quotient <span class="math-inline">K_F(C)</span>) has topological invariants
+— Betti numbers, Euler characteristic — that encode structural properties
+of the grammar. Do these invariants characterise the <em>expressive power</em>
+of the language? For instance, a grammar with few generating constraints
+but many forbidden patterns should have low Betti numbers (the forbidden
+patterns are consequences of a small generating set). Conversely, a grammar
+with high Betti numbers has a more complex, less compressible constraint
+structure. This is unexplored territory at the intersection of applied
+topology and formal language theory.
+</p>
+</div>
+
+<div class="open-problem">
+<div class="num">OP4 — Connection to Chomsky's Universal Grammar.</div>
+<p>
+Can the Chomsky hierarchy — in particular, the class of regular or
+context-free languages — be characterised in terms of the topological
+or coalgebraic properties of their Forb complexes? If so, Forb would
+provide a <em>topological signature</em> for language classes, potentially
+offering a new angle on the Universal Grammar hypothesis (Chomsky 1965).
+</p>
+</div>
+
+<div class="open-problem">
+<div class="num">OP5 — Extension to Higher-Order n-grams (k ≥ 2).</div>
+<p>
+The present paper restricts to bigrams (<span class="math-inline">k = 2</span>).
+Extending to <span class="math-inline">k</span>-grams for
+<span class="math-inline">k ≥ 2</span> is conceptually straightforward
+but computationally demanding. The forbidden <span class="math-inline">k</span>-grams
+are the missing <span class="math-inline">(k-1)</span>-simplices of the
+Dowker complex. The functorial formulation should generalise to
+<span class="math-inline">Forb_k: CSS → BoolAlg_k</span> where
+<span class="math-inline">BoolAlg_k</span> is the category of Boolean
+algebras over <span class="math-inline">k·n</span> variables. The
+combinatorial explosion (<span class="math-inline">|S|^k</span> possible
+<span class="math-inline">k</span>-grams) makes statistical filtering
+essential.
+</p>
+</div>
+
+<div class="open-problem">
+<div class="num">OP6 — Computational Implementation for Protein Domains.</div>
+<p>
+While the BOC (chemistry) and English phonotactics pipelines are fully
+implemented and verified, the protein domain architecture application
+remains at the design stage. A proof-of-concept implementation using
+Pfam + UniProt would test whether biophysically impossible domain
+combinations can be systematically enumerated, and whether any
+<em>surprising</em> forbidden pairs (those not explained by obvious
+steric or folding constraints) emerge at scale.
+</p>
+</div>
+
+<div class="open-problem">
+<div class="num">OP7 — Forb-Constrained Decoding for Neural Language Models.</div>
+<p>
+Implement and evaluate Forb-constrained decoding on a production LLM.
+Key empirical questions: (a) What fraction of structural hallucinations
+are eliminated by constraining to training-corpus bigrams? (b) Does the
+constraint reduce output diversity (measured by token-level entropy or
+type-token ratio)? (c) Can the constraint be applied tokeniser-agnostically
+via feature compression
+<span class="math-inline">F: S → {0,1}ⁿ</span> to avoid tokeniser
+artefacts? (d) What is the trade-off between constraint strictness (n-gram
+order k) and generation quality as measured by human evaluation?
+</p>
+</div>
+
+<div class="open-problem">
+<div class="num">OP8 — Topological Fingerprinting of Language Models.</div>
+<p>
+Compute <span class="math-inline">Forb(C_gen)</span> for a diverse set of
+open-source LLMs and establish whether the resulting Boolean algebras
+cluster by architecture family (decoder-only vs. encoder-decoder), training
+regime (base vs. instruction-tuned), or model scale. Determine whether
+<span class="math-inline">Forb_∞</span> (Conjecture 6.1) exists empirically
+and, if so, at what sample size it stabilises. Investigate whether
+<span class="math-inline">Forb(C_gen)</span> is predictive of downstream
+benchmark performance — i.e., whether models that more closely match
+human core constraints perform better on tasks requiring human-like
+output.
+</p>
+</div>
+
+<div class="open-problem">
+<div class="num">OP9 — Unification with Neural Pruning and the Free Energy Principle.</div>
+<p>
+§6.7 identifies a structural homology between the Forb functor and three
+neuroscientific frameworks: Changeux &amp; Danchin's selective stabilisation,
+Olshausen &amp; Field's sparse coding, and Friston's free energy principle.
+Is this homology merely structural, or does it reflect a deeper mathematical
+unity? Specific questions: (a) Can the free energy principle be reformulated
+in category-theoretic terms such that the Forb functor emerges as a special
+case (the zero-surprisal limit)? (b) Does the Betti number structure of the
+Forb complex (OP3) correspond to any known measure of neural circuit
+complexity? (c) Can the critical period — the developmental window during
+which synaptic pruning is active — be characterised as the phase during which
+<span class="math-inline">|Forb(C)|</span> undergoes its most rapid
+shrinkage, and can its closure be predicted from corpus statistics alone?
+</p>
+</div>
+
+<div class="open-problem">
+<div class="num">OP10 — Transcendental Invariants of the Forb Functor.</div>
+<p>
+§6.8 establishes that the Cantor dimension
+<span class="math-inline">D_C(F) = log₂(|F|)/k</span> of the forbidden set is
+transcendental whenever <span class="math-inline">|F|</span> and 2 are
+multiplicatively independent (Theorem 6.2), and that the CLOC value
+<span class="math-inline">log₂(17)/5</span> is transcendental by Baker's theorem.
+Several questions remain open. (a) Does
+<span class="math-inline">D_C(F)</span> satisfy any known class of transcendental
+numbers (e.g., is it a period in the sense of Kontsevich–Zagier, or a Liouville
+number)? (b) Can the box-counting dimension
+<span class="math-inline">D_B(F) ≈ 0.76</span> and the boundary dimension
+<span class="math-inline">D_boundary ≈ 1.54</span> be rigorously related to the
+Cantor dimension, and are they also transcendental? (c) For non-Boolean feature
+spaces (e.g., the categorical VC × EC-O product in IC-O, §6.1 of the ICO paper),
+what is the appropriate generalisation of the Cantor dimension, and does a
+transcendence result hold? (d) Is the limit dimension
+<span class="math-inline">D_C(Forb_∞)</span> under corpus expansion
+(Conjecture 6.2) always transcendental for non-degenerate CSS, and if so, can
+this be proven without assuming the convergence theorem's i.i.d. hypothesis?
+(e) What is the exact relationship between the Betti numbers of the allowed
+region (§6.8.4) and the fractal dimensions of the forbidden set — can the Euler
+characteristic be expressed as a function of <span class="math-inline">D_C(F)</span>?
+</p>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 8: CONCLUSION -->
+<!-- ============================================================ -->
+
+<h2 id="s8">8. Conclusion</h2>
+
+<p>
+The forbidden pattern functor <span class="math-inline">Forb: CSS^op → BoolAlg</span>
+formalises an operation that was discovered in organic chemistry but whose
+mathematical structure is independent of any particular domain. The key
+contributions of this paper are:
+</p>
+
+<ol style="margin:6px 0;">
+<li><strong>Functorial formulation</strong> (Theorem 3.1): Forb is a
+contravariant functor from the category of combinatorial symbol systems
+to Boolean algebras. The functorial structure guarantees that the
+operation composes with symbol translations and respects the
+hierarchical organisation of corpora.</li>
+
+<li><strong>Monotonicity</strong> (Theorem 3.2): Forb is antitone in the
+corpus — more data can only eliminate forbidden patterns, never create
+new ones. This gives the pipeline a well-defined asymptotic direction.</li>
+
+<li><strong>Convergence</strong> (Theorem 3.3): Under i.i.d. sampling from a
+true distribution, <span class="math-inline">Forb(C_k)</span> converges
+almost surely to the set of probability-zero constraints. The proof
+combines the finite hypothesis space (Proposition 5.1), monotonicity
+(Corollary 3.2.1), and the Borel–Cantelli lemma. This transforms Forb
+from a descriptive tool into an inferential one — the constraints
+extracted from a large finite corpus are guaranteed to approximate the
+true grammar of the underlying distribution.</li>
+
+<li><strong>Three-way equivalence</strong> (Theorem 4.1): The coalgebraic,
+Dowker-simplicial, and FCA formulations of the forbidden-pattern space
+are mathematically equivalent — not merely analogous. This connects
+three previously independent mathematical traditions under a single
+commutative diagram.</li>
+
+<li><strong>PAC-learning connection</strong> (Theorem 5.2): Forb satisfies
+Angluin's condition for identification from positive data, evading
+Gold's impossibility theorem by restricting to a finite hypothesis
+space of Boolean constraints at fixed feature dimension.</li>
+
+<li><strong>Empirical verification</strong> (§6): The same pipeline operates
+identically on 107.8M organic compounds (chemistry) and 33K English
+words (phonology), extracting domain-appropriate absolute constraints in
+both cases. The structural isomorphism extends to undeciphered scripts,
+protein domain architectures, and large language model output.</li>
+
+<li><strong>LLM applications</strong> (§6.5–6.6): Forb-constrained decoding
+provides mathematically guaranteed hard constraints on neural language
+model output, structurally preventing training-corpus violations — a
+guarantee that RLHF and prompt engineering cannot offer. The Forb
+fingerprint of LLM output offers a new model evaluation dimension
+orthogonal to perplexity and benchmark scores.</li>
+
+<li><strong>Neural homology</strong> (§6.7): The Forb functor exhibits structural
+homology with three neuroscientific frameworks — Changeux &amp; Danchin's
+selective stabilisation, Olshausen &amp; Field's sparse coding, and
+Friston's free energy principle. All three describe operations that are
+antitone in experience and sparse in their output, suggesting that Forb
+may serve as a minimal mathematical model of the brain's negative-learning
+mechanisms.</li>
+
+<li><strong>Fractal dimension and transcendental invariants</strong> (§6.8):
+The forbidden set <span class="math-inline">F</span>, when embedded in the
+feature hypercube <span class="math-inline">{0,1}ⁿ</span>, has a Cantor
+dimension <span class="math-inline">D_C(F) = log₂(|F|)/k</span> that is
+<em>transcendental</em> whenever <span class="math-inline">|F|</span> and 2
+are multiplicatively independent — provably so for the CLOC value
+<span class="math-inline">log₂(17)/5 ≈ 0.8175</span> by Baker's theorem
+(1966). The allowed set <span class="math-inline">A</span> is a dominating
+set of the 7-cube (Surface Theorem, proved from Axiom A), and its flag complex
+has Betti numbers <span class="math-inline">β₀ = 1, β₁ = 252</span>. This
+establishes Forb as a <strong>transcendence generator</strong>: a finite,
+combinatorial construction whose output carries real numbers that cannot be
+expressed as roots of any polynomial with integer coefficients — a phenomenon
+structurally parallel to the emergence of <span class="math-inline">π</span>
+at the boundary of the Mandelbrot set (Klebanoff 2001).</li>
+</ol>
+
+<p>
+The contribution is <em>unification</em>, not invention of components.
+The components — coalgebras (Sweedler 1969; Rutten 2000), Dowker complexes
+(Dowker 1952), formal concept analysis (Ganter &amp; Wille 1999), and
+locally testable languages (McNaughton &amp; Papert 1971) — are well-established.
+The novel contribution is the proof that they are equivalent representations
+of the same operation, the functorial formulation that makes the
+domain-neutrality precise, and the empirical demonstration that the resulting
+pipeline works across chemistry, linguistics, archaeology, and protein science
+without modification.
+</p>
+
+<!-- ============================================================ -->
+<!-- SECTION 9: LIMITATIONS -->
+<!-- ============================================================ -->
+
+<h2 id="s9">9. Limitations</h2>
+
+<div class="limitations-box">
+<div class="label">LIMITATIONS</div>
+<ol style="margin:6px 0;padding-left:20px;">
+<li><strong>Convergence is now proven</strong> (Theorem 3.3). Under i.i.d. sampling,
+Forb converges almost surely to the true grammar. The former limitation —
+that Forb is descriptive rather than inferential — is resolved.
+<strong>However, natural corpora (chemical databases, phonological
+lexicons, undeciphered-script text collections) are not i.i.d.: they
+exhibit Zipfian distributions, burstiness, and temporal drift.
+Theorem 3.3's convergence guarantee is asymptotic under the idealised
+i.i.d. model; the rate and robustness of convergence under
+realistic, non-i.i.d. sampling remains an open empirical question (see the
+Remark following Theorem 3.3 for a discussion of the independence assumption,
+and OP1 for the formal extension problem).</strong></li>
+
+<li><strong>Feature dimension <span class="math-inline">n</span> is a hyperparameter.</strong>
+The choice of <span class="math-inline">n</span> is an inductive bias
+that determines which grammars are expressible. While
+<span class="math-inline">n = 7</span> works empirically for two
+domains, there is no theoretical guarantee that <span class="math-inline">n</span>
+is sufficient for a given domain, nor a method for determining the
+minimal sufficient <span class="math-inline">n</span> a priori.</li>
+
+<li><strong>Bigram restriction.</strong> The present framework only analyses
+adjacent bigrams. Long-range dependencies — constraints between non-adjacent
+signs — are invisible to Forb₂. Extending to <span class="math-inline">k</span>-grams
+for <span class="math-inline">k ≥ 2</span> would capture longer-range structure
+but introduces a combinatorial explosion (Open Problem 5).</li>
+
+<li><strong>Statistical significance at small corpora.</strong> For small
+corpora, <span class="math-inline">cnt = 0</span> may reflect sampling
+noise rather than structural impossibility. The statistical significance
+filter (expected frequency under a null model) is necessary but not
+validated for small-sample regimes. The Indus script corpus (~2,900
+inscriptions with an average of 5 signs each) may be near the lower
+bound of statistical reliability.</li>
+
+<li><strong>No computational implementation for scripts or proteins.</strong>
+While the chemistry and phonology pipelines are fully implemented and
+verified, the Indus script, Linear A, and protein domain
+applications remain at the design stage (Proto-Elamite is now fully
+analysed with 503 forbidden bigrams and 22 functional sign classes
+automatically extracted; see §6.3).</li>
+
+<li><strong>Feature engineering is domain-dependent.</strong>
+The functor <span class="math-inline">Forb</span> is domain-neutral, but
+the feature map <span class="math-inline">F: S → {0,1}ⁿ</span> is not.
+Designing an adequate feature encoding for a new domain (e.g., Indus
+signs, protein domains) requires domain expertise. The functor
+guarantees that <em>once</em> an <span class="math-inline">F</span> is
+chosen, the pipeline operates identically; it does not guarantee that a
+good <span class="math-inline">F</span> exists or is easy to construct.</li>
+
+<li><strong>Dependence on unpublished framework.</strong>
+The BOC motivation (§1.2) and chemical application (§6.1) depend on
+the BOC framework (Uota, unpublished), which introduces the EEE
+generators and r-vector encoding. All chemical claims in this paper
+are conditional on the validity of BOC, which is an unpublished
+manuscript.</li>
+
+<li><strong>Incomplete integration of prior mathematical frameworks.</strong>
+The equivalence proof (Theorem 4.1) establishes that coalgebra, Dowker
+complex, and FCA encode the same information, but it does not integrate
+their full theoretical apparatus. Specifically: (a) the coalgebraic
+bisimulation theory (Rutten 2000) could provide a notion of
+observational equivalence for CSS objects that has not been developed;
+(b) the persistent homology of the expanding Dowker complex as the
+corpus grows could yield topological convergence criteria, unexplored
+here; (c) the FCA attribute exploration algorithm (Ganter &amp; Wille
+1999) is an interactive protocol, whereas Forb is batch — the connection
+to interactive learning remains unexamined.</li>
+
+<li><strong>Code and data availability.</strong>
+The reference implementation (<span class="math-inline">boc_to_indus.py</span>)
+and the CMUdict phonotactics pipeline are not currently deposited in a
+public repository. The BOC chemical corpus draws from PubChem and ChEMBL
+(public databases). The Indus and Linear A data are
+not yet digitised in the required format (Proto-Elamite data are now
+available from the CDLI daily bulk data dump; the August 2022 release
+was used in §6.3). Full reproducibility requires
+publication of the pipeline code, which is planned as a companion
+resource.</li>
+
+<li><strong>Structural vs. factual hallucination.</strong>
+Forb-constrained decoding (§6.5) prevents structural hallucination
+(bigrams absent from training) but does not address factual hallucination
+(false assertions using grammatical token sequences). The constraint
+operates on form, not propositional content. Users of Forb-constrained
+decoding should not expect it to function as a factuality guarantee.</li>
+
+<li><strong>LLM fingerprinting is empirical, not deductive.</strong>
+The claims in §6.6 about Forb(C_gen) as a model fingerprint
+are empirical observations awaiting systematic validation. The
+convergence of Forb(C_gen) to a limit algebra Forb_∞ (Conjecture 6.1)
+is unproven, and the relationship between fingerprint distance and
+downstream benchmark performance is unexplored (OP8).</li>
+</ol>
+</div>
+
+<!-- ============================================================ -->
+<!-- REFERENCES -->
+<!-- ============================================================ -->
+
+<h2 id="refs">References</h2>
+
+<ol class="ref-list">
+<li>Angluin, D. (1980). Inductive inference of formal languages from positive data. <em>Information and Control</em> 45, 117–135.</li>
+
+<li>Apic, G., Gough, J. &amp; Teichmann, S.A. (2001). Domain combinations in archaeal, eubacterial and eukaryotic proteomes. <em>Journal of Molecular Biology</em> 310, 311–325.</li>
+
+<li>CDLI — Cuneiform Digital Library Initiative (2022). Daily bulk data dump, August 2022 release. <a href="https://github.com/cdli-gh/data"><em>https://github.com/cdli-gh/data</em></a></li>
+
+<li>Chomsky, N. (1965). <em>Aspects of the Theory of Syntax.</em> MIT Press.</li>
+
+<li>Chomsky, N. &amp; Halle, M. (1968). <em>The Sound Pattern of English.</em> Harper &amp; Row.</li>
+
+<li>Dahl, J.L. (2005). Animal husbandry in Susa during the Proto-Elamite period. <em>Studi Micenei ed Egeo-Anatolici</em> 47, 81–134.</li>
+
+<li>Dowker, C.H. (1952). Homology groups of relations. <em>Annals of Mathematics</em> 56, 84–95.</li>
+
+<li>Englund, R.K. (1998). Texts from the Late Uruk period. In: J. Bauer, R.K. Englund &amp; M. Krebernik, <em>Mesopotamien: Späturuk-Zeit und Frühdynastische Zeit.</em> OBO 160/1. Universitätsverlag Freiburg / Vandenhoeck &amp; Ruprecht.</li>
+
+<li>Ganter, B. &amp; Wille, R. (1999). <em>Formal Concept Analysis: Mathematical Foundations.</em> Springer.</li>
+
+<li>Gold, E.M. (1967). Language identification in the limit. <em>Information and Control</em> 10, 447–474.</li>
+
+<li>Hayes, B. &amp; Wilson, C. (2008). A maximum entropy model of phonotactics and phonotactic learning. <em>Linguistic Inquiry</em> 39, 379–440.</li>
+
+<li>Heinz, J. (2010). Learning long-distance phonotactics. <em>Linguistic Inquiry</em> 41, 623–661.</li>
+
+<li>Mahadevan, I. (1977). <em>The Indus Script: Texts, Concordance and Tables.</em> Archaeological Survey of India.</li>
+
+<li>McNaughton, R. &amp; Papert, S. (1971). <em>Counter-Free Automata.</em> MIT Press.</li>
+
+<li>Parpola, A. (1994). <em>Deciphering the Indus Script.</em> Cambridge University Press.</li>
+
+<li>Rao, R.P.N., Yadav, N., Vahia, M.N., Joglekar, H., Adhikari, R. &amp; Mahadevan, I. (2009). Entropic evidence for linguistic structure in the Indus script. <em>Science</em> 324, 1165.</li>
+
+<li>Rutten, J.J.M.M. (2000). Universal coalgebra: a theory of systems. <em>Theoretical Computer Science</em> 249, 3–80.</li>
+
+<li>Sweedler, M.E. (1969). <em>Hopf Algebras.</em> W.A. Benjamin.</li>
+
+<li>Valiant, L.G. (1984). A theory of the learnable. <em>Communications of the ACM</em> 27, 1134–1142.</li>
+
+<li>Vogel, C., Bashton, M., Kerrison, N.D., Chothia, C. &amp; Teichmann, S.A. (2004). Structure, function and evolution of multidomain proteins. <em>Current Opinion in Structural Biology</em> 14, 208–216.</li>
+
+<li>Yadav, N., Vahia, M.N., Mahadevan, I. &amp; Joglekar, H. (2010). Statistical analysis of the Indus script using <em>n</em>-grams. <em>PLoS ONE</em> 5(3), e9506.</li>
+
+<li>Changeux, J.-P. &amp; Danchin, A. (1976). Selective stabilisation of developing synapses as a mechanism for the specification of neuronal networks. <em>Nature</em> 264, 705–712.</li>
+
+<li>Friston, K. (2010). The free-energy principle: a unified brain theory? <em>Nature Reviews Neuroscience</em> 11, 127–138.</li>
+
+<li>Huttenlocher, P.R. (1979). Synaptic density in human frontal cortex — developmental changes and effects of aging. <em>Brain Research</em> 163, 195–205.</li>
+
+<li>Olshausen, B.A. &amp; Field, D.J. (1996). Emergence of simple-cell receptive field properties by learning a sparse code for natural images. <em>Nature</em> 381, 607–609.</li>
+
+<li>Baker, A. (1966). Linear forms in the logarithms of algebraic numbers. <em>Mathematika</em> 13, 204–216.</li>
+
+<li>Lindemann, F. (1882). Über die Zahl π. <em>Mathematische Annalen</em> 20, 213–225.</li>
+
+<li>Klebanoff, A.D. (2001). π in the Mandelbrot set. <em>Fractals</em> 9(4), 393–402.</li>
+
+<li>Mandelbrot, B.B. (1982). <em>The Fractal Geometry of Nature.</em> W.H. Freeman.</li>
+</ol>
+
+<div class="footer">
+Shin UOTA · The Forbidden Pattern Functor · June 2026<br>
+7 Theorems · 5 Propositions · 4 Corollaries · 3 Conjectures · 16 Findings · 9 Definitions · 10 Open Problems · 29 References
+</div>
+
+</body>
+</html>

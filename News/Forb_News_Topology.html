@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>News — Topological Grammar</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Georgia,serif;background:#fafafa;color:#111;font-size:15px;line-height:1.78}
+  .page{max-width:820px;margin:0 auto;background:white;padding:60px 72px 80px;border-left:1px solid #e0e0e0;border-right:1px solid #e0e0e0;min-height:100vh}
+  .kicker{font-family:Arial,sans-serif;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:#1a6a8a;font-weight:700;margin-bottom:14px}
+  .headline{font-size:24px;font-weight:700;line-height:1.3;color:#0a0a0a;margin-bottom:6px}
+  .deck{font-size:15px;color:#555;margin-bottom:20px;font-style:italic;line-height:1.5}
+  .byline{font-family:Arial,sans-serif;font-size:12px;color:#777;margin-bottom:28px;border-bottom:1px solid #ddd;padding-bottom:10px}
+  p{margin-bottom:14px;text-align:justify}
+  .pullquote{font-size:17px;font-style:italic;color:#1a6a8a;text-align:center;margin:26px 0;padding:14px 30px;line-height:1.5}
+  .highlight-box{background:#f5f9fc;border-left:3px solid #1a6a8a;padding:14px 18px;margin:18px 0;font-size:14px}
+  .sidenote{font-size:13px;color:#888;font-style:italic;margin:16px 0}
+  .footer{font-family:Arial,sans-serif;font-size:11px;color:#999;text-align:center;margin-top:40px;padding-top:16px;border-top:1px solid #eee}
+  table{border-collapse:collapse;margin:14px 0;width:100%;font-size:13px}
+  th{background:#1a1a2e;color:#e0e0e0;padding:6px 8px;text-align:left;font-weight:normal}
+  td{padding:5px 8px;border-bottom:1px solid #ddd}
+  ol.refs{font-size:12px;color:#666;margin-top:24px;padding-left:20px}
+  ol.refs li{margin-bottom:6px}
+</style>
+</head>
+<body><div class="page">
+
+<div class="kicker">News &amp; Views · Forb Topology</div>
+<h1 class="headline">Chemistry Speaks in Loops, Language in Voids</h1>
+<div class="deck">Betti numbers of forbidden-pattern spaces reveal that chemical and linguistic grammars occupy complementary topological dimensions — a discovery with implications for how nature encodes constraints.</div>
+<div class="byline">June 25, 2026</div>
+
+<p>When chemists enumerate which molecular fragments can follow which others, and linguists catalog which sounds can follow which in English, they are doing the same thing: extracting constraints from absence. But the <em>shape</em> of those constraints, it turns out, is fundamentally different.</p>
+
+<div class="pullquote">"Chemical grammar is 1-dimensional — it's about which paths exist. Linguistic grammar is 2-dimensional — it's about which triangles are hollow."</div>
+
+<p>UOTA applied the Forbidden Pattern Functor — a universal algorithm for extracting Boolean constraints from any symbol system — to two real-world domains: the BOC/CLOC chemical database (123 million compounds) and the CMU Pronouncing Dictionary (134,000 English words). The topological analysis of the resulting constraint spaces revealed a striking complementarity.</p>
+
+<h2>Loops vs. Voids</h2>
+
+<p>For chemistry (111 allowed molecular fragment types in a 7-dimensional hypercube), the constraint space has <strong>238 independent cycles</strong> — different "routes" through chemical space that can't be reduced to each other — but <strong>zero 2-dimensional voids</strong>. The hypercube is bipartite: no three fragments can all be pairwise adjacent, so no "hollow triangles" can form.</p>
+
+<p>For English phonotactics (39 phonemes), the picture inverts. The constraint space has <strong>zero independent cycles</strong> — all 1-dimensional loops are filled in — but <strong>7,130 independent 2-dimensional voids</strong>. These voids are concrete: they represent triplets of phonemes like {AA, AH, ER} where any two can appear together (AA-AH appears 13 times, AH-ER appears 812 times, AA-ER appears 273 times) but all three <em>never</em> appear in sequence in any English word.</p>
+
+<div class="highlight-box">
+<strong>Key numbers.</strong> Only 249 bigrams (16.4%) are forbidden in English, yet they generate 7,130 independent 2D voids — a 28.6-fold amplification. A small set of constraints creates an enormously complex void structure.
+</div>
+
+<h2>Why This Matters</h2>
+
+<p>The finding suggests that the "dimension" of a grammar — whether its complexity is primarily 1-dimensional (cycles) or 2-dimensional (voids) — may be a fundamental property of the domain. Chemical constraints are inherently local (what can follow what), while phonological constraints involve higher-order interactions (which triples are excluded even when all pairs are allowed).</p>
+
+<p>The same method applies to any domain with a symbol inventory and a corpus: nuclear physics (20,886 nuclide pairs), particle physics (30 Standard Model particles), protein domain architectures, and undeciphered scripts. The Betti numbers of the constraint space provide an objective, domain-independent measure of "grammar shape."</p>
+
+<div class="sidenote">
+  <strong>Scope note.</strong> This work establishes topological signatures of constraint spaces. It does not claim that chemical or linguistic grammars are <em>defined</em> by these signatures — only that the Forb functor reveals them as objective mathematical properties of the corpus. Cross-linguistic validation across non-English phonologies has not been performed.
+</div>
+
+<h2>References</h2>
+<ol class="refs">
+  <li>UOTA, S. (2026). <em>The Forbidden Pattern Functor: Universal Constraint Extraction in Combinatorial Symbol Systems.</em></li>
+  <li>Dowker, C.H. (1952). Homology groups of relations. <em>Annals of Mathematics</em> 56, 84–95.</li>
+  <li>McNaughton, R. &amp; Papert, S. (1971). <em>Counter-Free Automata.</em> MIT Press.</li>
+  <li>Hayes, B. &amp; Wilson, C. (2008). A maximum entropy model of phonotactics and phonotactic learning. <em>Linguistic Inquiry</em> 39, 379–440.</li>
+  <li>Chomsky, N. &amp; Halle, M. (1968). <em>The Sound Pattern of English.</em> Harper &amp; Row.</li>
+  <li>CMU Pronouncing Dictionary (cmudict-0.7b). Carnegie Mellon University.</li>
+  <li>Kim, S. et al. (2023). PubChem 2023 update. <em>Nucleic Acids Research</em> 51, D1373–D1380. [123.68M compounds]</li>
+</ol>
+
+<div class="footer">
+  Reference: UOTA, S. (2026). Betti–Grammar Correspondence and Locality Horizon. [OP3+OP4].<br>
+  Status: OP3 and OP4 resolved. Survey: Forb_Survey.html.
+</div></div></body></html>

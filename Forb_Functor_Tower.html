@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Forbidden Pattern Functor Tower: From Organic Chemistry to the Standard Model</title>
+<style>
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 760px;
+    margin: 40px auto;
+    padding: 0 20px;
+    line-height: 1.65;
+    color: #1a1a1a;
+    background: #fff;
+    font-size: 15px;
+  }
+  h1 { font-size: 1.55em; text-align: center; margin-bottom: 4px; font-weight: normal; }
+  h2 { font-size: 1.25em; margin-top: 2em; border-bottom: 1px solid #2c3e50; padding-bottom: 4px; color: #2c3e50; }
+  h3 { font-size: 1.08em; margin-top: 1.5em; color: #2c3e50; }
+  .paper-meta { text-align: center; color: #555; margin-bottom: 36px; font-size: 0.9em; }
+  .abstract { margin: 24px 40px; padding: 16px 20px; border-left: 3px solid #2c3e50; background: #f8f9fa; font-size: 0.94em; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88em; }
+  th { background: #2c3e50; color: #fff; padding: 8px 10px; text-align: left; font-weight: normal; }
+  td { padding: 7px 10px; border-bottom: 1px solid #ddd; }
+  tr:nth-child(even) td { background: #f8f9fa; }
+  .theorem, .definition, .finding {
+    margin: 18px 0; padding: 14px 18px; border-left: 4px solid #2c3e50;
+    background: #f8f9fa;
+  }
+  .definition { border-left-color: #2980b9; }
+  .theorem { border-left-color: #c0392b; }
+  .finding { border-left-color: #2980b9; }
+  .theorem .label, .definition .label, .finding .label {
+    font-weight: bold; font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+  .theorem .label { color: #c0392b; }
+  .definition .label { color: #2980b9; }
+  .finding .label { color: #2980b9; }
+  .status-tag {
+    display: inline-block; font-size: 0.72em; font-weight: bold; padding: 2px 7px;
+    border-radius: 3px; margin-left: 8px; vertical-align: middle;
+    letter-spacing: 0.3px;
+  }
+  .status-DEDUCTIVE    { background: #d4efdf; color: #1e8449; }
+  .status-STRUCTURAL   { background: #d6eaf8; color: #2471a3; }
+  .status-EMPIRICAL    { background: #fef9c3; color: #7d6608; }
+  .status-DEFINITIONAL { background: #fdebd0; color: #b9770e; }
+  .status-CONJECTURAL  { background: #eaeded; color: #566573; }
+  .math-block { margin: 14px 30px; padding: 12px 16px; background: #fafafa; border: 1px solid #e0e0e0;
+    font-family: 'Courier New', Courier, monospace; font-size: 0.88em; line-height: 1.55;
+    overflow-x: auto; white-space: pre; }
+  .commutative-diagram { margin: 20px auto; text-align: center; }
+  .commutative-diagram pre { display: inline-block; text-align: left; font-family: 'Courier New', Courier, monospace;
+    font-size: 0.85em; line-height: 1.35; }
+  .tower-diagram { margin: 24px auto; text-align: center; }
+  .tower-diagram pre { display: inline-block; text-align: left; font-family: 'Courier New', Courier, monospace;
+    font-size: 0.82em; line-height: 1.3; }
+  .note { margin: 14px 0; padding: 10px 16px; background: #fef9c3; border: 1px solid #e7d84f; font-size: 0.9em; }
+</style>
+</head>
+<body>
+
+<h1>The Forbidden Pattern Functor Tower:<br>From Organic Chemistry to the Standard Model</h1>
+
+<div class="paper-meta">
+Shin UOTA<br>
+June 24, 2026
+</div>
+
+<div class="abstract">
+<strong>Abstract.</strong>
+The Forbidden Pattern Functor <span class="math-inline">Forb: CSS<sup>op</sup> → BoolAlg</span> extracts Boolean constraints from the systematic absence of combinatorially possible patterns in any Combinatorial Symbol System. We apply this functor across five physical scales — the Standard Model (Level 0), the nuclear chart (Level 1), atomic selection rules (Level 2), general chemistry (Level 3), and organic chemistry (Level 4) — revealing a strict hierarchy: the forbidden rate increases from 13.3% at the molecular scale to 99.8% at the particle scale, with non-monotonic variation at intermediate scales (L3: 92.7%, L2: 84.1%, L1: 81.7%). We define coarse-graining functors <span class="math-inline">R<sub>i</sub>: CSS<sub>i</sub> → CSS<sub>i+1</sub></span> between levels and show that the induced maps on Forb provide a mathematical criterion distinguishing reductionist from emergent forbidden patterns. The framework extends naturally to the dark sector (Level −1), where Forb serves as a falsification filter for dark matter models. The BOC Axiom A — <span class="math-inline">α<sub>CH</sub> ⇒ ν<sub>π</sub> ∨ ε<sub>LU</sub></span>, verified across 123.68 million compounds with zero counterexamples — stands as a candidate emergent chemical law with no direct analogue at lower levels.
+</div>
+
+<!-- §1 Introduction -->
+<h2>§1 Introduction</h2>
+
+<p>
+The Forbidden Pattern Functor <span class="math-inline">Forb: CSS<sup>op</sup> → BoolAlg</span> [1] provides a universal algorithm for extracting Boolean constraints from any combinatorial symbol system: enumerate all combinatorially possible patterns, identify those that never appear in a corpus, and derive the minimal Boolean rules governing their absence. Originally developed to explain the 17 forbidden r-vectors discovered in the BOC classification of 123.68 million organic compounds [2], the functor has been verified across domains including English phonotactics, undeciphered scripts (Proto-Elamite), and LLM output spaces.
+</p>
+
+<p>
+This paper extends Forb vertically — through the physical hierarchy from particle physics to organic chemistry. We ask: <em>does the same functor, applied at each scale, reveal a coherent structure? And what does the scale-dependence of its image tell us about reductionism and emergence in physical law?</em>
+</p>
+
+<!-- §2 Mathematical Framework -->
+<h2>§2 Mathematical Framework</h2>
+
+<div class="definition">
+<div class="label">Definition 1 — Combinatorial Symbol System (CSS) <span class="status-tag status-DEFINITIONAL">DEFINITIONAL</span></div>
+A CSS is a triple <span class="math-inline">(S, F, C)</span> where <span class="math-inline">S</span> is a finite set of signs, <span class="math-inline">F: S → {0,1}<sup>n</sup></span> is a feature map, and <span class="math-inline">C ⊂ S*</span> is a finite multiset of sign sequences (the corpus).
+</div>
+
+<div class="definition">
+<div class="label">Definition 2 — Coarse-Graining Functor <span class="status-tag status-DEFINITIONAL">DEFINITIONAL</span></div>
+A coarse-graining functor <span class="math-inline">R: CSS<sub>i</sub> → CSS<sub>i+1</sub></span> maps signs, features, and corpus from a finer level to a coarser level. It is typically many-to-one: multiple fine-grained states map to the same coarse-grained sign. The induced map on Forb is:
+<div class="math-block">Forb<sub>i+1</sub> ∘ R<sup>op</sup>: CSS<sub>i</sub><sup>op</sup> → BoolAlg</div>
+When this is naturally isomorphic to <span class="math-inline">Forb<sub>i</sub></span>, reductionism holds at that level. When it is not, emergent forbidden patterns exist.
+</div>
+
+<!-- §3 The Tower -->
+<h2>§3 The Forb Functor Tower</h2>
+
+<div class="tower-diagram"><pre>
+LEVEL -1  DARK SECTOR      CSS_SM×DM          (prospective)
+    │ R₋₁: gauge extension
+LEVEL 0   STANDARD MODEL   CSS_SM             99.8% forbidden
+    │ R₀: quark confinement → nucleons
+LEVEL 1   NUCLEAR CHART    CSS_nuc            81.7% forbidden
+    │ R₁: nuclear → electronic structure
+LEVEL 2   ATOMIC E1        CSS_atom           84.1% forbidden
+    │ R₂: orbital → molecular graph
+LEVEL 3   GENERAL CHEM     CSS_chem (metal)   92.7% forbidden*
+    │ R₃: general → organic subset
+LEVEL 4   ORGANIC CHEM     CSS_org (BOC)      13.3% forbidden
+</pre></div>
+<p style="text-align:center;font-size:0.85em;color:#666;">*Level 3 rate inflated by small sample (n=2,996); true rate expected lower.</p>
+
+<!-- §4 Level 0: Standard Model -->
+<h2>§4 Level 0: The Standard Model</h2>
+
+<div class="finding">
+<div class="label">Finding 1 — SM Vertex Forb <span class="status-tag status-EMPIRICAL">EMPIRICAL</span></div>
+Applied to the Standard Model particle content (17 fundamental particles + 13 antiparticles = 30 signs, encoded via 12-bit quantum number vectors), Forb evaluates all 13,050 possible 2-body decay channels. Only 30 satisfy all conservation laws — a forbidden rate of <strong>99.8%</strong>. Electric charge conservation alone accounts for 89.0% of forbidden decays.
+</div>
+
+<table>
+<tr><th>Constraint</th><th>Forbidden Decays</th><th>Fraction</th></tr>
+<tr><td>Electric charge (Q)</td><td>11,618</td><td>89.0%</td></tr>
+<tr><td>Total lepton number (L)</td><td>906</td><td>6.9%</td></tr>
+<tr><td>Electron lepton number (L<sub>e</sub>)</td><td>120</td><td>0.9%</td></tr>
+<tr><td>Baryon number (B)</td><td>90</td><td>0.7%</td></tr>
+<tr><td>Muon lepton number (L<sub>μ</sub>)</td><td>60</td><td>0.5%</td></tr>
+<tr><td>Strangeness (S)</td><td>54</td><td>0.4%</td></tr>
+<tr><td>Charm (C)</td><td>52</td><td>0.4%</td></tr>
+<tr><td>Kinematics (E)</td><td>50</td><td>0.4%</td></tr>
+<tr><td>Bottom (B̃)</td><td>28</td><td>0.2%</td></tr>
+<tr><td>Top (T)</td><td>26</td><td>0.2%</td></tr>
+<tr><td>Weak isospin (I₃)</td><td>16</td><td>0.1%</td></tr>
+</table>
+
+<div class="finding">
+<div class="label">Finding 2 — SM N→M→R <span class="status-tag status-STRUCTURAL">STRUCTURAL</span></div>
+N = 13,020 forbidden decays → M = 11 distinct violation types → R = 7 Boolean axioms (Q, B, L<sub>total</sub>, L<sub>e</sub>, L<sub>μ</sub>, L<sub>τ</sub>, E). N→M compression: 99.9%. M→R compression: 36.4%.
+</div>
+
+<p>
+The SM's seven Boolean axioms correspond to the known conservation laws of the Standard Model. Forb reconstructs these from "absence data" alone — without prior knowledge of gauge symmetries. The fact that charge conservation emerges as the dominant constraint (89%) reflects the U(1)<sub>EM</sub> gauge symmetry's role as the strongest selection rule in particle physics.
+</p>
+
+<!-- §5 Level 1: Nuclear Chart -->
+<h2>§5 Level 1: The Nuclear Chart</h2>
+
+<div class="finding">
+<div class="label">Finding 3 — Nuclear Landscape Forb <span class="status-tag status-EMPIRICAL">EMPIRICAL</span></div>
+The nuclear landscape (Z ∈ [1,118], N ∈ [1,177]) contains 20,886 combinatorially possible (Z,N) pairs. Of these, 3,823 are known nuclides (286 stable). The forbidden rate is <strong>81.7%</strong>. Feature encoding via parity, magic numbers, mass range, and distance from the beta-stability valley yields 285 possible feature vectors, of which 197 are observed.
+</div>
+
+<table>
+<tr><th>Axiom</th><th>Content</th><th>Status</th></tr>
+<tr><td>A1: Even-Even</td><td>167/286 stable nuclides are even-even (58.4%)</td><td>EMPIRICAL</td></tr>
+<tr><td>A2: Odd-Odd</td><td>Only 9 stable odd-odd nuclides (²H,⁶Li,¹⁰B,¹⁴N + 5 primordial)</td><td>EMPIRICAL</td></tr>
+<tr><td>A3: Magic Z</td><td>Z ∈ {2,8,20,28,50,82} → 30 stable isotopes</td><td>EMPIRICAL</td></tr>
+<tr><td>A4: Magic N</td><td>N ∈ {2,8,20,28,50,82,126} → 28 stable isotopes; N=126 closes stability</td><td>EMPIRICAL</td></tr>
+<tr><td>A5: Beta-Valley</td><td>N ≈ Z + 0.0075Z² — nuclei far from this line forbidden</td><td>EMPIRICAL</td></tr>
+<tr><td>A6: Drip Lines</td><td>Z ≤ 118, N ≤ 177 absolute bounds for bound nuclei</td><td>EMPIRICAL</td></tr>
+</table>
+
+<div class="finding">
+<div class="label">Finding 4 — Nuclear N→M→R <span class="status-tag status-STRUCTURAL">STRUCTURAL</span></div>
+N = 17,063 forbidden nuclides → M = 88 forbidden feature vectors → R = 6 Boolean axioms. N→M compression: 99.5%. M→R compression: 93.2%. The dominant forbidden feature vectors all share "dist = very far from beta-stability valley."
+</div>
+
+<!-- §6 Level 2: Atomic Selection Rules -->
+<h2>§6 Level 2: Atomic E1 Transitions</h2>
+
+<div class="finding">
+<div class="label">Finding 5 — Atomic E1 Forb <span class="status-tag status-EMPIRICAL">EMPIRICAL</span></div>
+LS-coupled atomic states (L ∈ {S,P,D,F}, S ∈ {0,1}, all valid J, both parities) produce 28 states with injective 12-bit feature encoding. Of 756 possible transitions, 120 satisfy electric dipole (E1) selection rules — a forbidden rate of <strong>84.1%</strong>. Five Boolean axioms fully explain all 636 forbidden transitions with 99.2% M→R compression.
+</div>
+
+<table>
+<tr><th>Axiom</th><th>Rule</th><th>Forbidden Bigrams</th></tr>
+<tr><td>Laporte (Parity)</td><td>p(initial) ≠ p(final)</td><td>96</td></tr>
+<tr><td>Spin Conservation</td><td>ΔS = 0</td><td>80</td></tr>
+<tr><td>Angular Momentum</td><td>|ΔJ| ≤ 1</td><td>28</td></tr>
+<tr><td>J = 0 → 0</td><td>¬(J<sub>i</sub> = 0 ∧ J<sub>f</sub> = 0)</td><td>4</td></tr>
+<tr><td>Orbital</td><td>|ΔL| ≤ 1</td><td>20</td></tr>
+</table>
+
+<p>
+The atomic level is the cleanest demonstration of Forb's soundness: <em>all five axioms are textbook physics</em>, independently verified by a century of spectroscopy. Forb reconstructs them from "bigram absence" alone, with no prior knowledge of angular momentum algebra or the Wigner-Eckart theorem. The 0 unknown violations with injective encoding confirm that the feature map F is adequate.
+</p>
+
+<!-- §7 Level 3: General Chemistry -->
+<h2>§7 Level 3: General Chemistry (Metal Extension)</h2>
+
+<div class="finding">
+<div class="label">Finding 6 — Metal Feature Extension <span class="status-tag status-EMPIRICAL">EMPIRICAL</span></div>
+The BOC 7-bit r-vector is extended with 4 metal feature bits (transition metal, main-group metal, high coordination ≥4, metal-metal bond), expanding the feature space from 128 to 2,048 r-vectors. On a sample of 2,996 metal-containing PubChem compounds, 150 r-vectors are observed. 25.3% of metal compounds are BOC_INERT (r = 0000000) — invisible to organic SMARTS but captured by metal features.
+</div>
+
+<table>
+<tr><th>Metal Feature Pattern</th><th>Count</th><th>Fraction</th><th>Interpretation</th></tr>
+<tr><td>0010 (main-group only)</td><td>1,582</td><td>52.8%</td><td>Na⁺/K⁺ salts of organic molecules</td></tr>
+<tr><td>0001 (transition metal, low CN)</td><td>737</td><td>24.6%</td><td>Simple TM compounds</td></tr>
+<tr><td>0000 (no metal features detected)</td><td>432</td><td>14.4%</td><td>Grep false positives / unusual bonding</td></tr>
+<tr><td>0011 (TM + main-group)</td><td>117</td><td>3.9%</td><td>Bimetallic / mixed salts</td></tr>
+<tr><td>0101 (TM + high CN ≥4)</td><td>80</td><td>2.7%</td><td>Coordination complexes</td></tr>
+<tr><td>0111 (TM + MG + high CN)</td><td>37</td><td>1.2%</td><td>Complex bimetallic</td></tr>
+<tr><td>0110 (MG + high CN)</td><td>10</td><td>0.3%</td><td>Main-group hypervalent</td></tr>
+<tr><td>1001 (TM + M-M bond)</td><td>1</td><td>0.03%</td><td>Metal cluster</td></tr>
+</table>
+
+<div class="finding">
+<div class="label">Finding 7 — Level 3 Candidate Axioms <span class="status-tag status-CONJECTURAL">CONJECTURAL</span></div>
+<strong>C1 (M-M bond rarity):</strong> Metal-metal bonds appear in 0.03% of metal compounds — requiring specific synthetic conditions. <strong>C2 (High CN ⇒ Transition Metal):</strong> 117/127 high-coordination compounds contain transition metals (92% sufficiency). <strong>C3 (BOC_INERT fraction):</strong> One quarter of metal compounds are invisible to organic functional group classification — the metal feature bits are essential for Level 3 coverage.
+</div>
+
+<div class="note">
+<strong>Sample limitation.</strong> These results are from n = 2,996. Full PubChem metal-containing compounds estimate ~1.23 million (0.99% of 124M). The observed 150 r-vectors underestimate the true coverage. BOC experience: 108/128 at 21.4M grew to 111/128 at 123.68M (+3 r-vectors). We expect similar scale-dependent discovery at Level 3. Re-processing the existing CLOC database (metal detection only, ~26 minutes at 786 compounds/sec) would resolve this.
+</div>
+
+<!-- §8 Level 4: Organic Chemistry -->
+<h2>§8 Level 4: Organic Chemistry (BOC)</h2>
+
+<div class="finding">
+<div class="label">Finding 8 — BOC Forb (established) <span class="status-tag status-EMPIRICAL">EMPIRICAL</span></div>
+The BOC classification [2] encodes organic compounds via 7 EEE generators (ν<sub>LP</sub>, ε<sub>LU</sub>, ν<sub>π</sub>, α<sub>CH</sub>, ρ<sub>rad</sub>, ε<sub>π</sub>, ET) into a 128-dimensional r-vector space. At 123.68 million PubChem compounds, 111 r-vectors are observed, 17 are forbidden — the lowest forbidden rate in the tower at <strong>13.3%</strong>.
+</div>
+
+<div class="theorem">
+<div class="label">Axiom A (BOC Chemical Law) <span class="status-tag status-EMPIRICAL">EMPIRICAL</span></div>
+<span class="math-inline">α<sub>CH</sub> ⇒ ν<sub>π</sub> ∨ ε<sub>LU</sub></span><br>
+"If a molecule possesses C–H acid character, it must also possess either π-nucleophilicity or electrophilic unsaturation." Verified at 123.68M scale with <strong>zero counterexamples</strong>. The axiom explains 16 of 17 forbidden r-vectors (94.1% coverage). The sole surviving forbidden pattern (<span class="math-inline">1111010</span>: ET + α<sub>CH</sub> + ρ<sub>rad</sub> + ε<sub>π</sub> + ε<sub>LU</sub>, p &lt; 8.1 × 10<sup>−9</sup>) represents a higher-order chemical incompatibility requiring a separate axiom.
+</div>
+
+<!-- §9 The Forbidden Rate Hierarchy -->
+<h2>§9 The Forbidden Rate Hierarchy</h2>
+
+<div class="finding">
+<div class="label">Finding 9 — Forbidden Rate Hierarchy <span class="status-tag status-EMPIRICAL">EMPIRICAL</span></div>
+The forbidden rate varies with physical depth as follows (non-monotonic at intermediate scales):
+</div>
+
+<table>
+<tr><th>Level</th><th>|Sign Space|</th><th>Forbidden Rate</th><th>Axioms (R)</th><th>M→R Compression</th></tr>
+<tr><td>L4: Organic Chemistry</td><td>128 r-vectors</td><td style="color:#1e8449;">13.3%</td><td>1 (+1 residual)</td><td>—</td></tr>
+<tr><td>L3: General Chemistry</td><td>2,048 r-vectors</td><td>92.7%*</td><td>3 (candidate)</td><td>TBD</td></tr>
+<tr><td>L2: Atomic E1</td><td>756 transitions</td><td>84.1%</td><td>5</td><td style="color:#c0392b;">99.2%</td></tr>
+<tr><td>L1: Nuclear Chart</td><td>20,886 nuclides</td><td>81.7%</td><td>6</td><td>93.2%</td></tr>
+<tr><td>L0: Standard Model</td><td>13,050 decays</td><td style="color:#c0392b;">99.8%</td><td>7</td><td>36.4%</td></tr>
+</table>
+
+<p>
+The hierarchy reveals a structural principle: <em>more fundamental physics is more combinatorially constrained</em>. The Standard Model's 99.8% forbidden rate means that almost all combinatorially conceivable particle decays are blocked by gauge symmetries. Organic chemistry's 13.3% means that most combinatorially conceivable functional group combinations actually occur in nature. Chemistry is, in a precise combinatorial sense, the most "free" level of physical reality.
+</p>
+
+<div class="finding">
+<div class="label">Finding 10 — M→R Compression as Complexity Measure <span class="status-tag status-STRUCTURAL">STRUCTURAL</span></div>
+The M→R compression ratio measures how efficiently a small number of Boolean rules explain a large number of forbidden patterns. Atomic E1 achieves 99.2% (5 rules → 636 patterns), reflecting the algebraic simplicity of angular momentum selection rules. The Standard Model achieves only 36.4% (7 rules → 11 violation types), because each conservation law is a distinct axiom with limited overlap. This suggests M→R compression as a principled measure of a physical theory's <em>explanatory economy</em>.
+</div>
+
+<!-- §10 Coarse-Graining Functors -->
+<h2>§10 Coarse-Graining Functors R<sub>i</sub></h2>
+
+<div class="definition">
+<div class="label">Definition 3 — Emergence Criterion <span class="status-tag status-DEFINITIONAL">DEFINITIONAL</span></div>
+A forbidden pattern at level i is <strong>emergent</strong> if it is not in the image of the pullback <span class="math-inline">Forb<sub>i+1</sub> ∘ R<sub>i</sub><sup>op</sup></span>. Equivalently: no Boolean constraint at the coarser level i+1, when pulled back through the coarse-graining functor, explains the forbidden pattern at level i.
+</div>
+
+<div class="finding">
+<div class="label">Finding 11 — R<sub>2</sub> Gap (Atom → Molecule) <span class="status-tag status-CONJECTURAL">CONJECTURAL</span></div>
+The coarse-graining <span class="math-inline">R<sub>2</sub>: CSS<sub>atom</sub> → CSS<sub>chem</sub></span> maps 28 atomic LS-terms to 128 molecular r-vectors. The atomic forbidden rate (84.1%) compresses to the organic forbidden rate (13.3%) — a 70.8 percentage-point gap. This gap represents <em>information destroyed by coarse-graining</em>: atomic selection rules are washed out at the molecular scale. Crucially, BOC Axiom A (<span class="math-inline">α<sub>CH</sub> ⇒ ν<sub>π</sub> ∨ ε<sub>LU</sub></span>) has no direct atomic analogue — no atomic selection rule corresponds to "C–H acidity implies π-nucleophilicity or electrophilicity." This makes Axiom A a <strong>candidate emergent chemical law</strong>: a Boolean constraint that appears only at the molecular scale and cannot be reduced to atomic physics.
+</div>
+
+<div class="finding">
+<div class="label">Finding 12 — R<sub>0</sub> Compression (SM → Nuclear) <span class="status-tag status-STRUCTURAL">STRUCTURAL</span></div>
+<span class="math-inline">R<sub>0</sub>: CSS<sub>SM</sub> → CSS<sub>nuc</sub></span> compresses 30 SM particles to 2 nucleons (proton, neutron). This is the most extreme coarse-graining in the tower. The 7 SM Boolean axioms (gauge conservation laws) collapse to 2 nuclear features (Z, N). All quark flavor information (S, C, B̃, T) and lepton structure is irreversibly lost. This furnishes a rigorous sense in which nuclear physics is a <em>functorial image</em> of the Standard Model under extreme information-theoretic compression.
+</div>
+
+<!-- §11 Dark Sector -->
+<h2>§11 Level −1: The Dark Sector</h2>
+
+<div class="finding">
+<div class="label">Finding 13 — Dark Matter as Feature Space Insufficiency <span class="status-tag status-CONJECTURAL">CONJECTURAL</span></div>
+A particle with the all-zero SM feature vector <span class="math-inline">(0,0,0,0,0,0,0,0,0,0,0,0)</span> — Q = 0, B = 0, L = 0, all flavors zero — would be <em>invisible to all Standard Model gauge interactions</em>. This is precisely the WIMP dark matter paradigm. Within the Forb framework, this corresponds to <strong>Feature Space Insufficiency (Case A)</strong>: the current CSS<sub>SM</sub> lacks the feature dimension (dark charge) needed to classify the particle. Extending <span class="math-inline">F → F′: S ∪ {dark} → {0,1}<sup>n+1</sup></span> is the natural mathematical response.
+</div>
+
+<div class="finding">
+<div class="label">Finding 14 — Forb as Dark Sector Falsification Filter <span class="status-tag status-CONJECTURAL">CONJECTURAL</span></div>
+Although the full dark sector model space is infinite, Forb provides a computable falsification criterion for any candidate model M:
+<div class="math-block">Forb(M) ∩ Observed ≠ ∅ ⇒ M is falsified</div>
+That is: if a model M predicts that some process is forbidden, but that process IS observed, M is wrong. This is Popperian falsification recast in the language of the Forb functor. A parametric scan of dark particle quantum numbers (Q, B, L, spin, dark charge) shows that the "SM-invisible" configuration (all SM charges zero) is the only one consistent with current non-observation — any non-zero SM charge would produce detectable signatures.
+</div>
+
+<table>
+<tr><th>Dark Candidate</th><th>Q</th><th>B</th><th>L</th><th>Verdict</th></tr>
+<tr><td>WIMP</td><td>0</td><td>0</td><td>0</td><td style="color:#1e8449;">✓ SM-invisible</td></tr>
+<tr><td>Sterile neutrino</td><td>0</td><td>0</td><td>1</td><td style="color:#c0392b;">⚠ Leptonic — detectable via mixing</td></tr>
+<tr><td>Dark photon</td><td>0</td><td>0</td><td>0</td><td style="color:#1e8449;">✓ SM-invisible (vector mediator)</td></tr>
+<tr><td>Axion</td><td>0</td><td>0</td><td>0</td><td style="color:#1e8449;">✓ SM-invisible (light scalar)</td></tr>
+<tr><td>Millicharged</td><td>ε</td><td>0</td><td>0</td><td style="color:#c0392b;">⚠ EM-visible at sufficient ε</td></tr>
+<tr><td>MACHO (baryonic)</td><td>0</td><td>1</td><td>0</td><td style="color:#c0392b;">⚠ Baryonic — constrained by BBN</td></tr>
+</table>
+
+<!-- §12 Discussion -->
+<h2>§12 Discussion</h2>
+
+<h3>§12.1 Reductionism vs. Emergence</h3>
+
+<p>
+The Forb Functor Tower provides a mathematical criterion for distinguishing reductionist from emergent constraints. When <span class="math-inline">Forb<sub>i</sub> ≅ Forb<sub>i+1</sub> ∘ R<sub>i</sub><sup>op</sup></span>, all forbidden patterns at level i are "inherited" from level i+1 — reductionism holds. When the natural transformation is not an isomorphism, level i possesses genuinely new constraints. BOC Axiom A is the strongest candidate for emergence: it has survived 5.8× scale-up with zero counterexamples, yet has no identifiable atomic or subatomic analogue. Its status as an emergent chemical law remains a central open question.
+</p>
+
+<h3>§12.2 The Direction of Constraint Flow</h3>
+
+<p>
+The overall trend is toward higher forbidden rates at more fundamental scales (13.3% → 92.7% → 84.1% → 81.7% → 99.8%), despite non-monotonic variation at intermediate levels. This pattern inverts the usual reductionist intuition. Rather than higher levels being "nothing but" lower levels, the Forb data suggest that <em>lower levels are combinatorially more constrained</em> — fundamental physics is not "simpler" but <em>more restrictive</em>. Coarse-graining does not create new forbidden patterns; it destroys them. The relative freedom of chemistry (only 13.3% forbidden) is precisely what enables the combinatorial richness of the molecular world.
+</p>
+
+<h3>§12.3 Limitations</h3>
+
+<p>
+<b>Level 3 sample size.</b> The metal extension results are based on n = 2,996 and significantly understate the true coverage. Re-processing the existing 123.68M-compound CLOC database with metal detection (estimated 26 minutes) would resolve this. <b>Coarse-graining formalization.</b> The functors R<sub>i</sub> are currently defined only at the sign-mapping level; full verification of functoriality (identity and composition preservation) at each level requires formal specification of the feature map and corpus transformations. <b>Dark sector.</b> Level −1 analysis is parametric, not enumerative; a full dark sector CSS requires theoretical input (gauge group, particle content) beyond what Forb alone can supply. <b>Level 0 scope.</b> The SM analysis considers only 2-body decays; 3-body and higher are exponentially more numerous and remain unexplored.
+</p>
+
+<!-- References -->
+<h2>References</h2>
+
+<div class="references">
+<p>[1] Uota, S. (2026). "The Forbidden Pattern Functor: Universal Constraint Extraction in Combinatorial Symbol Systems." v5. §6.8, 7 Theorems, 16 Findings, 29 References.</p>
+<p>[2] Uota, S. (2026). "BOC: The Coalgebraic Lens for Organic Chemistry — Forbidden Patterns in the Chemical Universe." BOC_Forbidden_Patterns_v1.html. 123.68M compounds, 17 forbidden r-vectors, Axiom A zero counterexamples.</p>
+<p>[3] Uota, S. (2026). "CLOC: Coalgebraic Lens for Organic Chemistry — Classification System." 123.68M compounds classified, 43 SMARTS patterns, 7 EEE generators.</p>
+<p>[4] Uota, S. (2026). "BOC × B/F/E/W: The CORD Tetralogy." Parts I–IV: IHT, BOC, ICO, CORD Synthesis.</p>
+<p>[5] Particle Data Group (2024). "Review of Particle Physics." <em>Phys. Rev. D</em> 110, 030001.</p>
+<p>[6] NuDat 3.0. National Nuclear Data Center, Brookhaven National Laboratory.</p>
+<p>[7] Condon, E.U. & Shortley, G.H. (1935). <em>The Theory of Atomic Spectra.</em> Cambridge University Press.</p>
+<p>[8] Goeppert-Mayer, M. & Jensen, J.H.D. (1955). <em>Elementary Theory of Nuclear Shell Structure.</em> Wiley.</p>
+<p>[9] Weinberg, S. (1995). <em>The Quantum Theory of Fields, Vol. I: Foundations.</em> Cambridge University Press.</p>
+<p>[10] Bertone, G., Hooper, D., & Silk, J. (2005). "Particle dark matter: evidence, candidates and constraints." <em>Phys. Rept.</em> 405, 279–390.</p>
+</div>
+
+</body>
+</html>

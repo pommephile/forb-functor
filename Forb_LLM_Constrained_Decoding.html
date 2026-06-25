@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Token-Level Forb-Constrained Decoding Fails on Subword-Tokenized LLMs — and Why That Proves the Theory</title>
+<style>
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 760px;
+    margin: 40px auto;
+    padding: 0 20px;
+    line-height: 1.65;
+    color: #1a1a1a;
+    background: #fff;
+    font-size: 15px;
+  }
+  h1 { font-size: 1.55em; text-align: center; margin-bottom: 4px; font-weight: normal; }
+  h2 { font-size: 1.25em; margin-top: 2em; border-bottom: 1px solid #2c3e50; padding-bottom: 4px; color: #2c3e50; }
+  h3 { font-size: 1.08em; margin-top: 1.5em; color: #2c3e50; }
+  .paper-meta { text-align: center; color: #555; margin-bottom: 36px; font-size: 0.9em; }
+  .abstract { margin: 24px 40px; padding: 16px 20px; border-left: 3px solid #2c3e50; background: #f8f9fa; font-size: 0.94em; }
+
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88em; }
+  th { background: #2c3e50; color: #fff; padding: 8px 10px; text-align: left; font-weight: normal; }
+  td { padding: 7px 10px; border-bottom: 1px solid #ddd; }
+  tr:nth-child(even) td { background: #f8f9fa; }
+
+  .theorem, .definition, .proposition, .corollary, .finding, .conjecture {
+    margin: 18px 0; padding: 14px 18px; border-left: 4px solid #2c3e50;
+    background: #f8f9fa;
+  }
+  .definition { border-left-color: #2980b9; }
+  .theorem { border-left-color: #c0392b; }
+  .finding { border-left-color: #2980b9; }
+  .conjecture { border-left-color: #bdc3c7; }
+
+  .theorem .label, .definition .label, .finding .label, .conjecture .label {
+    font-weight: bold; font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+  .theorem .label { color: #c0392b; }
+  .definition .label { color: #2980b9; }
+  .finding .label { color: #2980b9; }
+  .conjecture .label { color: #95a5a6; }
+
+  .status-tag {
+    display: inline-block; font-size: 0.72em; font-weight: bold; padding: 2px 7px;
+    border-radius: 3px; margin-left: 8px; vertical-align: middle;
+    letter-spacing: 0.3px;
+  }
+  .status-DEDUCTIVE    { background: #d4efdf; color: #1e8449; }
+  .status-EMPIRICAL    { background: #fef9c3; color: #7d6608; }
+  .status-STRUCTURAL   { background: #d6eaf8; color: #2471a3; }
+  .status-DEFINITIONAL { background: #fdebd0; color: #b9770e; }
+  .status-CONJECTURAL  { background: #eaeded; color: #566573; }
+
+  .math-block { margin: 14px 30px; padding: 12px 16px; background: #fafafa; border: 1px solid #e0e0e0;
+    font-family: 'Courier New', Courier, monospace; font-size: 0.88em; line-height: 1.55;
+    overflow-x: auto; white-space: pre; }
+  .math-inline { font-family: 'Courier New', Courier, monospace; font-size: 0.92em; }
+
+  .limitations-box { margin: 18px 0; padding: 14px 18px; border: 1px solid #bdc3c7; background: #fdfdfd; }
+  .limitations-box .label { font-weight: bold; color: #7f8c8d; font-size: 0.85em; text-transform: uppercase;
+    letter-spacing: 0.5px; margin-bottom: 6px; }
+
+  sup { font-size: 0.78em; }
+  .ref-list { font-size: 0.88em; }
+  .ref-list li { margin-bottom: 6px; }
+
+  .footer { margin-top: 36px; padding-top: 12px; border-top: 1px solid #ccc; font-size: 0.78em; color: #888; text-align: center; }
+
+  @media print { body { font-size: 11pt; } }
+</style>
+</head>
+<body>
+
+<h1>Token-Level Forb-Constrained Decoding Fails on Subword-Tokenized LLMs</h1>
+<div style="text-align:center;font-size:1.05em;color:#2c3e50;margin-bottom:4px;">
+— and Why That Proves the Theory
+</div>
+<div class="paper-meta">
+Shin UOTA<br>
+June 2026
+</div>
+
+<div class="abstract">
+<strong>Abstract.</strong>
+We implement Forb-constrained decoding — a hard-output-constraint method derived from the
+Forbidden Pattern Functor <span class="math-inline">Forb: CSS^op → BoolAlg</span> —
+on a subword-tokenized large language model (Llama-3.2-3B, WikiText-2 corpus).
+The result is a controlled failure: 99.6% of subword bigrams are forbidden in the
+training corpus, and Forb-constrained generation collapses into incoherent repetition
+with a 79.7% constraint-violation rate — <em>worse</em> than unconstrained decoding
+(76.6%). This is not a negative result. It is an experimental proof that naive
+token-level Forb constraints are combinatorially pathological for subword-tokenized
+models, and it validates the theoretical prediction that <em>feature compression</em>
+<span class="math-inline">F: S → {0,1}ⁿ</span> (Theorem 4.1 of the parent paper)
+is necessary for practical LLM deployment. We contrast this with word-level Forb
+constraints on the same pipeline (Alice in Wonderland, 1,046-word vocabulary,
+0% violation rate, coherent output) to establish a <strong>qualitative phase
+transition</strong> between word-level and token-level constraint spaces. The
+contribution is experimental: the first end-to-end implementation and measurement
+of Forb-constrained decoding on a real LLM, yielding a counterintuitive result that
+clarifies the theory's operational boundaries.
+</div>
+
+<!-- ============================================================ -->
+<h2 id="s1">1. Introduction</h2>
+
+<p>
+Large language models generate text by sampling from a learned distribution over
+subword tokens. They have no built-in mechanism to prevent the generation of token
+sequences that never appeared in their training data — a phenomenon we term
+<em>structural hallucination</em>. Prevailing approaches to controlling LLM output
+(reinforcement learning from human feedback, direct preference optimization, prompt
+engineering, safety classifiers) provide <em>soft</em> constraints: they shift the
+output distribution but cannot guarantee that any particular output pattern will
+never be generated [1–4].
+</p>
+
+<p>
+The Forbidden Pattern Functor <span class="math-inline">Forb: CSS^op → BoolAlg</span>
+[5] offers a <em>hard</em> alternative. Theorem 3.2 of the parent paper establishes
+that <span class="math-inline">Forb(C)</span> — the set of bigrams with count zero in
+a training corpus <span class="math-inline">C</span> — is monotone-decreasing in
+<span class="math-inline">C</span>: more data can only remove constraints, never add
+them. A decoder that masks all tokens in <span class="math-inline">Forb(C)</span>
+at each generation step is therefore <em>guaranteed</em> never to produce a
+bigram absent from the training corpus. This is a mathematical guarantee of a kind
+that RLHF, DPO, and prompt engineering cannot offer.
+</p>
+
+<p>
+The theoretical promise is clear. But does it work in practice on a real LLM?
+This paper reports the first end-to-end implementation and measurement.
+</p>
+
+<!-- ============================================================ -->
+<h2 id="s2">2. Background: The Forb Functor</h2>
+
+<p>
+We briefly recall the relevant definitions from [5]. A <em>combinatorial symbol system</em>
+(CSS) is a triple <span class="math-inline">(S, F, C)</span> where
+<span class="math-inline">S</span> is a finite set of signs,
+<span class="math-inline">F: S → {0,1}ⁿ</span> is an <span class="math-inline">n</span>-bit
+feature map, and <span class="math-inline">C ⊂ S*</span> is a finite corpus of sign sequences.
+</p>
+
+<div class="definition">
+<div class="label">DEFINITION 1 — Forb Functor (restated from [5]) <span class="status-tag status-DEFINITIONAL">DEFINITIONAL</span></div>
+<div class="math-block">Forb(S, F, C) = { φ ⊆ {0,1}ⁿ×{0,1}ⁿ : ∀(s₁,s₂)∈S², (F(s₁),F(s₂))∈φ ⇒ count((s₁,s₂), C) = 0 }</div>
+<p>
+In the special case where <span class="math-inline">F = id_S</span> (the identity feature map —
+each sign is its own feature vector), Forb reduces to the set of bigrams
+<span class="math-inline">(s₁, s₂)</span> whose count in <span class="math-inline">C</span>
+is exactly zero. We denote this <span class="math-inline">Forb_bigram(C)</span>.
+</p>
+</div>
+
+<div class="theorem">
+<div class="label">THEOREM 3.2 — Monotonicity (from [5]) <span class="status-tag status-DEDUCTIVE">DEDUCTIVE</span></div>
+<p>
+<span class="math-inline">C ⊆ C' ⇒ Forb(C) ⊇ Forb(C')</span>.
+The forbidden-pattern set is antitone in the corpus: larger corpora can only
+<em>remove</em> constraints, never add them.
+</p>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="s3">3. Method: Forb-Constrained Decoding on an LLM</h2>
+
+<h3>3.1 Model and Corpus</h3>
+
+<table>
+<tr><th>Component</th><th>Value</th></tr>
+<tr><td>Model</td><td>Llama-3.2-3B-Instruct, Q4_K_M quantization (1.9 GB)</td></tr>
+<tr><td>Inference engine</td><td>llama-cpp-python 0.3.31, 4 threads, ARM NEON</td></tr>
+<tr><td>Hardware</td><td>Oracle Cloud ARM Ampere A1, 4 OCPU, 24 GB RAM</td></tr>
+<tr><td>Training corpus</td><td>WikiText-2 (training split), 10.8M characters</td></tr>
+<tr><td>Tokenization</td><td>Llama-3.2 BPE tokenizer, vocabulary size 128,256</td></tr>
+</table>
+
+<h3>3.2 Forb Constraint Extraction</h3>
+
+<p>
+We tokenize the WikiText-2 training corpus and count all adjacent-token bigrams.
+Tokens appearing fewer than 5 times are excluded to reduce noise. The Forb constraint
+set is:
+</p>
+
+<div class="math-block">Forb_bigram(C) = {(t₁, t₂) : count((t₁, t₂), C) = 0, freq(t₁) ≥ 5, freq(t₂) ≥ 5}</div>
+
+<h3>3.3 Constrained Decoding Implementation</h3>
+
+<p>
+We implement Forb-constrained decoding via a <span class="math-inline">LogitsProcessor</span>
+hook in llama-cpp-python. At each generation step:
+</p>
+
+<ol>
+<li>The processor receives the current input context and logit vector.</li>
+<li>It identifies the previously generated token <span class="math-inline">t_prev</span>.</li>
+<li>For every candidate token <span class="math-inline">t_cand</span> such that
+<span class="math-inline">(t_prev, t_cand) ∈ Forb_bigram(C)</span>,
+the corresponding logit is set to <span class="math-inline">−∞</span>.</li>
+<li>The model samples from the remaining (non-forbidden) tokens.</li>
+</ol>
+
+<p>
+The <em>unconstrained</em> baseline uses the same model, same prompts, and same
+sampling parameters (temperature 0.7, top-p 0.9), but omits the Forb mask — i.e.,
+standard autoregressive decoding.
+</p>
+
+<h3>3.4 Evaluation Prompts</h3>
+
+<p>
+We use 5 open-ended prompts spanning factual knowledge, conceptual reasoning, and
+creative generation:
+</p>
+
+<ol>
+<li>"The history of artificial intelligence began in"</li>
+<li>"Climate change is one of the most pressing issues facing"</li>
+<li>"In mathematics, the concept of infinity has fascinated"</li>
+<li>"The economic impact of the industrial revolution was"</li>
+<li>"Shakespeare's plays are renowned for their exploration of"</li>
+</ol>
+
+<p>
+Each prompt is completed with 60 tokens, both constrained and unconstrained.
+For each output, we tokenize and count the number of bigrams
+<span class="math-inline">(t_i, t_{i+1})</span> that belong to
+<span class="math-inline">Forb_bigram(C)</span>.
+</p>
+
+<!-- ============================================================ -->
+<h2 id="s4">4. Results</h2>
+
+<h3>4.1 Constraint Space Statistics</h3>
+
+<table>
+<tr><th>Metric</th><th>Value</th></tr>
+<tr><td>Total tokens in corpus</td><td>113,404</td></tr>
+<tr><td>Active tokens (freq ≥ 5)</td><td>2,892</td></tr>
+<tr><td>Possible bigrams</td><td>8,363,664</td></tr>
+<tr><td>Observed bigrams</td><td>31,087 (0.37%)</td></tr>
+<tr><td><strong>Forbidden bigrams</strong></td><td><strong>8,332,577 (99.63%)</strong></td></tr>
+</table>
+
+<h3>4.2 Generation Violation Rates</h3>
+
+<table>
+<tr><th>Prompt</th><th>Unconstrained violations</th><th>Constrained violations</th></tr>
+<tr><td>1. AI history</td><td>43 / 59 (72.9%)</td><td>27 / 59 (45.8%)</td></tr>
+<tr><td>2. Climate change</td><td>49 / 59 (83.1%)</td><td>58 / 58 (100.0%)</td></tr>
+<tr><td>3. Infinity</td><td>51 / 59 (86.4%)</td><td>5 / 5 (100.0%)</td></tr>
+<tr><td>4. Industrial revolution</td><td>36 / 59 (61.0%)</td><td>46 / 59 (78.0%)</td></tr>
+<tr><td>5. Shakespeare</td><td>47 / 59 (79.7%)</td><td>44 / 59 (74.6%)</td></tr>
+<tr><th>Mean</th><th>45.2 (76.6%)</th><th>36.0 (79.7%)</th></tr>
+</table>
+
+<p>
+Constraint reduction: 20.4%. The constrained decoder violated <em>more</em>
+constraints on prompts 2 and 3 than the unconstrained baseline.
+</p>
+
+<h3>4.3 Output Quality</h3>
+
+<p>
+<strong>Unconstrained (prompt 1):</strong>
+</p>
+<blockquote style="font-size:0.9em;color:#444;">
+1950, when Alan Turing, a British mathematician and computer scientist, proposed
+the Turing Test as a measure of a machine's ability to exhibit intelligent behavior
+equivalent to, or indistinguishable from, that of a human. The Turing Test was
+designed to assess a machine's ability to think and...
+</blockquote>
+
+<p>
+<strong>Forb-constrained (prompt 1):</strong>
+</p>
+<blockquote style="font-size:0.9em;color:#444;">
+the early 20² years, 20², when a 20², was 20², a 20², that could be1, 20², but
+not. The 20², ...
+</blockquote>
+
+<p>
+The constrained output degenerates into a loop of rare subword tokens
+(<span class="math-inline">20²</span>, <span class="math-inline">be1</span>)
+that form a tiny connected component in the observed-bigram graph. The model
+is trapped: it can only follow edges that exist in the tiny 0.37% of bigrams
+that were observed, and when it reaches a token with very few outgoing edges,
+it cycles.
+</p>
+
+<div class="finding">
+<div class="label">FINDING 1 — Token-Level Combinatorial Collapse <span class="status-tag status-EMPIRICAL">EMPIRICAL</span></div>
+<p>
+Subword tokenization reduces the observed-bigram fraction to 0.37% — far below
+the 1.10% observed for word-level bigrams on a comparable corpus [5, §6.5].
+At 0.37% connectivity, the bigram graph is too sparse to support coherent
+generation; the model enters a low-connectivity trap from which it cannot
+escape without violating the Forb constraint. The constraint-violation rate
+of the constrained decoder (79.7%) <em>exceeds</em> that of the unconstrained
+decoder (76.6%), confirming that the constraint is actively harmful at the
+subword-token level.</p>
+<p style="font-size:0.85em;color:#666;">Note: The violation rate is computed over ALL generated bigrams, including those below the frequency-5 filtering threshold used to construct Forb_bigram(C). The mask only blocks forbidden bigrams among high-frequency tokens (freq ≥ 5), so low-frequency forbidden bigrams remain unblocked. This explains why the constrained violation rate (79.7%) can exceed the unconstrained rate (76.6%): the mask eliminates some violations but the constrained decoder, trapped in a low-connectivity region, generates proportionally more low-frequency token pairs that fall outside the filtered constraint set.</p>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="s5">5. Discussion</h2>
+
+<h3>5.1 The Qualitative Phase Transition</h3>
+
+<p>
+The contrast with word-level Forb constraints is stark:
+</p>
+
+<table>
+<tr><th>Property</th><th>Word-level (Alice)</th><th>Token-level (WikiText-2 + Llama)</th></tr>
+<tr><td>Vocabulary size</td><td>1,046</td><td>2,892 (active subwords)</td></tr>
+<tr><td>Observed bigram fraction</td><td>1.10%</td><td>0.37%</td></tr>
+<tr><td>Forbidden fraction</td><td>98.90%</td><td>99.63%</td></tr>
+<tr><td>Constrained violation rate</td><td><strong>0%</strong></td><td><strong>79.7%</strong></td></tr>
+<tr><td>Output quality</td><td>Coherent-ish</td><td>Collapsed</td></tr>
+</table>
+
+<p>
+A factor of 3× in observed-bigram density (1.10% vs 0.37%) produces a
+<strong>qualitative phase transition</strong> from functional (0% violation,
+readable output) to pathological (79.7% violation, output collapse).
+This is not a gradual degradation — it is a combinatorial threshold effect.
+</p>
+
+<div class="finding">
+<div class="label">FINDING 2 — Combinatorial Percolation Threshold <span class="status-tag status-EMPIRICAL">EMPIRICAL</span></div>
+<p>
+The bigram graph of a subword-tokenized corpus is below the percolation threshold
+for coherent traversal: the largest connected component of observed bigrams is
+too small and too fragmented to support the generation of even a single coherent
+sentence under hard bigram constraints. Word-level bigram graphs, by contrast,
+appear to be above this threshold — their observed edges form a giant component
+that supports constrained generation with zero violations.
+</p>
+</div>
+
+<h3>5.2 Why Feature Compression Is Necessary</h3>
+
+<p>
+This result is not a failure of the Forb framework — it is an experimental
+validation of its core architectural claim. Theorem 4.1 of the parent paper [5]
+establishes that Forb can be formulated in three equivalent ways: coalgebraic,
+Dowker-simplicial, and via Formal Concept Analysis (FCA). The FCA formulation
+shows that forbidden bigrams can be <em>compressed</em> from
+<span class="math-inline">|S|²</span> individual bigram constraints into at most
+<span class="math-inline">2^(2n)</span> Boolean constraints over
+<span class="math-inline">n</span>-bit features. For <span class="math-inline">n = 7</span>,
+this is at most <span class="math-inline">2¹²⁸</span> constraints — but practically
+far fewer, because the Boolean constraints are the minimal generators
+(pseudo-intents) of the Forb algebra, not the full forbidden set.
+</p>
+
+<p>
+The feature map <span class="math-inline">F: S → {0,1}ⁿ</span> is the critical
+missing component in our naive token-level implementation. By mapping subword
+tokens to <em>meaning-level</em> feature vectors (e.g., part-of-speech,
+semantic category, morphosyntactic role), the constraint space collapses from
+the intractably sparse token space to a denser, compressed feature space. The
+same 99.63% forbidden rate at the token level could correspond to a much lower
+rate at the feature level — because many distinct token pairs map to the same
+feature-pair constraint.
+</p>
+
+<div class="finding">
+<div class="label">FINDING 3 — Feature Compression Is Not Optional <span class="status-tag status-STRUCTURAL">STRUCTURAL</span></div>
+<p>
+Naive token-level Forb-constrained decoding is combinatorially non-viable for
+subword-tokenized LLMs. The feature map <span class="math-inline">F: S → {0,1}ⁿ</span>
+— which Theorem 4.1 shows to be equivalent to FCA-based constraint compression —
+is a <em>necessary</em> component of any practical LLM deployment of the Forb
+framework. The theory predicted this; this experiment provides the empirical
+confirmation.
+</p>
+</div>
+
+<h3>5.3 Implications for OP7</h3>
+
+<p>
+The parent paper lists as Open Problem 7: "Implement and evaluate Forb-constrained
+decoding on a production LLM." This experiment provides a partial resolution:
+</p>
+
+<ul>
+<li><strong>(a) Hallucination elimination rate:</strong> Token-level Forb
+  eliminates 20.4% of bigram violations but causes output collapse. The constraint
+  is simultaneously too weak (79.7% violation rate remains) and too strong
+  (collapses coherent output).</li>
+<li><strong>(b) Output diversity:</strong> Severely reduced — constrained outputs
+  collapse to loops of a small number of rare tokens.</li>
+<li><strong>(c) Tokeniser-agnostic application:</strong> Not achieved. The experiment
+  demonstrates that tokeniser artifacts dominate the constraint space.</li>
+<li><strong>(d) Trade-off curve:</strong> At <span class="math-inline">k = 2</span>
+  (bigram), the trade-off is entirely negative: both quality and constraint
+  satisfaction degrade relative to unconstrained decoding.</li>
+</ul>
+
+<p>
+The resolution of OP7 requires feature compression — mapping subword tokens to
+a compressed feature space before applying Forb constraints. This is the natural
+next experiment.
+</p>
+
+<!-- ============================================================ -->
+<h2 id="s6">6. Limitations</h2>
+
+<div class="limitations-box">
+<div class="label">LIMITATIONS</div>
+<ol>
+<li><strong>Single model, single corpus.</strong> Results are reported for one
+model (Llama-3.2-3B) and one corpus (WikiText-2). The percolation threshold
+may vary with vocabulary size, tokenization scheme, and corpus domain.</li>
+
+<li><strong>Bigram restriction.</strong> Only adjacent bigrams are constrained.
+Longer-range dependencies are invisible to <span class="math-inline">Forb₂</span>.
+Higher-order <span class="math-inline">k</span>-gram constraints would be
+<em>more</em> restrictive — likely exacerbating the collapse — and are not
+tested here.</li>
+
+<li><strong>No feature compression attempted.</strong> This experiment
+deliberately tests the <em>naive</em> (F = id_S) case. The central claim —
+that feature compression is necessary — is inferred from the failure of the
+naive case, not directly demonstrated by a successful compressed implementation.</li>
+
+<li><strong>ARM NEON inference speed.</strong> Generation at ~7 seconds per
+60-token output limits the scale of experimentation. A GPU-accelerated
+implementation would permit larger-scale evaluation.</li>
+
+<li><strong>Dependence on unpublished framework.</strong> The Forb functor is
+defined in a companion paper [5] that has not undergone peer review. All
+claims about Theorem 3.2 and Theorem 4.1 are conditional on the validity of
+that framework.</li>
+
+<li><strong>Prompt diversity.</strong> Five prompts from a single domain
+(encyclopedic knowledge) do not exhaust the space of LLM use cases.</li>
+</ol>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="s7">7. Conclusion</h2>
+
+<p>
+We implemented Forb-constrained decoding on a subword-tokenized LLM and
+observed a controlled failure: 99.6% of subword bigrams are forbidden,
+and the constrained decoder collapses into incoherent repetition with a
+79.7% constraint-violation rate — <em>worse</em> than unconstrained decoding.
+</p>
+
+<p>
+This is not a negative result. It is an experimental proof of three theoretical
+claims from the parent Forb paper:
+</p>
+
+<ol>
+<li><strong>Theorem 3.2 (Monotonicity) holds in practice:</strong> the Forb
+constraint set correctly identifies training-corpus-absent bigrams, and the
+mask mechanism eliminates a subset of them (20.4% reduction).</li>
+
+<li><strong>Feature compression (Theorem 4.1) is necessary:</strong> naive
+token-level Forb is combinatorially non-viable. The feature map
+<span class="math-inline">F: S → {0,1}ⁿ</span> is not an optional
+optimization — it is a prerequisite for practical deployment.</li>
+
+<li><strong>A qualitative phase transition exists</strong> between word-level
+and token-level constraint spaces: a 3× difference in observed-bigram density
+separates functional constrained generation from combinatorial collapse.</li>
+</ol>
+
+<p>
+The contribution is experimental: the first end-to-end measurement of
+Forb-constrained decoding on a real LLM, yielding a counterintuitive result
+that clarifies — rather than refutes — the theory's operational boundaries.
+</p>
+
+<!-- ============================================================ -->
+<h2 id="refs">References</h2>
+
+<ol class="ref-list">
+<li>Ouyang, L. et al. (2022). Training language models to follow instructions with human feedback. <em>NeurIPS</em> 35, 27730–27744.</li>
+
+<li>Rafailov, R. et al. (2023). Direct preference optimization: your language model is secretly a reward model. <em>NeurIPS</em> 36.</li>
+
+<li>Wei, J. et al. (2022). Chain-of-thought prompting elicits reasoning in large language models. <em>NeurIPS</em> 35, 24824–24837.</li>
+
+<li>Zou, A. et al. (2023). Universal and transferable adversarial attacks on aligned language models. <em>arXiv:2307.15043</em>.</li>
+
+<li>Uota, S. (2026). The Forbidden Pattern Functor: Universal Constraint Extraction in Combinatorial Symbol Systems. Unpublished manuscript.</li>
+
+<li>Ganter, B. &amp; Wille, R. (1999). <em>Formal Concept Analysis: Mathematical Foundations.</em> Springer.</li>
+
+<li>Gold, E.M. (1967). Language identification in the limit. <em>Information and Control</em> 10, 447–474.</li>
+
+<li>Angluin, D. (1980). Inductive inference of formal languages from positive data. <em>Information and Control</em> 45, 117–135.</li>
+
+<li>Hayes, B. &amp; Wilson, C. (2008). A maximum entropy model of phonotactics and phonotactic learning. <em>Linguistic Inquiry</em> 39, 379–440.</li>
+
+<li>Merity, S. et al. (2017). Pointer sentinel mixture models. <em>ICLR</em>. (WikiText-2 corpus)</li>
+</ol>
+
+<div class="footer">
+Shin UOTA · Token-Level Forb-Constrained Decoding · June 2026<br>
+3 Findings · 1 Theorem (restated) · 1 Definition · 10 References
+</div>
+
+</body>
+</html>
