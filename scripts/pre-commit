@@ -1,0 +1,14 @@
+#!/bin/bash
+# Pre-commit hook: verify Forb OP table consistency
+# Rejects commit if OP tables are inconsistent across papers.
+
+SCRIPT="$(git rev-parse --show-toplevel)/scripts/verify_op_consistency.py"
+
+if [ -f "$SCRIPT" ]; then
+    python3 "$SCRIPT" || {
+        echo ""
+        echo "Commit rejected: OP table inconsistency."
+        echo "Run: python3 scripts/verify_op_consistency.py"
+        exit 1
+    }
+fi
