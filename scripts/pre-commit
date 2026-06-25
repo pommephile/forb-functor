@@ -1,14 +1,25 @@
 #!/bin/bash
-# Pre-commit hook: verify Forb OP table consistency
-# Rejects commit if OP tables are inconsistent across papers.
+# Pre-commit hook: dual verification — local + external (Qwen-Max)
+# Rejects commit if OP tables are inconsistent.
 
-SCRIPT="$(git rev-parse --show-toplevel)/scripts/verify_op_consistency.py"
+TOPLEVEL="$(git rev-parse --show-toplevel)"
 
-if [ -f "$SCRIPT" ]; then
-    python3 "$SCRIPT" || {
+# Stage 1: Local structural check (fast)
+LOCAL="$TOPLEVEL/scripts/verify_op_consistency.py"
+if [ -f "$LOCAL" ]; then
+    python3 "$LOCAL" || {
         echo ""
-        echo "Commit rejected: OP table inconsistency."
-        echo "Run: python3 scripts/verify_op_consistency.py"
+        echo "Commit rejected: OP table inconsistency (local check)."
+        exit 1
+    }
+fi
+
+# Stage 2: External AI verification (Qwen-Max)
+EXTERNAL="$TOPLEVEL/scripts/verify_external.py"
+if [ -f "$EXTERNAL" ] && [ -n "$DASHSCOPE_API_KEY" ]; then
+    python3 "$EXTERNAL" || {
+        echo ""
+        echo "Commit rejected: OP table inconsistency (Qwen-Max external audit)."
         exit 1
     }
 fi
